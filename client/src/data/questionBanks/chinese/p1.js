@@ -1,52 +1,4 @@
 /* P1 中文題庫：日後只在此檔案加入小一題目，不影響其他年級。 */
-const storyStructureStories = [
-  {
-    id: 'P1-CN-R04-S01', title: '雨天遠足', intro: '先讀完整短文，再按問題找出最合適的段落。這一篇短文共有四條練習問題。',
-    paragraphs: [
-      { id: 'S1-P1', text: '星期五早上，小琪和同學到郊外遠足。天氣晴朗，大家都很期待。' },
-      { id: 'S1-P2', text: '他們沿著小路走，看見小鳥在樹上唱歌，也看見蝴蝶在花間飛舞。' },
-      { id: 'S1-P3', text: '忽然，天空下起大雨，大家連忙跑到涼亭避雨。' },
-      { id: 'S1-P4', text: '不久，雨停了，天空出現彩虹。小琪覺得這次遠足十分難忘。' },
-    ],
-    questions: [
-      { id: 'P1-CN-R04-Q01', stage: '起', prompt: '哪一段先交代時間、人物和遠足活動？', answer: 'S1-P1', explanation: '第一段交代星期五早上、小琪和同學，以及到郊外遠足，是故事的開始。' },
-      { id: 'P1-CN-R04-Q02', stage: '承', prompt: '哪一段承接開始，寫他們沿路看見的景物？', answer: 'S1-P2', explanation: '第二段寫小鳥、蝴蝶和花，讓故事順著遠足活動發展。' },
-      { id: 'P1-CN-R04-Q03', stage: '轉', prompt: '哪一段令故事出現明顯變化？', answer: 'S1-P3', explanation: '第三段由晴天忽然變成下大雨，故事出現轉變。' },
-      { id: 'P1-CN-R04-Q04', stage: '合', prompt: '哪一段交代雨後結果和小琪的感受？', answer: 'S1-P4', explanation: '第四段寫雨停、看見彩虹和難忘感受，收束整個故事。' },
-    ],
-  },
-  {
-    id: 'P1-CN-R04-S02', title: '校園植樹日', intro: '先讀完整短文，再找出每一段在故事中的作用。這一篇短文共有四條練習問題。',
-    paragraphs: [
-      { id: 'S2-P1', text: '星期三早上，小安和同學到學校花園參加植樹日。大家戴上手套，準備種小樹苗。' },
-      { id: 'S2-P2', text: '老師教大家先挖泥土，再放入樹苗，最後把泥土蓋好和澆水。' },
-      { id: 'S2-P3', text: '可是，小明的水壺忽然倒了，水全流到地上。他很着急。' },
-      { id: 'S2-P4', text: '老師拿來另一個水壺，大家一起把樹苗澆好。小安看見小樹苗站得直直的，十分高興。' },
-    ],
-    questions: [
-      { id: 'P1-CN-R04-Q07', stage: '起', prompt: '哪一段介紹植樹日的時間、人物和活動？', answer: 'S2-P1', explanation: '第一段交代星期三早上、小安和同學，以及到學校花園種樹，是故事的開始。' },
-      { id: 'P1-CN-R04-Q08', stage: '承', prompt: '哪一段寫老師教大家怎樣種樹？', answer: 'S2-P2', explanation: '第二段寫挖泥土、放樹苗、蓋泥土和澆水，承接植樹活動的發展。' },
-      { id: 'P1-CN-R04-Q09', stage: '轉', prompt: '哪一段出現了令事情改變的小問題？', answer: 'S2-P3', explanation: '第三段的水壺忽然倒了，令小明着急，是故事的轉變。' },
-      { id: 'P1-CN-R04-Q10', stage: '合', prompt: '哪一段寫出問題解決後的結果和感受？', answer: 'S2-P4', explanation: '第四段寫老師幫忙、樹苗澆好和小安高興，為故事作結。' },
-    ],
-  },
-  {
-    id: 'P1-CN-R04-S03', title: '圖書館借書', intro: '先讀完整短文，再按問題找出最合適的段落。這一篇短文共有四條練習問題。',
-    paragraphs: [
-      { id: 'S3-P1', text: '星期日下午，小朗和媽媽到圖書館。他想借一本有關海洋的圖畫書。' },
-      { id: 'S3-P2', text: '小朗找到《小鯨魚的家》，安靜地坐在椅子上閱讀，知道海洋要保持清潔。' },
-      { id: 'S3-P3', text: '正當他準備借書時，他發現借書證不在口袋裏，便四處尋找。' },
-      { id: 'S3-P4', text: '媽媽在書包的小袋裏找到借書證。小朗借到圖畫書，答應以後把借書證放好。' },
-    ],
-    questions: [
-      { id: 'P1-CN-R04-Q11', stage: '起', prompt: '哪一段交代小朗到哪裏和想借甚麼書？', answer: 'S3-P1', explanation: '第一段交代星期日下午、小朗到圖書館和想借海洋圖畫書，是故事的開始。' },
-      { id: 'P1-CN-R04-Q12', stage: '承', prompt: '哪一段寫小朗找到書後閱讀到的內容？', answer: 'S3-P2', explanation: '第二段寫小朗找到《小鯨魚的家》並閱讀海洋要保持清潔，承接借書活動。' },
-      { id: 'P1-CN-R04-Q13', stage: '轉', prompt: '哪一段出現了借書前的小意外？', answer: 'S3-P3', explanation: '第三段發現借書證不在口袋裏，令事情出現變化。' },
-      { id: 'P1-CN-R04-Q14', stage: '合', prompt: '哪一段寫出找到借書證後的結果？', answer: 'S3-P4', explanation: '第四段寫媽媽找到借書證、小朗借到書和答應收好借書證，完整結束故事。' },
-    ],
-  },
-];
-
 export default {
   grade: 'P1', subject: '中文',
   units: [
@@ -135,7 +87,6 @@ export default {
         { id: 'P1-CN-R03-Q10', prompt: '把正確標點拖到句子空格。', before: '你喜歡這本圖畫書嗎', after: '', answer: '？', choices: ['！', '？', '。'], explanation: '這是一句問句，句末用問號。' },
       ],
     },
-    { id: 'P1-CN-R04', area: '閱讀', title: '短文起、承、轉、合', interaction: 'story-structure', stories: storyStructureStories, questions: storyStructureStories.flatMap((story) => story.questions) },
     {
       id: 'P1-CN-W01', area: '寫作', title: '句子擴寫', interaction: 'sentence-expand',
       questions: [

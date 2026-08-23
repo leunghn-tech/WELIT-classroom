@@ -14,6 +14,7 @@ const p4EnglishBank = (await import('../client/src/data/questionBanks/english/p4
 const p5EnglishBank = (await import('../client/src/data/questionBanks/english/p5.js')).default;
 const p6EnglishBank = (await import('../client/src/data/questionBanks/english/p6.js')).default;
 const { mathQuestionBanks } = await import('../client/src/data/questionBanks/math/index.js');
+const { englishQuestionBanks } = await import('../client/src/data/questionBanks/english/index.js');
 const englishCatalog = (await import('../client/src/data/englishCatalog.js')).default;
 const chineseCatalog = (await import('../client/src/data/chineseCatalog.js')).default;
 const { englishPracticeLinks, chinesePracticeLinks } = await import('../client/src/data/catalogPracticeLinks.js');
@@ -22,6 +23,18 @@ const subjects = ['中文', '英文', '數學'];
 const expected = grades.flatMap((grade) => subjects.map((subject) => `${grade}-${subject === '英文' ? 'English' : subject}`));
 const ids = database.topics.map((topic) => topic.id);
 const errors = [];
+const allDifficultyLabels = new Set(['基礎', '應用', '進階', '挑戰']);
+
+for (const [subject, banks] of Object.entries({ 中文: chineseQuestionBanks, 英文: englishQuestionBanks, 數學: mathQuestionBanks })) {
+  for (const bank of Object.values(banks)) {
+    for (const unit of bank.units) {
+      for (const question of unit.questions) {
+        if (!allDifficultyLabels.has(question.difficulty)) errors.push(`${question.id || unit.id} 缺少有效難度標記。`);
+        if (!question.learningObjective) errors.push(`${question.id || unit.id} 缺少學習目標標記。`);
+      }
+    }
+  }
+}
 
 if (database.mode !== 'catalog-in-progress') errors.push('資料庫必須標示為 catalog-in-progress。');
 if (database.topics.length !== 18) errors.push(`應有 18 個示範單元，實際為 ${database.topics.length}。`);
@@ -254,12 +267,12 @@ validateEnglishReadingUnit(p5EnglishBank, 'P5', 'P5-EN-R01', '閱讀推論工作
 validateEnglishReadingUnit(p6EnglishBank, 'P6', 'P6-EN-R01', '證據式閱讀挑戰');
 
 const mathRequiredUnitIds = {
-  P1: ['P1-MATH-A01', 'P1-MATH-A02', 'P1-MATH-A03', 'P1-MATH-A04', 'P1-MATH-A05', 'P1-MATH-M01', 'P1-MATH-M02', 'P1-MATH-M03', 'P1-MATH-S01', 'P1-MATH-S02', 'P1-MATH-S03', 'P1-MATH-A06'],
-  P2: ['P2-MATH-A01', 'P2-MATH-A02', 'P2-MATH-A03', 'P2-MATH-A04', 'P2-MATH-M01', 'P2-MATH-M02', 'P2-MATH-M03', 'P2-MATH-S01', 'P2-MATH-S02', 'P2-MATH-D01'],
-  P3: ['P3-MATH-A01', 'P3-MATH-A02', 'P3-MATH-A03', 'P3-MATH-A04', 'P3-MATH-A05', 'P3-MATH-A06', 'P3-MATH-A07', 'P3-MATH-A08', 'P3-MATH-M01', 'P3-MATH-M02', 'P3-MATH-M03', 'P3-MATH-S01', 'P3-MATH-S02', 'P3-MATH-S03', 'P3-MATH-D01'],
-  P4: ['P4-MATH-A01', 'P4-MATH-A02', 'P4-MATH-A03', 'P4-MATH-A04', 'P4-MATH-A05', 'P4-MATH-A06', 'P4-MATH-M01', 'P4-MATH-M02', 'P4-MATH-M03', 'P4-MATH-S01', 'P4-MATH-S02', 'P4-MATH-S03', 'P4-MATH-D01'],
-  P5: ['P5-MATH-A01', 'P5-MATH-A02', 'P5-MATH-A03', 'P5-MATH-A04', 'P5-MATH-A05', 'P5-MATH-A06', 'P5-MATH-M01', 'P5-MATH-M02', 'P5-MATH-M03', 'P5-MATH-S01', 'P5-MATH-S02', 'P5-MATH-S03', 'P5-MATH-D01', 'P5-MATH-D02'],
-  P6: ['P6-MATH-A01', 'P6-MATH-A02', 'P6-MATH-A03', 'P6-MATH-A04', 'P6-MATH-A05', 'P6-MATH-M01', 'P6-MATH-M02', 'P6-MATH-M03', 'P6-MATH-S01', 'P6-MATH-S02', 'P6-MATH-S03', 'P6-MATH-D01', 'P6-MATH-D02'],
+  P1: ['P1-MATH-A01', 'P1-MATH-A02', 'P1-MATH-A03', 'P1-MATH-A04', 'P1-MATH-A05', 'P1-MATH-M01', 'P1-MATH-M02', 'P1-MATH-S01', 'P1-MATH-S02'],
+  P2: ['P2-MATH-A01', 'P2-MATH-A02', 'P2-MATH-A04', 'P2-MATH-A05', 'P2-MATH-A06', 'P2-MATH-A07', 'P2-MATH-M01', 'P2-MATH-M02', 'P2-MATH-M03', 'P2-MATH-S01', 'P2-MATH-S03', 'P2-MATH-D01'],
+  P3: ['P3-MATH-A01', 'P3-MATH-A02', 'P3-MATH-A03', 'P3-MATH-A04', 'P3-MATH-A05', 'P3-MATH-M01', 'P3-MATH-M02', 'P3-MATH-M03', 'P3-MATH-S01', 'P3-MATH-S02', 'P3-MATH-D01'],
+  P4: ['P4-MATH-A01', 'P4-MATH-A02', 'P4-MATH-A03', 'P4-MATH-A04', 'P4-MATH-A05', 'P4-MATH-A06', 'P4-MATH-A07', 'P4-MATH-M01', 'P4-MATH-M02', 'P4-MATH-M03', 'P4-MATH-S01', 'P4-MATH-S02', 'P4-MATH-D01'],
+  P5: ['P5-MATH-A01', 'P5-MATH-A02', 'P5-MATH-A03', 'P5-MATH-A05', 'P5-MATH-A06', 'P5-MATH-A07', 'P5-MATH-M01', 'P5-MATH-M02', 'P5-MATH-M03', 'P5-MATH-S02', 'P5-MATH-D02'],
+  P6: ['P6-MATH-A02', 'P6-MATH-A03', 'P6-MATH-A04', 'P6-MATH-M01', 'P6-MATH-M02', 'P6-MATH-M03', 'P6-MATH-S03', 'P6-MATH-D01', 'P6-MATH-D02', 'P6-MATH-C01'],
 };
 for (const [grade, unitIds] of Object.entries(mathRequiredUnitIds)) {
   const bank = mathQuestionBanks[grade];
@@ -267,7 +280,9 @@ for (const [grade, unitIds] of Object.entries(mathRequiredUnitIds)) {
   for (const unitId of unitIds) {
     const unit = bank.units.find((item) => item.id === unitId);
     if (!unit) { errors.push(`缺少 ${unitId} 數學單元。`); continue; }
-    if (!['math-number-line', 'math-ten-frame', 'math-choice', 'math-shopping', 'math-measurement', 'math-fraction-pie', 'math-fraction-compare'].includes(unit.interaction) || !unit.objective || unit.questions.length !== 10) errors.push(`${unitId} 必須有互動類型、學習目標及十題。`);
+    const expectedQuestionCount = unit.interaction === 'math-life-application' ? 6 : 10;
+    if (!['math-number-line', 'math-ten-frame', 'math-choice', 'math-shopping', 'math-measurement', 'math-fraction-pie', 'math-fraction-compare', 'math-equal-groups', 'math-sharing', 'math-sharing-remainder', 'math-life-application'].includes(unit.interaction) || !unit.objective || unit.questions.length !== expectedQuestionCount) errors.push(`${unitId} 必須有互動類型、學習目標及 ${expectedQuestionCount} 題。`);
+    if (unit.interaction === 'math-life-application' && (!unit.featured || !unit.hintTitle || !Array.isArray(unit.hintSteps) || unit.hintSteps.length !== 4 || unit.hintSteps.some((step) => !step.label || !step.text))) errors.push(`${unitId} 必須有專屬入口及完整的四步解題提示。`);
     for (const question of unit.questions) {
       if (!question.id || !question.prompt || question.answer === undefined || !question.explanation) errors.push(`${question.id || unitId} 缺少題幹、答案或解析。`);
       if (unit.interaction === 'math-number-line') {
@@ -275,7 +290,7 @@ for (const [grade, unitIds] of Object.entries(mathRequiredUnitIds)) {
         if (!line || !Number.isFinite(line.start) || !Number.isFinite(line.end) || !Number.isFinite(line.step) || line.start >= line.end || line.step <= 0 || !Number.isFinite(question.answer) || question.answer < line.start || question.answer > line.end || (question.answer - line.start) % line.step !== 0) errors.push(`${question.id} 的數線範圍、刻度或答案不正確。`);
       } else if (unit.interaction === 'math-ten-frame') {
         const frame = question.frame;
-        if (!frame || !Number.isInteger(frame.initial) || frame.initial < 0 || frame.initial > 10 || !Number.isInteger(frame.removed) || frame.removed < 0 || frame.removed > frame.initial || !Array.isArray(question.choices) || question.choices.length !== 4 || !question.choices.includes(question.answer) || new Set(question.choices).size !== 4) errors.push(`${question.id} 的十格框資料或選項不正確。`);
+        if (!frame || !Number.isInteger(frame.initial) || frame.initial < 0 || frame.initial > 10 || !Number.isInteger(frame.removed) || frame.removed < 0 || frame.removed > frame.initial || question.answer !== frame.initial - frame.removed || !Array.isArray(question.choices) || question.choices.length !== 4 || !question.choices.includes(question.answer) || new Set(question.choices).size !== 4) errors.push(`${question.id} 的十格框資料、計算答案或選項不正確。`);
       } else if (unit.interaction === 'math-shopping') {
         const items = question.items || [{ item: question.item, price: question.price }];
         const total = items.reduce((sum, item) => sum + item.price, 0);
@@ -284,9 +299,13 @@ for (const [grade, unitIds] of Object.entries(mathRequiredUnitIds)) {
       } else if (unit.interaction === 'math-measurement') {
         if (!question.visual || !['ruler', 'cup', 'clock'].includes(question.visual.type) || !Array.isArray(question.choices) || question.choices.length !== 4 || !question.choices.includes(question.answer)) errors.push(`${question.id} 缺少完整量度圖解資料。`);
       } else if (unit.interaction === 'math-fraction-pie') {
-        if (!Number.isInteger(question.total) || !Number.isInteger(question.target) || question.target < 1 || question.target > question.total || !Array.isArray(question.choices) || question.choices.length !== 4 || !question.choices.includes(question.answer)) errors.push(`${question.id} 缺少完整切餅分數資料。`);
+        const expectedFraction = `${question.target}/${question.total}`;
+        if (!Number.isInteger(question.total) || !Number.isInteger(question.target) || question.target < 1 || question.target > question.total || question.answer !== expectedFraction || !Array.isArray(question.choices) || question.choices.length !== 4 || !question.choices.includes(question.answer)) errors.push(`${question.id} 的切餅分數答案或資料不正確。`);
       } else if (unit.interaction === 'math-fraction-compare') {
-        if (!question.left || !question.right || !Number.isInteger(question.left.total) || question.left.total !== question.right.total || !Array.isArray(question.choices) || question.choices.length !== 2 || !question.choices.includes(question.answer) || new Set(question.choices).size !== 2) errors.push(`${question.id} 缺少完整分數比較資料。`);
+        const leftFraction = `${question.left?.filled}/${question.left?.total}`;
+        const rightFraction = `${question.right?.filled}/${question.right?.total}`;
+        const expectedAnswer = question.left?.filled > question.right?.filled ? leftFraction : rightFraction;
+        if (!question.left || !question.right || !Number.isInteger(question.left.total) || !Number.isInteger(question.right.total) || !Number.isInteger(question.left.filled) || !Number.isInteger(question.right.filled) || question.left.filled === question.right.filled || question.left.filled < 0 || question.right.filled < 0 || question.left.filled > question.left.total || question.right.filled > question.right.total || question.left.total !== question.right.total || question.answer !== expectedAnswer || !Array.isArray(question.choices) || question.choices.length !== 2 || !question.choices.includes(question.answer) || new Set(question.choices).size !== 2) errors.push(`${question.id} 的分數比較答案或資料不正確。`);
       } else if (!Array.isArray(question.choices) || question.choices.length !== 4 || !question.choices.includes(question.answer) || new Set(question.choices).size !== 4) errors.push(`${question.id} 必須有四個不重複選項，且包含正確答案。`);
     }
   }
@@ -322,7 +341,6 @@ for (const grade of grades) {
 
 const p1WordUnit = p1Bank.units.find((unit) => unit.id === 'P1-CN-R01');
 const p1RadicalUnit = p1Bank.units.find((unit) => unit.id === 'P1-CN-R02');
-const p1StoryUnit = p1Bank.units.find((unit) => unit.id === 'P1-CN-R04');
 const p1SentenceUnit = p1Bank.units.find((unit) => unit.id === 'P1-CN-W01');
 const p2Bank = (await import('../client/src/data/questionBanks/chinese/p2.js')).default;
 const p2ContextUnit = p2Bank.units.find((unit) => unit.id === 'P2-CN-R01');
@@ -332,6 +350,7 @@ const p2PortraitUnit = p2Bank.units.find((unit) => unit.id === 'P2-CN-W01');
 const p2PracticalUnit = p2Bank.units.find((unit) => unit.id === 'P2-CN-W02');
 const p2FormatUnit = p2Bank.units.find((unit) => unit.id === 'P2-CN-W03');
 const p3Bank = (await import('../client/src/data/questionBanks/chinese/p3.js')).default;
+const p3StoryUnit = p3Bank.units.find((unit) => unit.id === 'P3-CN-R09');
 const p3InfoUnit = p3Bank.units.find((unit) => unit.id === 'P3-CN-R01');
 const p3IdiomUnit = p3Bank.units.find((unit) => unit.id === 'P3-CN-R02');
 const p3ParagraphMarkUnit = p3Bank.units.find((unit) => unit.id === 'P3-CN-R03');
@@ -395,18 +414,18 @@ else {
   }
 }
 
-if (!p1StoryUnit) errors.push('缺少 P1「短文起、承、轉、合」題庫單元。');
+if (!p3StoryUnit) errors.push('缺少 P3「簡單短文的起、承、轉、合」題庫單元。');
 else {
-  if (p1StoryUnit.interaction !== 'story-structure') errors.push('P1 短文起、承、轉、合必須使用 story-structure 互動。');
-  if (!Array.isArray(p1StoryUnit.stories) || p1StoryUnit.stories.length < 3) errors.push('P1 短文起、承、轉、合至少需要三篇短文。');
-  if (p1StoryUnit.questions.length < 12) errors.push('P1 短文起、承、轉、合至少需要十二條問題。');
+  if (p3StoryUnit.interaction !== 'story-structure') errors.push('P3 簡單短文的起、承、轉、合必須使用 story-structure 互動。');
+  if (!Array.isArray(p3StoryUnit.stories) || p3StoryUnit.stories.length < 3) errors.push('P3 簡單短文的起、承、轉、合至少需要三篇短文。');
+  if (p3StoryUnit.questions.length < 12) errors.push('P3 簡單短文的起、承、轉、合至少需要十二條問題。');
   const storyQuestionIds = [];
-  for (const [index, story] of (p1StoryUnit.stories || []).entries()) {
-    if (!story.id || !story.title || !Array.isArray(story.paragraphs) || story.paragraphs.length !== 4) errors.push('每篇 P1 短文必須有名稱及四段內容。');
+  for (const [index, story] of (p3StoryUnit.stories || []).entries()) {
+    if (!story.id || !story.title || !Array.isArray(story.paragraphs) || story.paragraphs.length !== 4) errors.push('每篇 P3 短文必須有名稱及四段內容。');
     if (!Array.isArray(story.questions) || story.questions.length < 4) errors.push(`短文「${story.title || '未命名'}」至少需要四條問題。`);
     if (story.questions?.length !== 4) errors.push(`短文「${story.title || '未命名'}」必須剛好有四條問題。`);
     const paragraphIds = story.paragraphs?.map((paragraph) => paragraph.id) || [];
-    for (const paragraph of story.paragraphs || []) if (!paragraph.id || !paragraph.text) errors.push('P1 短文段落缺少編號或文字。');
+    for (const paragraph of story.paragraphs || []) if (!paragraph.id || !paragraph.text) errors.push('P3 短文段落缺少編號或文字。');
     for (const question of story.questions || []) {
       storyQuestionIds.push(question.id);
       if (!question.prompt || !question.stage || !question.answer || !question.explanation) errors.push(`${question.id} 缺少短文題必要資料。`);
@@ -414,7 +433,7 @@ else {
     }
   }
   if (new Set(storyQuestionIds).size !== storyQuestionIds.length) errors.push('短文閱讀問題不可重複。');
-  if (p1StoryUnit.questions.length !== storyQuestionIds.length) errors.push('短文單元的總題數必須等於各篇短文問題數之和。');
+  if (p3StoryUnit.questions.length !== storyQuestionIds.length) errors.push('短文單元的總題數必須等於各篇短文問題數之和。');
 }
 
 if (!p1SentenceUnit) errors.push('缺少 P1「句子擴寫」題庫單元。');
@@ -597,4 +616,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(JSON.stringify({ status: 'valid', mode: database.mode, topics: database.topics.length, grades, subjects, questionsPerTopic: 1, p1WordMatchQuestions: p1WordUnit.questions.length, p1RadicalQuestions: p1RadicalUnit.questions.length, p1PunctuationQuestions: p1PunctuationUnit.questions.length, p1StoryStructureQuestions: p1StoryUnit.questions.length, p1SentenceExpandQuestions: p1SentenceUnit.questions.length, p2ContextQuestions: p2ContextUnit.questions.length, p2ConnectorQuestions: p2ConnectorUnit.questions.length, p2TaleQuestions: p2TaleUnit.questions.length, p2PortraitQuestions: p2PortraitUnit.questions.length, p2PracticalQuestions: p2PracticalUnit.questions.length, p2FormatQuestions: p2FormatUnit.questions.length, p3InfoQuestions: p3InfoUnit.questions.length, p3IdiomQuestions: p3IdiomUnit.questions.length, p3ParagraphMarkQuestions: p3ParagraphMarkUnit.questions.length, p3MetaphorQuestions: p3MetaphorUnit.questions.length, p3PersonificationQuestions: p3PersonificationUnit.questions.length, p3ParallelismQuestions: p3ParallelismUnit.questions.length, p6ExamUnits: p6Bank.units.length, p6ExamQuestions: p6Bank.units.reduce((total, unit) => total + unit.questions.length, 0) }, null, 2));
+console.log(JSON.stringify({ status: 'valid', mode: database.mode, topics: database.topics.length, grades, subjects, questionsPerTopic: 1, p1WordMatchQuestions: p1WordUnit.questions.length, p1RadicalQuestions: p1RadicalUnit.questions.length, p1PunctuationQuestions: p1PunctuationUnit.questions.length, p1SentenceExpandQuestions: p1SentenceUnit.questions.length, p2ContextQuestions: p2ContextUnit.questions.length, p2ConnectorQuestions: p2ConnectorUnit.questions.length, p2TaleQuestions: p2TaleUnit.questions.length, p2PortraitQuestions: p2PortraitUnit.questions.length, p2PracticalQuestions: p2PracticalUnit.questions.length, p2FormatQuestions: p2FormatUnit.questions.length, p3InfoQuestions: p3InfoUnit.questions.length, p3IdiomQuestions: p3IdiomUnit.questions.length, p3ParagraphMarkQuestions: p3ParagraphMarkUnit.questions.length, p3StoryStructureQuestions: p3StoryUnit.questions.length, p3MetaphorQuestions: p3MetaphorUnit.questions.length, p3PersonificationQuestions: p3PersonificationUnit.questions.length, p3ParallelismQuestions: p3ParallelismUnit.questions.length, p6ExamUnits: p6Bank.units.length, p6ExamQuestions: p6Bank.units.reduce((total, unit) => total + unit.questions.length, 0) }, null, 2));

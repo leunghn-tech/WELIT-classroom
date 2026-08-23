@@ -94,6 +94,32 @@ const taskRows = [
   ['完成作文前，最有效的檢查步驟是甚麼？', '選出最合適答案。', '核對題目要求、文體格式、內容重點和標點錯別字。', ['核對題目要求、文體格式、內容重點和標點錯別字。', '只數頁數。', '只改第一句。', '不必重讀題目。'], '最後檢查可防止看錯題目、寫錯文體或遺漏要求。'],
 ];
 
+const expositoryMethodQuestions = [
+  { id: 'P5-CN-W05-Q01', prompt: '配對環保主題的說明方法。', matches: [{ id: 'example', word: '舉例說明', symbol: '例', meaning: '「例如，把廚餘放進棕色回收桶，可製成堆肥。」' }, { id: 'number', word: '數字說明', symbol: '數', meaning: '「香港每日棄置的都市固體廢物超過一萬公噸。」' }, { id: 'definition', word: '下定義', symbol: '義', meaning: '「再生能源是可自然補充、能重複使用的能源。」' }], explanation: '舉例用具體事例說明；數字令資料精確；下定義先交代事物的基本意思。' },
+  { id: 'P5-CN-W05-Q02', prompt: '配對交通與生活主題的說明方法。', matches: [{ id: 'classification', word: '分類說明', symbol: '類', meaning: '「圖書可分為故事、科學、歷史和藝術四大類。」' }, { id: 'comparison', word: '比較說明', symbol: '比', meaning: '「電動巴士比柴油巴士排放更少廢氣。」' }, { id: 'process', word: '程序說明', symbol: '序', meaning: '「先洗淨雙手，再切開水果，最後放進保鮮盒。」' }], explanation: '分類把資料分組；比較突顯異同；程序按先後交代做法。' },
+  { id: 'P5-CN-W05-Q03', prompt: '配對健康生活主題的說明方法。', matches: [{ id: 'example', word: '舉例說明', symbol: '例', meaning: '「例如，游泳和踏單車都是有氧運動。」' }, { id: 'number', word: '數字說明', symbol: '數', meaning: '「成年人每天應至少做三十分鐘中等強度運動。」' }, { id: 'comparison', word: '比較說明', symbol: '比', meaning: '「步行上樓梯比乘搭升降機能活動更多肌肉。」' }], explanation: '同一主題可用例子、數字或比較加強說明，但每種方法的作用不同。' },
+  { id: 'P5-CN-W05-Q04', prompt: '配對濕地主題的說明方法。', matches: [{ id: 'definition', word: '下定義', symbol: '義', meaning: '「濕地是長期或季節性有水覆蓋的自然環境。」' }, { id: 'classification', word: '分類說明', symbol: '類', meaning: '「濕地可分為河口、沼澤和人工魚塘等類型。」' }, { id: 'example', word: '舉例說明', symbol: '例', meaning: '「例如，米埔濕地是候鳥遷徙時的重要停留地。」' }], explanation: '先用定義交代概念，再分類或舉例，可令說明層次更清楚。' },
+  { id: 'P5-CN-W05-Q05', prompt: '配對種植主題的說明方法。', matches: [{ id: 'process', word: '程序說明', symbol: '序', meaning: '「先把種子放進泥土，再澆水，最後放到有陽光的地方。」' }, { id: 'number', word: '數字說明', symbol: '數', meaning: '「幼苗每天約需要六小時陽光。」' }, { id: 'example', word: '舉例說明', symbol: '例', meaning: '「例如，薄荷和羅勒都適合在窗邊種植。」' }], explanation: '程序說明交代步驟；數字補充準確條件；例子幫助讀者具體想像。' },
+  { id: 'P5-CN-W05-Q06', prompt: '配對回收主題的說明方法。', matches: [{ id: 'comparison', word: '比較說明', symbol: '比', meaning: '「紙袋比膠袋較容易分解，但也需要消耗資源。」' }, { id: 'classification', word: '分類說明', symbol: '類', meaning: '「可回收物包括紙張、金屬、塑膠和玻璃。」' }, { id: 'definition', word: '下定義', symbol: '義', meaning: '「回收是把用過的物品處理成可再次使用的材料。」' }], explanation: '比較說明優劣和異同；分類列出組別；定義交代概念。' },
+  { id: 'P5-CN-W05-Q07', prompt: '配對節能主題的說明方法。', matches: [{ id: 'number', word: '數字說明', symbol: '數', meaning: '「一部節能燈泡的耗電量可比傳統燈泡低約八成。」' }, { id: 'example', word: '舉例說明', symbol: '例', meaning: '「例如，離開課室前關燈和關風扇能節約電力。」' }, { id: 'process', word: '程序說明', symbol: '序', meaning: '「檢查電器後，按下總掣，再把門關好。」' }], explanation: '數字呈現程度；例子展示行動；程序交代操作次序。' },
+  { id: 'P5-CN-W05-Q08', prompt: '配對專題研習的說明方法。', matches: [{ id: 'definition', word: '下定義', symbol: '義', meaning: '「專題研習是圍繞一個問題蒐集資料、分析和分享的學習活動。」' }, { id: 'process', word: '程序說明', symbol: '序', meaning: '「先訂定問題，接着訪問或查閱資料，最後整理結果。」' }, { id: 'comparison', word: '比較說明', symbol: '比', meaning: '「和只看課本相比，訪問能得到更多第一手資料。」' }], explanation: '說明活動時，可先定義，再交代程序，亦可比較不同資料來源。' },
+  { id: 'P5-CN-W05-Q09', prompt: '配對博物館展覽的說明方法。', matches: [{ id: 'classification', word: '分類說明', symbol: '類', meaning: '「博物館展品可分為歷史文物、自然標本和互動展覽。」' }, { id: 'number', word: '數字說明', symbol: '數', meaning: '「這次展覽共有超過二百件展品。」' }, { id: 'example', word: '舉例說明', symbol: '例', meaning: '「例如，恐龍化石展區最受學生歡迎。」' }], explanation: '分類、數字和例子能從不同角度介紹一個展覽。' },
+  { id: 'P5-CN-W05-Q10', prompt: '配對閱讀材料的說明方法。', matches: [{ id: 'comparison', word: '比較說明', symbol: '比', meaning: '「電子書比紙本書更輕便，紙本書則不用充電。」' }, { id: 'definition', word: '下定義', symbol: '義', meaning: '「電子書是以電子裝置閱讀的數碼出版物。」' }, { id: 'classification', word: '分類說明', symbol: '類', meaning: '「閱讀材料可分為故事、知識和新聞等類別。」' }], explanation: '比較可呈現兩者特點；定義說清概念；分類有助整理資料。' },
+];
+
+const expositoryFrameworkQuestions = [
+  ['P5-CN-W06-Q01', '自備水樽', '資料：自備水樽可減少即棄膠樽；校內有加水機；每天應清洗水樽。', '自備水樽是一個減少即棄膠樽的好習慣。', '例如，學校設有加水機，學生可每天補充食水。', '因此，只要每天清洗水樽，便能方便又衞生地實踐環保。'],
+  ['P5-CN-W06-Q02', '閱讀角', '資料：閱讀角有不同程度圖書和軟墊；下課可安靜閱讀；同學可交換書籍。', '課室閱讀角能為同學提供舒適的閱讀空間。', '閱讀角放有不同程度的圖書，讓同學按興趣選擇。', '所以，班級可定期更新書籍，培養每天閱讀的習慣。'],
+  ['P5-CN-W06-Q03', '節約電力', '資料：離開課室關燈和風扇；節能小隊員檢查；用電量下降。', '節約電力要從日常小習慣開始。', '例如，節能小隊員可在離開課室前檢查電燈和風扇。', '這樣既能減少浪費，也能讓同學建立責任感。'],
+  ['P5-CN-W06-Q04', '健康早餐', '資料：早餐提供能量；可選全穀類、水果和奶類；避免只吃甜食。', '吃健康早餐有助學生開始精神充沛的一天。', '全穀類、水果和奶類能提供不同營養，幫助身體成長。', '因此，學生應避免只吃甜食，並養成均衡飲食習慣。'],
+  ['P5-CN-W06-Q05', '社區回收', '資料：回收紙張、金屬和膠樽；分類可方便處理；要先清洗容器。', '社區回收能讓可用材料得到再次利用。', '回收前把紙張、金屬和膠樽分類，可方便後續處理。', '只要先清洗容器再放進回收箱，人人也能參與環保。'],
+  ['P5-CN-W06-Q06', '種植香草', '資料：香草可在窗邊種植；需要陽光和適量水分；可用於烹調。', '在家種植香草是一項有趣又實用的活動。', '薄荷和羅勒適合放在窗邊，並需要陽光和適量水分。', '待香草長大後，還可用於烹調，增加種植的樂趣。'],
+  ['P5-CN-W06-Q07', '參觀博物館', '資料：有歷史文物、自然標本和互動展覽；可先看地圖；記下有趣發現。', '參觀博物館能讓學生從實物中學習知識。', '博物館有歷史文物、自然標本和互動展覽等不同展區。', '參觀前先看地圖，並記下發現，可令學習更有收穫。'],
+  ['P5-CN-W06-Q08', '安全過馬路', '資料：看交通燈；使用行人過路處；不一邊看手機一邊過路。', '安全過馬路是每位學生都要遵守的重要守則。', '行人應使用過路處，並依照交通燈指示才橫過馬路。', '同時不應一邊看手機一邊過路，才能保護自己。'],
+  ['P5-CN-W06-Q09', '校園菜園', '資料：同學分工鬆土、播種和澆水；記錄生長；收成可分享。', '校園菜園讓同學在實踐中認識植物生長。', '同學可分工鬆土、播種和澆水，並記錄菜苗的變化。', '收成時分享蔬菜，更能體會合作和耐心的重要。'],
+  ['P5-CN-W06-Q10', '專題研習', '資料：先訂問題；訪問或查資料；整理結果並分享。', '專題研習能培養學生主動探索問題的能力。', '學生可先訂定問題，再透過訪問或查閱資料蒐集證據。', '最後整理結果並與同學分享，便能完成有條理的研習。'],
+].map(([id, title, source, opening, development, conclusion]) => ({ id, title, source, prompt: `為「${title}」選出一段完整的說明文字。`, steps: [{ id: 'opening', label: '開頭：點出主題', focus: '先用一句話交代要說明的事物或做法', answer: opening, options: [opening, '我昨天和朋友一起玩了一整天。', '這個話題不需要任何解釋。'] }, { id: 'development', label: '說明：補充資料', focus: '運用例子、分類、程序或事實說明', answer: development, options: [development, '大家都說這件事很好，所以不用再說明。', '我最喜歡的顏色是藍色。'] }, { id: 'conclusion', label: '結尾：歸納作用', focus: '以建議或結果收束段落', answer: conclusion, options: [conclusion, '這件事和上面的資料沒有關係。', '我還沒有想好要寫甚麼。'] }], explanation: '說明段落可先點出主題，再用資料具體說明，最後歸納作用或提出建議。' }));
+
 export default {
   grade: 'P5', subject: '中文',
   units: [
@@ -102,7 +128,9 @@ export default {
     { id: 'P5-CN-R03', area: '閱讀', title: '篇章理解：關鍵句、主旨與推論', interaction: 'p3-figure', figureType: '篇章理解與推論', questions: makeQuestions('P5-CN-R03', comprehensionRows) },
     { id: 'P5-CN-W01', area: '寫作', title: '記敘文應試：事件、轉折與心路歷程', interaction: 'p3-figure', figureType: '記敘文應試', questions: makeQuestions('P5-CN-W01', narrativeRows) },
     { id: 'P5-CN-W02', area: '寫作', title: '說明文：好學生與課外活動', interaction: 'p3-figure', figureType: '說明文應試', questions: makeQuestions('P5-CN-W02', expositoryRows) },
+    { id: 'P5-CN-W05', area: '寫作', title: '說明文：說明方法配對', interaction: 'word-match', matchMode: 'expository-method', questions: expositoryMethodQuestions },
+    { id: 'P5-CN-W06', area: '寫作', title: '說明文：段落寫作框架', interaction: 'chinese-writing-scaffold', scaffoldMode: 'expository-framework', questions: expositoryFrameworkQuestions },
     { id: 'P5-CN-W03', area: '寫作', title: '實用文：演講稿、建議書、投訴信、啟事', interaction: 'p3-figure', figureType: '進階實用文', questions: makeQuestions('P5-CN-W03', practicalRows) },
     { id: 'P5-CN-W04', area: '寫作', title: '審題與文體：按題目要求作答', interaction: 'p3-figure', figureType: '審題與文體', questions: makeQuestions('P5-CN-W04', taskRows) },
-  ],
+  ].sort((left, right) => ['P5-CN-R03', 'P5-CN-R01', 'P5-CN-R02', 'P5-CN-W05', 'P5-CN-W06', 'P5-CN-W02', 'P5-CN-W01', 'P5-CN-W03', 'P5-CN-W04'].indexOf(left.id) - ['P5-CN-R03', 'P5-CN-R01', 'P5-CN-R02', 'P5-CN-W05', 'P5-CN-W06', 'P5-CN-W02', 'P5-CN-W01', 'P5-CN-W03', 'P5-CN-W04'].indexOf(right.id)),
 };

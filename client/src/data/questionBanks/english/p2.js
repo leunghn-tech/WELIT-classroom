@@ -4,6 +4,20 @@ const p2EnglishBank = {
   subject: '英文',
   units: [
     {
+      id: 'P2-EN-P01', area: '拼讀與發音', title: '混合音與二合字母', objective: '辨認常見 blends（bl-, cr-, st-）及 digraphs（sh, ch, th）的開頭發音。', interaction: 'english-phonics-choice', questions: [
+        ['🔊', 'Which word begins with the /sh/ sound?', 'ship', 'ship|chip|thin|flag', 'ship begins with sh, which makes the /sh/ sound.'],
+        ['🔊', 'Which word begins with the /ch/ sound?', 'chair', 'chair|share|three|black', 'chair begins with ch, which makes the /ch/ sound.'],
+        ['🔊', 'Which word begins with the /th/ sound?', 'three', 'three|tree|cheese|sleep', 'three begins with th, which makes the /th/ sound.'],
+        ['🔊', 'Which word begins with the bl- blend?', 'blue', 'blue|clue|shoe|thin', 'blue begins with the two-letter blend bl-.'],
+        ['🔊', 'Which word begins with the cr- blend?', 'crab', 'crab|grab|ship|train', 'crab begins with the two-letter blend cr-.'],
+        ['🔊', 'Which word begins with the st- blend?', 'star', 'star|car|chair|three', 'star begins with the two-letter blend st-.'],
+        ['🔊', 'Which word begins with the fl- blend?', 'flag', 'flag|frog|chair|shop', 'flag begins with the two-letter blend fl-.'],
+        ['🔊', 'Which word begins with the gr- blend?', 'green', 'green|queen|thin|shoe', 'green begins with the two-letter blend gr-.'],
+        ['🔊', 'Which word begins with the same sound as “sheep”?', 'shop', 'shop|chop|top|clap', 'shop and sheep both begin with sh, which makes the /sh/ sound.'],
+        ['🔊', 'Which word begins with the same sound as “cheese”?', 'chicken', 'chicken|thicken|ship|black', 'chicken and cheese both begin with ch, which makes the /ch/ sound.'],
+      ].map(([symbol, sentence, answer, choices, explanation], index) => ({ id: `P2-EN-P01-Q${String(index + 1).padStart(2, '0')}`, prompt: 'Read the sound clue and choose the word.', symbol, sentence, answer, choices: choices.split('|'), explanation })),
+    },
+    {
       id: 'P2-EN-G01', area: '核心文法', title: '正在做甚麼？', objective: '辨認 be + V-ing 的現在進行式與 now、look、listen 等提示。', interaction: 'english-continuous-choice',
       questions: [
         { id: 'P2-EN-G01-Q01', prompt: '選出最合適的英文答案。', symbol: '⏱️', sentence: 'Look! Tom ___ a book.', choices: ['is reading', 'reads', 'read', 'are reading'], answer: 'is reading', explanation: 'Look! 表示現在正在發生；Tom 用 is reading。' },
@@ -31,6 +45,21 @@ const p2EnglishBank = {
         { id: 'P2-EN-G02-Q08', prompt: '選出最合適的英文答案。', symbol: '🍎', sentence: 'Cats ___ fish.', choices: ['like', 'likes', 'are liking', 'liked'], answer: 'like', explanation: 'Cats 是複數，表達一般事實用 like。' },
         { id: 'P2-EN-G02-Q09', prompt: '選出最合適的英文答案。', symbol: '🛏️', sentence: 'He always ___ at nine o’clock.', choices: ['sleeps', 'sleep', 'is sleeping', 'slept'], answer: 'sleeps', explanation: 'always 表示習慣；He 用 sleeps。' },
         { id: 'P2-EN-G02-Q10', prompt: '選出最合適的英文答案。', symbol: '🚌', sentence: 'My friends ___ the bus to school.', choices: ['take', 'takes', 'are taking', 'took'], answer: 'take', explanation: 'friends 是複數，習慣動作用 take。' },
+      ],
+    },
+    {
+      id: 'P2-EN-G05', area: '核心文法', title: '這裡有甚麼？', objective: '按物件數量選用 There is 或 There are，並配合 a／an 和複數名詞。', interaction: 'english-there-be-choice',
+      questions: [
+        { id: 'P2-EN-G05-Q01', prompt: '選出最合適的英文答案。', symbol: '🎒', sentence: '___ a book in my bag.', choices: ['There is', 'There are', 'There am', 'There be'], answer: 'There is', explanation: '一冊書是單數，所以用 There is。' },
+        { id: 'P2-EN-G05-Q02', prompt: '選出最合適的英文答案。', symbol: '🖍️', sentence: '___ three crayons on the table.', choices: ['There are', 'There is', 'There am', 'There be'], answer: 'There are', explanation: 'three crayons 是複數，所以用 There are。' },
+        { id: 'P2-EN-G05-Q03', prompt: '選出最合適的英文答案。', symbol: '🐱', sentence: '___ a cat under the chair.', choices: ['There is', 'There are', 'It are', 'They is'], answer: 'There is', explanation: 'a cat 是單數，所以用 There is。' },
+        { id: 'P2-EN-G05-Q04', prompt: '選出最合適的英文答案。', symbol: '🍎', sentence: '___ two apples in the bowl.', choices: ['There are', 'There is', 'There am', 'It is'], answer: 'There are', explanation: 'two apples 是複數，所以用 There are。' },
+        { id: 'P2-EN-G05-Q05', prompt: '選出最合適的英文答案。', symbol: '🏫', sentence: '___ an art room in our school.', choices: ['There is', 'There are', 'There am', 'They are'], answer: 'There is', explanation: 'an art room 是單數，所以用 There is。' },
+        { id: 'P2-EN-G05-Q06', prompt: '選出最合適的英文答案。', symbol: '🌳', sentence: '___ many trees in the park.', choices: ['There are', 'There is', 'There am', 'It are'], answer: 'There are', explanation: 'many trees 是複數，所以用 There are。' },
+        { id: 'P2-EN-G05-Q07', prompt: '選出最合適的英文答案。', symbol: '🚪', sentence: '___ a door next to the window.', choices: ['There is', 'There are', 'There am', 'They is'], answer: 'There is', explanation: 'a door 是單數，所以用 There is。' },
+        { id: 'P2-EN-G05-Q08', prompt: '選出最合適的英文答案。', symbol: '🪑', sentence: '___ four chairs in the classroom.', choices: ['There are', 'There is', 'There am', 'It is'], answer: 'There are', explanation: 'four chairs 是複數，所以用 There are。' },
+        { id: 'P2-EN-G05-Q09', prompt: '選出最合適的英文答案。', symbol: '🍰', sentence: '___ a cake on the plate.', choices: ['There is', 'There are', 'There am', 'They are'], answer: 'There is', explanation: 'a cake 是單數，所以用 There is。' },
+        { id: 'P2-EN-G05-Q10', prompt: '選出最合適的英文答案。', symbol: '📖', sentence: '___ some books on the shelf.', choices: ['There are', 'There is', 'There am', 'It is'], answer: 'There are', explanation: 'some books 表示多於一本書，所以用 There are。' },
       ],
     },
     {
@@ -63,7 +92,71 @@ const p2EnglishBank = {
         { id: 'P2-EN-G04-Q10', prompt: '選出最合適的英文答案。', symbol: '🌙', sentence: 'I ___ see in the dark.', choices: ['can’t', 'can', 'am', 'do'], answer: 'can’t', explanation: '在黑暗中不能看見，所以用 can’t。' },
       ],
     },
-  ],
+    {
+      id: 'P2-EN-W01',
+      area: '看圖寫作',
+      title: '看圖故事段落',
+      objective: '按三幅連環圖選出開頭、經過和結尾，寫出有次序的簡單故事段落。',
+      interaction: 'english-writing-template',
+      templateMode: 'english-picture-story-template',
+      questions: [
+        {
+          id: 'P2-EN-W01-Q01', title: 'A Puppy in the Rain', brief: 'Look at the three pictures and build a short story about helping a puppy.', prompt: 'Build a simple picture-story paragraph in the correct order.',
+          pictureStrip: [{ emoji: '☔', label: 'Mia walks home.' }, { emoji: '🐶', label: 'She sees a puppy.' }, { emoji: '🏠', label: 'The puppy is safe.' }],
+          steps: [
+            { id: 'beginning', label: 'Picture 1: Beginning', focus: 'Say who is there and where the story starts.', answer: 'One rainy day, Mia is walking home with her umbrella.', options: ['One rainy day, Mia is walking home with her umbrella.', 'Mia does not want a story.', 'The ending comes before the beginning.'] },
+            { id: 'middle', label: 'Picture 2: What happens?', focus: 'Use the picture to tell the important action.', answer: 'She sees a small puppy under a bench and calls her mum.', options: ['She sees a small puppy under a bench and calls her mum.', 'The puppy is not in the picture.', 'Mia stops telling the story.'] },
+            { id: 'ending', label: 'Picture 3: Ending', focus: 'Tell readers what happens at the end.', answer: 'They take the puppy home, and it is warm and safe.', options: ['They take the puppy home, and it is warm and safe.', 'The story has no ending.', 'Nobody helps the puppy.'] },
+          ], explanation: 'A clear picture story starts with the setting, tells the important action, then gives an ending.'
+        },
+        {
+          id: 'P2-EN-W01-Q02', title: 'The Lost Balloon', brief: 'Look at the three pictures and tell how Sam gets his balloon back.', prompt: 'Build a simple picture-story paragraph in the correct order.',
+          pictureStrip: [{ emoji: '🎈', label: 'Sam has a balloon.' }, { emoji: '🌳', label: 'It is in a tree.' }, { emoji: '🧑‍🚒', label: 'A helper returns it.' }],
+          steps: [
+            { id: 'beginning', label: 'Picture 1: Beginning', focus: 'Introduce the person and the special object.', answer: 'Sam has a red balloon at the park.', options: ['Sam has a red balloon at the park.', 'Sam has no picture to see.', 'The ending is the first sentence.'] },
+            { id: 'middle', label: 'Picture 2: What happens?', focus: 'Tell readers about the problem in the next picture.', answer: 'Then the balloon flies into a tall tree.', options: ['Then the balloon flies into a tall tree.', 'The balloon is never important.', 'Sam writes about a different day.'] },
+            { id: 'ending', label: 'Picture 3: Ending', focus: 'Show how the problem is solved.', answer: 'A kind firefighter gets it down, and Sam smiles.', options: ['A kind firefighter gets it down, and Sam smiles.', 'Nobody can solve the problem.', 'The story stops without an ending.'] },
+          ], explanation: 'Use the pictures in order: start with the balloon, show the problem, then tell how Sam gets help.'
+        },
+        {
+          id: 'P2-EN-W01-Q03', title: 'Watering the Garden', brief: 'Look at the three pictures and tell how two friends care for the class garden.', prompt: 'Build a simple picture-story paragraph in the correct order.',
+          pictureStrip: [{ emoji: '🌱', label: 'The plants look dry.' }, { emoji: '🚿', label: 'The friends water them.' }, { emoji: '🌼', label: 'The plants look happy.' }],
+          steps: [
+            { id: 'beginning', label: 'Picture 1: Beginning', focus: 'Describe what the children notice first.', answer: 'Ben and Eva see that the garden plants look dry.', options: ['Ben and Eva see that the garden plants look dry.', 'The plants are not part of the story.', 'The garden is the final sentence.'] },
+            { id: 'middle', label: 'Picture 2: What happens?', focus: 'Use an action to show how they help.', answer: 'They fill a watering can and water the plants together.', options: ['They fill a watering can and water the plants together.', 'They do not do anything at all.', 'The story is only about a chair.'] },
+            { id: 'ending', label: 'Picture 3: Ending', focus: 'End with the result and a feeling.', answer: 'Soon the flowers look fresh, and the friends feel proud.', options: ['Soon the flowers look fresh, and the friends feel proud.', 'There is no result in the story.', 'The garden disappears from the story.'] },
+          ], explanation: 'The middle picture gives the action. The last picture can show the result and how the characters feel.'
+        },
+        {
+          id: 'P2-EN-W01-Q04', title: 'A Picnic Helper', brief: 'Look at the three pictures and tell how Leo helps during a class picnic.', prompt: 'Build a simple picture-story paragraph in the correct order.',
+          pictureStrip: [{ emoji: '🧺', label: 'The picnic basket is heavy.' }, { emoji: '🤝', label: 'Leo carries it.' }, { emoji: '🍎', label: 'The class enjoys lunch.' }],
+          steps: [
+            { id: 'beginning', label: 'Picture 1: Beginning', focus: 'State the place and the small problem.', answer: 'At the park, Ms Lee has a heavy picnic basket.', options: ['At the park, Ms Lee has a heavy picnic basket.', 'The class is not at a picnic.', 'The story starts with the ending.'] },
+            { id: 'middle', label: 'Picture 2: What happens?', focus: 'Tell readers who helps and what the person does.', answer: 'Leo carries the basket to the picnic table for her.', options: ['Leo carries the basket to the picnic table for her.', 'Leo hides from the picnic.', 'The basket is not used in the story.'] },
+            { id: 'ending', label: 'Picture 3: Ending', focus: 'Finish with the result of the helpful action.', answer: 'The class can eat lunch together, and Ms Lee says thank you.', options: ['The class can eat lunch together, and Ms Lee says thank you.', 'The story has no result.', 'Nobody notices Leo’s help.'] },
+          ], explanation: 'A helpful-story paragraph can show a problem, a kind action and a happy result.'
+        },
+        {
+          id: 'P2-EN-W01-Q05', title: 'The Library Book', brief: 'Look at the three pictures and tell how Amy chooses and shares a library book.', prompt: 'Build a simple picture-story paragraph in the correct order.',
+          pictureStrip: [{ emoji: '📚', label: 'Amy visits the library.' }, { emoji: '📖', label: 'She finds a book.' }, { emoji: '👭', label: 'She reads with a friend.' }],
+          steps: [
+            { id: 'beginning', label: 'Picture 1: Beginning', focus: 'Say where the character goes.', answer: 'After school, Amy goes to the library with her friend.', options: ['After school, Amy goes to the library with her friend.', 'Amy does not go anywhere.', 'The library is not in the story.'] },
+            { id: 'middle', label: 'Picture 2: What happens?', focus: 'Tell what the character finds or does next.', answer: 'She finds a funny animal book and opens it carefully.', options: ['She finds a funny animal book and opens it carefully.', 'She forgets every part of the story.', 'The book has no place in the picture.'] },
+            { id: 'ending', label: 'Picture 3: Ending', focus: 'End with a shared activity or feeling.', answer: 'Amy reads the book with her friend, and they laugh together.', options: ['Amy reads the book with her friend, and they laugh together.', 'The story cannot have an ending.', 'Nobody reads the book.'] },
+          ], explanation: 'The pictures help you keep the story in order: place, action, then ending.'
+        },
+        {
+          id: 'P2-EN-W01-Q06', title: 'A Birthday Card', brief: 'Look at the three pictures and tell how Kim makes a card for her dad.', prompt: 'Build a simple picture-story paragraph in the correct order.',
+          pictureStrip: [{ emoji: '✂️', label: 'Kim has paper and crayons.' }, { emoji: '💌', label: 'She makes a card.' }, { emoji: '🎂', label: 'Dad opens it.' }],
+          steps: [
+            { id: 'beginning', label: 'Picture 1: Beginning', focus: 'Introduce the materials and the idea.', answer: 'Kim has paper and crayons for her dad’s birthday.', options: ['Kim has paper and crayons for her dad’s birthday.', 'Kim has no idea for a card.', 'The card is the ending only.'] },
+            { id: 'middle', label: 'Picture 2: What happens?', focus: 'Tell what the character makes.', answer: 'She draws a big cake and writes, “Happy Birthday, Dad!”', options: ['She draws a big cake and writes, “Happy Birthday, Dad!”', 'She does not make a card.', 'The picture has no message.'] },
+            { id: 'ending', label: 'Picture 3: Ending', focus: 'Finish with the receiver’s reaction.', answer: 'Dad opens the card and gives Kim a big hug.', options: ['Dad opens the card and gives Kim a big hug.', 'Dad never sees the card.', 'The story ends before Dad is happy.'] },
+          ], explanation: 'A good ending shows what happens after the main action and can include a character’s feeling.'
+        },
+      ],
+    },
+  ].sort((left, right) => ['P2-EN-P01', 'P2-EN-G01', 'P2-EN-G05', 'P2-EN-G02', 'P2-EN-G03', 'P2-EN-G04', 'P2-EN-W01'].indexOf(left.id) - ['P2-EN-P01', 'P2-EN-G01', 'P2-EN-G05', 'P2-EN-G02', 'P2-EN-G03', 'P2-EN-G04', 'P2-EN-W01'].indexOf(right.id)),
 };
 
 export default p2EnglishBank;

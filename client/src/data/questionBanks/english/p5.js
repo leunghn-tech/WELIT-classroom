@@ -92,6 +92,30 @@ const p5EnglishBank = {
       ['🐾', 'Both the puppy ___ the kitten need water.', 'and', 'and|or|nor|but', 'both A and B 表示兩者都需要水。'],
       ['☕', 'She likes neither tea ___ coffee.', 'nor', 'nor|or|and|but', 'neither...nor... 表示兩種飲品都不喜歡。'],
     ]) },
+    { id: 'P5-EN-G06', area: '過去時態', title: '那時正在做甚麼？', objective: '按過去特定時間選用 was／were + V-ing 表達當時正在進行的動作。', interaction: 'english-past-continuous-choice', questions: makeQuestions('P5-EN-G06', [
+      ['🕖', 'At seven last night, I ___ my homework.', 'was doing', 'was doing|were doing|did|am doing', '主語 I 配 was；過去特定時間的進行動作用 was doing。'],
+      ['⚽', 'The boys ___ football when it started to rain.', 'were playing', 'were playing|was playing|played|are playing', 'boys 是複數，過去進行式用 were playing。'],
+      ['📖', 'Mia ___ a book at that time.', 'was reading', 'was reading|were reading|read|is reading', 'Mia 是單數，at that time 用 was reading。'],
+      ['🍳', 'Mum and Dad ___ dinner at six.', 'were cooking', 'were cooking|was cooking|cooked|are cooking', 'Mum and Dad 是複數，過去進行式用 were cooking。'],
+      ['🐶', 'The dog ___ when the doorbell rang.', 'was sleeping', 'was sleeping|were sleeping|slept|is sleeping', 'dog 是單數；另一件事發生時，原來的動作用 was sleeping。'],
+      ['🎨', 'We ___ posters during art class yesterday.', 'were making', 'were making|was making|made|are making', 'We 是複數，yesterday 的進行動作用 were making。'],
+      ['🚌', 'She ___ for the bus at 8 a.m.', 'was waiting', 'was waiting|were waiting|waited|is waiting', 'She 是單數，過去進行式用 was waiting。'],
+      ['🎵', 'The children ___ loudly in the hall.', 'were singing', 'were singing|was singing|sang|are singing', 'children 是複數，過去進行式用 were singing。'],
+      ['🌧️', 'It ___ when we left school.', 'was raining', 'was raining|were raining|rained|is raining', 'It 是單數；當時正在下雨用 was raining。'],
+      ['🧹', 'I ___ the floor while my brother washed the dishes.', 'was sweeping', 'was sweeping|were sweeping|swept|am sweeping', 'I 的過去進行式用 was sweeping。'],
+    ]) },
+    { id: 'P5-EN-G07', area: '動詞搭配', title: 'V-ing 還是 to V？', objective: '按常見動詞搭配選用動名詞或 to + verb。', interaction: 'english-nonfinite-basic-choice', questions: makeQuestions('P5-EN-G07', [
+      ['📚', 'I enjoy ___ comics after school.', 'reading', 'reading|to read|read|reads', 'enjoy 後面接 V-ing，所以用 reading。'],
+      ['🎹', 'She wants ___ the piano.', 'to play', 'to play|playing|played|plays', 'want 後面接 to + verb。'],
+      ['🏛️', 'We decided ___ the museum on Saturday.', 'to visit', 'to visit|visiting|visited|visit', 'decide 後面接 to + verb。'],
+      ['🧹', 'He dislikes ___ his room.', 'cleaning', 'cleaning|to clean|cleaned|cleans', 'dislike 後面常接 V-ing。'],
+      ['🏆', 'They hope ___ the match.', 'to win', 'to win|winning|won|wins', 'hope 後面接 to + verb。'],
+      ['🎨', 'My sister loves ___.', 'drawing', 'drawing|to drawing|drawn|draws', 'love 後可接 V-ing 表示喜好。'],
+      ['🤝', 'I agreed ___ my friend.', 'to help', 'to help|helping|helped|helps', 'agree 後面接 to + verb。'],
+      ['👋', 'We look forward to ___ you.', 'meeting', 'meeting|meet|to meet|met', 'look forward to 的 to 是介詞，後面接 V-ing。'],
+      ['🎤', 'She plans ___ the club.', 'to join', 'to join|joining|joined|joins', 'plan 後面接 to + verb。'],
+      ['🧽', 'The children finished ___ the table.', 'cleaning', 'cleaning|to clean|cleaned|clean', 'finish 後面接 V-ing。'],
+    ]) },
     { id: 'P5-EN-S01', area: '現在完成式', title: '完成式句子拼砌', objective: '按正確語序拼砌含 have／has + past participle 的完整句子。', interaction: 'english-sentence-build', questions: [
       { id: 'P5-EN-S01-Q01', sentence: 'I have finished my homework already.', translation: '我已經完成了功課。' },
       { id: 'P5-EN-S01-Q02', sentence: 'She has bought a new book.', translation: '她買了一本新書。' },
@@ -117,7 +141,15 @@ const p5EnglishBank = {
       { id: 'P5-EN-S02-Q10', sentence: 'The story was written by Mr Wong.', translation: '這個故事是黃先生寫的。' },
     ] },
     { id: 'P5-EN-R01', area: '進階閱讀理解', title: '閱讀推論工作紙', objective: '閱讀較長材料，辨識細節、關係從句、詞義、事件次序、推論與主旨。', interaction: 'english-reading-comprehension', passageSets: readingPassageSets, questions: readingPassageSets.flatMap((passage) => passage.questions) },
-  ],
+    { id: 'P5-EN-W01', area: '段落寫作', title: '記敘與描寫段落', objective: '以開場、具體細節和感受／評價寫出較長的記敘或描寫段落。', interaction: 'english-writing-template', templateMode: 'english-text-template', questions: [
+      ['P5-EN-W01-Q01', 'Narrative: A Helpful Stranger', 'Write a 70–80 word narrative paragraph about a time when someone helped you.', 'Last Saturday, I was looking for my family in a crowded market when I became worried.', 'A shopkeeper noticed me, let me use her phone and stayed with me until Mum arrived.', 'I thanked her warmly and learned that small acts of kindness can make a big difference.'],
+      ['P5-EN-W01-Q02', 'Narrative: A Team Challenge', 'Write a 70–80 word narrative paragraph about a team challenge at school.', 'During the class camping day, my group had to build a shelter before the rain started.', 'We shared the jobs, used ropes carefully and changed our plan when one side kept falling down.', 'Although the task was difficult, we felt proud when our shelter stayed dry.'],
+      ['P5-EN-W01-Q03', 'Narrative: An Unexpected Gift', 'Write a 70–80 word narrative paragraph about an unexpected gift.', 'On my birthday morning, I found a small box on the table with no name on it.', 'Inside was a notebook full of photos and messages from my friends, who had prepared it for weeks.', 'I felt touched because the gift showed how well my friends knew me.'],
+      ['P5-EN-W01-Q04', 'Descriptive: A Busy Market', 'Write a 70–80 word descriptive paragraph about a busy market.', 'The market was full of bright fruit stalls, colourful umbrellas and people carrying heavy bags.', 'Sellers called out friendly prices while the smell of fresh bread and sweet oranges filled the air.', 'Although it was noisy, the market felt lively and welcoming to every visitor.'],
+      ['P5-EN-W01-Q05', 'Descriptive: A Rainy Playground', 'Write a 70–80 word descriptive paragraph about a playground after rain.', 'After the rain, the playground looked shiny under the pale afternoon light.', 'Small puddles reflected the school building, and drops of water hung quietly from the swings.', 'The empty playground felt peaceful, as if it was waiting for pupils to return.'],
+      ['P5-EN-W01-Q06', 'Descriptive: A Family Kitchen', 'Write a 70–80 word descriptive paragraph about a family kitchen.', 'Every evening, our small kitchen becomes warm and busy before dinner.', 'Steam rises from the soup, plates clink softly and my family talks about the day around the table.', 'To me, the kitchen is more than a room because it is where we share time together.'],
+    ].map(([id, title, brief, opening, details, ending]) => ({ id, title, brief, prompt: 'Build a longer narrative or descriptive paragraph using the three writing steps.', steps: [{ id: 'opening', label: 'Opening', focus: 'Set the time, place or main focus clearly.', answer: opening, options: [opening, 'I do not want to introduce this paragraph.', 'This paragraph begins with no clear idea.'] }, { id: 'details', label: 'Specific details', focus: 'Add actions, senses or precise supporting details.', answer: details, options: [details, 'Nothing important happened and there are no details.', 'The reader does not need any description.'] }, { id: 'ending', label: 'Feeling or final idea', focus: 'Finish with a reflection, feeling or strong image.', answer: ending, options: [ending, 'I will stop without a final idea.', 'The ending does not matter to the reader.'] }], explanation: 'A longer paragraph needs a clear opening, specific details and a meaningful final idea.' })) },
+  ].sort((left, right) => ['P5-EN-G01', 'P5-EN-G02', 'P5-EN-G06', 'P5-EN-G07', 'P5-EN-G03', 'P5-EN-G04', 'P5-EN-G05', 'P5-EN-S01', 'P5-EN-S02', 'P5-EN-R01', 'P5-EN-W01'].indexOf(left.id) - ['P5-EN-G01', 'P5-EN-G02', 'P5-EN-G06', 'P5-EN-G07', 'P5-EN-G03', 'P5-EN-G04', 'P5-EN-G05', 'P5-EN-S01', 'P5-EN-S02', 'P5-EN-R01', 'P5-EN-W01'].indexOf(right.id)),
 };
 
 export default p5EnglishBank;

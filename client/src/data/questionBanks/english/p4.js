@@ -36,6 +36,18 @@ const readingPassageSets = [
 const p4EnglishBank = {
   grade: 'P4', subject: '英文',
   units: [
+    { id: 'P4-EN-W01', area: '文本寫作', title: '日記、電郵與海報', objective: '按日記、電郵和海報的目的與格式，選出開頭、資料和結尾的合適句子。', interaction: 'english-writing-template', templateMode: 'english-text-template', questions: [
+      ['P4-EN-W01-Q01', 'Diary: Sports Day', 'Write a diary entry about your sports day. Include what happened and how you felt.', 'Dear Diary, today was Sports Day at school.', 'I ran in the relay race and my team came second.', 'I felt proud because we worked hard together.'],
+      ['P4-EN-W01-Q02', 'Diary: A Rainy Day', 'Write a short diary entry about a rainy day activity.', 'Dear Diary, it rained heavily after school today.', 'My sister and I made paper boats near the window.', 'Although we stayed inside, we had a happy afternoon.'],
+      ['P4-EN-W01-Q03', 'Diary: Library Visit', 'Write a diary entry about visiting the public library.', 'Dear Diary, our class visited the public library this morning.', 'I borrowed a book about space and joined a story session.', 'I want to go back soon to find another interesting book.'],
+      ['P4-EN-W01-Q04', 'Diary: Helping at Home', 'Write a diary entry about helping at home.', 'Dear Diary, I helped Mum prepare dinner this evening.', 'I washed vegetables and set the table before we ate.', 'I learned that small jobs can make a family happier.'],
+      ['P4-EN-W01-Q05', 'Email: Invite a Friend', 'Write an email inviting Alex to a class picnic.', 'Hi Alex, I am writing to invite you to our class picnic on Saturday.', 'We will meet at the school gate at nine o’clock and bring lunch to the park.', 'I hope you can join us. Best wishes, Sam'],
+      ['P4-EN-W01-Q06', 'Email: Thank a Teacher', 'Write an email to thank your teacher for a museum visit.', 'Dear Ms Lee, thank you for taking our class to the science museum.', 'My favourite part was the space show because I learned about the planets.', 'Thank you again. Yours sincerely, Amy'],
+      ['P4-EN-W01-Q07', 'Email: Ask for Information', 'Write an email asking the library about a reading club.', 'Dear Librarian, I would like to know more about the Saturday reading club.', 'Could you please tell me the meeting time and the age group for the club?', 'Thank you for your help. Yours faithfully, Tom'],
+      ['P4-EN-W01-Q08', 'Poster: Clean-up Day', 'Make a poster for a school clean-up day.', 'Join our School Clean-up Day!', 'Meet at the playground at 3:30 p.m. on Friday. Bring a water bottle and wear comfortable shoes.', 'Let us work together to keep our school clean!'],
+      ['P4-EN-W01-Q09', 'Poster: Book Swap', 'Make a poster for a class book swap.', 'Class Book Swap — Share a Story!', 'Bring one clean storybook to Room 4A on Tuesday at lunchtime.', 'Choose a new book to take home and enjoy reading!'],
+      ['P4-EN-W01-Q10', 'Poster: Lost Cat', 'Make a poster to find a lost cat.', 'Have You Seen Coco the Cat?', 'Coco is small, orange and wears a blue collar. Please call 2345 6789 if you see her.', 'Thank you for helping Coco return home!'],
+    ].map(([id, title, brief, opening, details, ending]) => ({ id, title, brief, prompt: `Build a clear ${title.split(':')[0].toLowerCase()} using the template.`, steps: [{ id: 'opening', label: 'Opening', focus: 'Start with the correct greeting, title or main purpose.', answer: opening, options: [opening, 'I do not know what to write today.', 'This is not important for anyone.'] }, { id: 'details', label: 'Key details', focus: 'Include useful information about what, when, where or why.', answer: details, options: [details, 'Everyone already knows the details.', 'I like many different things.'] }, { id: 'ending', label: 'Ending', focus: 'Finish with a suitable feeling, request or action.', answer: ending, options: [ending, 'That is all and it does not matter.', 'Please forget about this message.'] }], explanation: 'A clear text type uses the right opening, gives useful details and ends with a suitable final line.' })) },
     { id: 'P4-EN-G01', area: '修飾語', title: '形容詞還是副詞？', objective: '分辨修飾名詞的形容詞與修飾動詞的副詞。', interaction: 'english-adjective-choice', questions: makeQuestions('P4-EN-G01', [
       ['🐢', 'The turtle walks ___.', 'slowly', 'slowly|slow|slowness|slower', 'walks 是動詞，應用副詞 slowly 修飾。'],
       ['🌞', 'It is a ___ day.', 'sunny', 'sunny|sunnyly|sun|sunnily', 'day 是名詞，應用形容詞 sunny 修飾。'],
@@ -96,8 +108,32 @@ const p4EnglishBank = {
       ['🎉', '___ the bell rang, the students left the class.', 'When', 'When|If|Although|Because', '鐘響是離開課室的時間點，用 When。'],
       ['🌂', '___ it was raining, we went for a walk.', 'Although', 'Although|If|When|Because', '雖然下雨仍散步，表示讓步。'],
     ]) },
+    { id: 'P4-EN-G06', area: '時態與動詞', title: '明天會做甚麼？', objective: '使用 will + verb 及 be going to + verb 描述計劃、預測和未來可能。', interaction: 'english-future-choice', questions: makeQuestions('P4-EN-G06', [
+      ['🌧️', 'It ___ rain tomorrow, so take an umbrella.', 'will', 'will|did|was|has', 'tomorrow 表示未來；will 後接動詞原形。'],
+      ['🎂', 'We ___ have a party next Saturday.', 'are going to', 'are going to|were going to|has|did', '已有計劃的未來事情可用 are going to。'],
+      ['📚', 'I ___ help you with your homework later.', 'will', 'will|am|was|did', '主語 I 的未來承諾可用 will help。'],
+      ['🏖️', 'My family ___ visit Macau during the holiday.', 'is going to', 'is going to|are going to|was going to|will to', 'My family 視作單數，計劃用 is going to visit。'],
+      ['🚌', 'The bus ___ arrive in five minutes.', 'will', 'will|has|was|did', 'in five minutes 表示未來，用 will arrive。'],
+      ['🎨', 'Amy ___ join the art club this term.', 'is going to', 'is going to|are going to|will joining|was', 'Amy 是單數，計劃用 is going to join。'],
+      ['🍳', 'Dad ___ cook dinner tonight.', 'will', 'will|is|did|was', 'tonight 的未來安排可用 will cook。'],
+      ['⚽', 'The boys ___ play a match on Sunday.', 'are going to', 'are going to|is going to|were|will playing', 'boys 是複數，計劃用 are going to play。'],
+      ['🎁', 'I think our team ___ win the game.', 'will', 'will|was|did|has', '對未來的預測常用 I think ... will。'],
+      ['🌳', 'Our class ___ plant trees next month.', 'is going to', 'is going to|are going to|was|will planting', 'Our class 視作單數，計劃用 is going to plant。'],
+    ]) },
+    { id: 'P4-EN-G07', area: '數量詞', title: '多少才合適？', objective: '按可數、不可數名詞及數量多寡選用 a few、a little、a lot of 和 enough。', interaction: 'english-quantifiers-advanced-choice', questions: makeQuestions('P4-EN-G07', [
+      ['🍎', 'There are only ___ apples left.', 'a few', 'a few|a little|much|any', 'apples 是可數複數而且數量不多，用 a few。'],
+      ['🥛', 'Please add ___ milk to the tea.', 'a little', 'a little|a few|many|an', 'milk 是不可數名詞而且只需少量，用 a little。'],
+      ['📚', 'Our library has ___ interesting books.', 'a lot of', 'a lot of|a little|a few|much', '數量很多的可數複數名詞可用 a lot of。'],
+      ['💧', 'We have ___ water for the trip.', 'enough', 'enough|a few|many|an', 'water 是不可數名詞；足夠用 enough。'],
+      ['🐶', 'Only ___ pupils brought their pets today.', 'a few', 'a few|a little|much|an', 'pupils 是可數複數而且數量少，用 a few。'],
+      ['🍚', 'There is ___ rice in the bowl.', 'a little', 'a little|a few|many|an', 'rice 是不可數名詞，少量用 a little。'],
+      ['🪑', 'The hall has ___ chairs for all the parents.', 'enough', 'enough|a little|much|an', 'chairs 是可數複數；足夠的數量用 enough。'],
+      ['🌟', 'She has ___ homework this week.', 'a lot of', 'a lot of|a few|many|an', 'homework 是不可數名詞；大量可用 a lot of。'],
+      ['🍪', 'Can I have ___ cookies, please?', 'a few', 'a few|a little|much|an', 'cookies 是可數複數；少量用 a few。'],
+      ['🧂', 'Put ___ salt in the soup.', 'a little', 'a little|a few|many|an', 'salt 是不可數名詞，少量用 a little。'],
+    ]) },
     { id: 'P4-EN-R01', area: '閱讀理解', title: '短篇閱讀偵探', objective: '閱讀短篇材料後找出事實、詞義、推論及主旨，並以文中線索支持答案。', interaction: 'english-reading-comprehension', passageSets: readingPassageSets, questions: readingPassageSets.flatMap((passage) => passage.questions) },
-  ],
+  ].sort((left, right) => ['P4-EN-G01', 'P4-EN-G02', 'P4-EN-G03', 'P4-EN-G04', 'P4-EN-G05', 'P4-EN-G06', 'P4-EN-G07', 'P4-EN-R01', 'P4-EN-W01'].indexOf(left.id) - ['P4-EN-G01', 'P4-EN-G02', 'P4-EN-G03', 'P4-EN-G04', 'P4-EN-G05', 'P4-EN-G06', 'P4-EN-G07', 'P4-EN-R01', 'P4-EN-W01'].indexOf(right.id)),
 };
 
 export default p4EnglishBank;

@@ -43,6 +43,13 @@ const labels = {
   'english-reported-choice': { name: '轉述任務', tip: '先找說話者、時間詞和時態，再把直接說話改為轉述句。', material: 'Speech clue' },
   'english-nonfinite-choice': { name: '動詞搭配任務', tip: '先記住前面的動詞搭配，再決定接 V-ing 或 to + verb。', material: 'Verb clue' },
   'english-phrasal-choice': { name: '短語動詞任務', tip: '先看整個情境，再判斷動詞加上介詞後的特別意思。', material: 'Phrase clue' },
+  'english-phonics-choice': { name: '拼讀任務', tip: '先慢慢讀出字首的兩個字母，再找出有相同聲音的單字。', material: 'Sound clue' },
+  'english-there-be-choice': { name: '位置與數量任務', tip: '先數一數有多少東西；一個用 There is，多於一個用 There are。', material: 'Place clue' },
+  'english-past-continuous-choice': { name: '過去時態任務', tip: '留意過去的特定時間；was／were + V-ing 表示當時正在發生的事。', material: 'Time clue' },
+  'english-nonfinite-basic-choice': { name: '動詞搭配任務', tip: '先看前面的動詞，再判斷後面要接 V-ing 還是 to + verb。', material: 'Verb clue' },
+  'english-future-choice': { name: '將來式任務', tip: '留意 tomorrow、next week 等未來時間提示，再選 will 或 be going to。', material: 'Future clue' },
+  'english-quantifiers-advanced-choice': { name: '進階數量詞任務', tip: '先看名詞能否逐個數，再判斷數量是少、很多還是足夠。', material: 'Quantity clue' },
+  'english-initial-final-phonics-choice': { name: '首尾音拼讀任務', tip: '先慢慢讀出單字，再留意它第一個或最後一個發音。', material: 'Sound clue' },
 };
 
 function ActivityFrame({ unit, taskLabel }) {

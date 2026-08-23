@@ -1,15 +1,57 @@
-import { BookMarked, Filter, Target, Tags } from 'lucide-react';
+import { ArrowLeft, BookMarked, Filter, SlidersHorizontal, Tags, Target } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
-const difficultyClass = { 基礎: 'foundation', 應用: 'application', 進階: 'advanced', 挑戰: 'challenge' };
-const difficultyOrder = ['全部', '基礎', '應用', '進階', '挑戰'];
+const subjectOrder = ['中文', '英文', '數學'];
+const gradeOrder = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
+const starValues = [1, 2, 3, 4, 5];
 
-export default function QuestionProfilePanel({ questionBank }) {
-  const [activeUnitId, setActiveUnitId] = useState(questionBank.units[0]?.id);
-  const [activeDifficulty, setActiveDifficulty] = useState('全部');
-  const activeUnit = useMemo(() => questionBank.units.find((unit) => unit.id === activeUnitId) || questionBank.units[0], [activeUnitId, questionBank]);
-  const visibleQuestions = activeUnit.questions.filter((question) => activeDifficulty === '全部' || question.difficulty === activeDifficulty);
-  const counts = activeUnit.questions.reduce((result, question) => ({ ...result, [question.difficulty]: (result[question.difficulty] || 0) + 1 }), {});
+function getTopicStars(index, total) {
+  if (total <= 1) return 3;
+  return Math.round((index / (total - 1)) * 4) + 1;
+}
 
-  return <section className="question-profile-panel" aria-label="教師題目標記"><header className="question-profile-head"><div><span><Tags size={16} /> 教師題目標記</span><h3>按難度與學習目標選擇練習</h3><p>每一道題目已標記難度及對應學習目標；可先選單元，再按能力篩選題目。</p></div><aside><Target size={18} /><b>全部題目已標記</b><small>可作分層指派參考</small></aside></header><div className="question-unit-tabs" role="tablist" aria-label="選擇中文單元">{questionBank.units.map((unit) => <button key={unit.id} role="tab" aria-selected={activeUnit.id === unit.id} className={activeUnit.id === unit.id ? 'active' : ''} onClick={() => { setActiveUnitId(unit.id); setActiveDifficulty('全部'); }}><span>{unit.area}</span><b>{unit.title}</b><small>{unit.questions.length} 題</small></button>)}</div><section className="question-profile-workspace"><div className="profile-objective"><span><BookMarked size={16} /> 本單元學習目標</span><b>{activeUnit.learningObjective}</b></div><div className="profile-filter"><span><Filter size={15} /> 篩選難度</span><div>{difficultyOrder.map((difficulty) => <button key={difficulty} className={activeDifficulty === difficulty ? 'active' : ''} onClick={() => setActiveDifficulty(difficulty)}>{difficulty}{difficulty !== '全部' && counts[difficulty] ? <small>{counts[difficulty]}</small> : null}</button>)}</div></div><div className="question-profile-list">{visibleQuestions.map((question, index) => <article key={question.id}><span className="question-number">{String(activeUnit.questions.indexOf(question) + 1).padStart(2, '0')}</span><div><h4>{question.prompt}</h4><p><strong>學習目標：</strong>{question.learningObjective}</p></div><span className={`difficulty-label ${difficultyClass[question.difficulty]}`}>{question.difficulty}</span></article>)}{visibleQuestions.length === 0 && <div className="question-profile-empty">此單元目前沒有「{activeDifficulty}」題目。</div>}</div></section></section>;
+function StarRating({ value }) {
+  return <span className={`difficulty-stars stars-${value}`} role="img" aria-label={`難度 ${value} 星`} title={`同一單元內難度 ${value} 星`}>{starValues.map((star) => <span className={star <= value ? 'filled' : 'empty'} key={star} aria-hidden="true">{star <= value ? '★' : '☆'}</span>)}</span>;
+}
+
+export default function QuestionProfilePanel({ questionBanks, questionBank, onBack }) {
+  const banks = questionBanks || (questionBank ? { 中文: { [questionBank.grade]: questionBank } } : {});
+  const [subject, setSubject] = useState('中文');
+  const [grade, setGrade] = useState('P1');
+  const [topic, setTopic] = useState('全部');
+  const [stars, setStars] = useState('全部');
+  const [sortBy, setSortBy] = useState('topic');
+
+  const availableSubjects = subjectOrder.filter((item) => banks[item]);
+  const activeSubject = availableSubjects.includes(subject) ? subject : availableSubjects[0] || '中文';
+  const availableGrades = gradeOrder.filter((item) => banks[activeSubject]?.[item]);
+  const activeGrade = availableGrades.includes(grade) ? grade : availableGrades[0] || 'P1';
+  const activeBank = banks[activeSubject]?.[activeGrade];
+  const topics = activeBank?.units || [];
+  const activeTopic = topics.some((unit) => unit.id === topic) ? topic : '全部';
+
+  const records = useMemo(() => (activeBank?.units || []).flatMap((unit) => unit.questions.map((question, index) => ({
+    ...question,
+    unit,
+    index,
+    subject: activeSubject,
+    grade: activeGrade,
+    stars: getTopicStars(index, unit.questions.length),
+  }))), [activeBank, activeSubject, activeGrade]);
+
+  const visibleQuestions = useMemo(() => records
+    .filter((question) => activeTopic === '全部' || question.unit.id === activeTopic)
+    .filter((question) => stars === '全部' || question.stars === Number(stars))
+    .sort((left, right) => {
+      if (sortBy === 'difficulty') return left.stars - right.stars || left.unit.title.localeCompare(right.unit.title, 'zh-Hant') || left.index - right.index;
+      if (sortBy === 'number') return left.index - right.index || left.unit.title.localeCompare(right.unit.title, 'zh-Hant');
+      return left.unit.title.localeCompare(right.unit.title, 'zh-Hant') || left.index - right.index;
+    }), [records, activeTopic, stars, sortBy]);
+  const counts = records.reduce((total, question) => ({ ...total, [question.stars]: (total[question.stars] || 0) + 1 }), {});
+  const visiblePreview = visibleQuestions.slice(0, 24);
+
+  const updateSubject = (value) => { setSubject(value); setGrade('P1'); setTopic('全部'); setStars('全部'); };
+  const updateGrade = (value) => { setGrade(value); setTopic('全部'); setStars('全部'); };
+
+  return <main className="site-shell teacher-question-page"><header className="topbar teacher-question-topbar"><div className="teacher-question-brand"><Tags size={19} /><span><b>EduQuest</b><small>教師題庫管理</small></span></div>{onBack && <button className="text-button" onClick={onBack}><ArrowLeft size={17} /> 返回課程</button>}</header><section className="teacher-question-hero"><div><span><SlidersHorizontal size={16} /> 題庫篩選與排序</span><h1>快速找到<br />適合講解的題目。</h1><p>先選學科、年級與課題，再按同一單元內由易至難的星級排列；所有題目均附有對應學習目標。</p></div><aside><Target size={20} /><b>{visibleQuestions.length} 題</b><small>符合目前條件</small></aside></section><section className="teacher-question-workbench"><div className="question-filter-grid"><label>學科<select value={activeSubject} onChange={(event) => updateSubject(event.target.value)}>{availableSubjects.map((item) => <option key={item}>{item}</option>)}</select></label><label>年級<select value={activeGrade} onChange={(event) => updateGrade(event.target.value)}>{availableGrades.map((item) => <option key={item}>{item}</option>)}</select></label><label>主題／單元<select value={activeTopic} onChange={(event) => setTopic(event.target.value)}><option value="全部">全部主題</option>{topics.map((unit) => <option value={unit.id} key={unit.id}>{unit.area}・{unit.title}</option>)}</select></label><label>範疇內難度<select value={stars} onChange={(event) => setStars(event.target.value)}><option value="全部">全部星級</option>{starValues.map((value) => <option value={value} key={value}>{'★'.repeat(value)}{'☆'.repeat(5 - value)}（{counts[value] || 0} 題）</option>)}</select></label><label>排序方式<select value={sortBy} onChange={(event) => setSortBy(event.target.value)}><option value="topic">主題次序</option><option value="difficulty">星級由低至高</option><option value="number">題號次序</option></select></label></div><div className="teacher-result-head"><span><Filter size={16} /> {activeSubject}・{activeGrade}</span><b>{activeTopic === '全部' ? '全部課題' : topics.find((unit) => unit.id === activeTopic)?.title}</b><small>星級只在同一單元內比較；顯示首 {Math.min(visiblePreview.length, 24)} 題。</small></div><div className="teacher-question-list">{visiblePreview.map((question) => <article key={question.id}><div className="teacher-question-index"><span>{question.grade}</span><b>{String(question.index + 1).padStart(2, '0')}</b></div><div><div className="teacher-question-meta"><span>{question.unit.area}・{question.unit.title}</span><StarRating value={question.stars} /></div><h2>{question.prompt || question.sentence || question.baseWord}</h2><p><BookMarked size={15} /><strong>講解重點：</strong>{question.learningObjective}</p></div></article>)}{visibleQuestions.length === 0 && <div className="question-profile-empty">這個條件下暫時沒有題目，請調整篩選。</div>}</div></section></main>;
 }

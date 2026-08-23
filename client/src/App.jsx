@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, BookOpen, Calculator, Check, ChevronRight, CircleHelp, Languages, LayoutDashboard, PenLine, Play, Sparkles, X } from 'lucide-react';
+import './teacherRefinements.css';
 import curriculumDB from './data/curriculumDB.json';
 import chineseCatalog from './data/chineseCatalog';
-import { getChineseQuestionBank } from './data/questionBanks/chinese/index.js';
-import { getEnglishQuestionBank } from './data/questionBanks/english';
-import { getMathQuestionBank } from './data/questionBanks/math';
+import { chineseQuestionBanks, getChineseQuestionBank } from './data/questionBanks/chinese/index.js';
+import { englishQuestionBanks, getEnglishQuestionBank } from './data/questionBanks/english';
+import { getMathQuestionBank, mathQuestionBanks } from './data/questionBanks/math';
 import EnglishCatalog from './components/EnglishCatalog';
 import MathCatalog from './components/MathCatalog';
 import UnifiedChineseCatalog from './components/UnifiedChineseCatalog';
@@ -16,6 +17,7 @@ import TeamMonsterActivity from './components/TeamMonsterActivity';
 import EnglishReadingActivity from './components/EnglishReadingActivity';
 import EnglishSentenceActivity from './components/EnglishSentenceActivity';
 import EnglishSentenceRewriteActivity from './components/EnglishSentenceRewriteActivity';
+import EnglishWritingTemplateActivity from './components/EnglishWritingTemplateActivity';
 import EnglishVerbMemoryActivity from './components/EnglishVerbMemoryActivity';
 import WordMatchActivity from './components/WordMatchActivity';
 import RadicalSortActivity from './components/RadicalSortActivity';
@@ -28,10 +30,13 @@ import P3StudyActivity from './components/P3StudyActivity';
 import ChoiceWorksheetActivity from './components/ChoiceWorksheetActivity';
 import TaleReadingActivity from './components/TaleReadingActivity';
 import ParagraphMarkActivity from './components/ParagraphMarkActivity';
+import ChineseWritingScaffoldActivity from './components/ChineseWritingScaffoldActivity';
 import QuestionProfilePanel from './components/QuestionProfilePanel';
 import TeacherFeedbackSettings from './components/TeacherFeedbackSettings';
 import ExamTimer from './components/ExamTimer';
-import { playCompletionSound, playCorrectSound } from './lib/feedbackAudio';
+import { playCompletionSound, playCorrectSound, playWrongSound } from './lib/feedbackAudio';
+import './mathProjectionRefinements.css';
+import './activityPresentation.css';
 
 const SUBJECTS = {
   中文: { icon: BookOpen, color: 'chinese', english: 'Chinese' },
@@ -47,19 +52,24 @@ const SUBJECT_COVERS = {
 };
 
 function Brand() {
-  return <div className="brand" aria-label="EduQuest"><span className="brand-mark"><i></i><i></i><i></i><Sparkles size={24} /></span><span><b>Edu<span>Quest</span></b><small>小學課堂展示版</small></span></div>;
+  return <div className="brand" aria-label="WelitQuest"><span className="brand-mark"><i></i><i></i><i></i><Sparkles size={24} /></span><span><b>Welit<span>Quest</span></b><small>小學課堂展示版</small></span></div>;
 }
 
-function Header({ onHome, action }) {
-  return <header className="topbar"><Brand /><div className="topbar-right"><span className="demo-pill">課堂試玩・可儲存進度</span><ExamTimer /><TeacherFeedbackSettings />{action}{onHome && <button className="icon-button" onClick={onHome} aria-label="返回首頁"><LayoutDashboard size={20} /></button>}</div></header>;
+function Header({ onHome, action, onOpenQuestionManager }) {
+  return <header className="topbar"><Brand /><div className="topbar-right"><span className="demo-pill">課堂試玩・可儲存進度</span><ExamTimer /><TeacherFeedbackSettings onOpenQuestionManager={onOpenQuestionManager} />{action}{onHome && <button className="icon-button" onClick={onHome} aria-label="返回首頁"><LayoutDashboard size={20} /></button>}</div></header>;
 }
 
-function TeacherSettingsDock() {
-  return <div className="teacher-settings-access"><TeacherFeedbackSettings /></div>;
+function TeacherSettingsDock({ onOpenQuestionManager }) {
+  return <div className="teacher-settings-access"><TeacherFeedbackSettings onOpenQuestionManager={onOpenQuestionManager} /></div>;
 }
 
-function Home({ onStart }) {
-  return <main className="site-shell home-page"><Header /><div className="floaters" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><section className="home-hero"><div className="hero-copy"><span className="kicker"><Sparkles size={15} /> EDUQUEST・課堂工作檯</span><h1>今天的課堂，<em>從這裡開始。</em></h1><p>先選年級，再選學科，再開啟對應的目錄或任務。中文各級已設目錄與題庫；小一英文已加入字母、詞彙、例句聽讀、句子拼砌與入門文法練習。</p><div className="hero-actions"><button className="primary-button" onClick={onStart}><Play size={18} fill="currentColor" /> 開始選年級與學科 <ChevronRight size={18} /></button><span>先選年級，再開啟今天的課堂。</span></div><div className="home-subject-bands" aria-label="今日課堂的三個學科"><span className="chinese"><b>中文</b><small>閱讀・寫作</small></span><span className="english"><b>英文</b><small>字母・詞彙・文法</small></span><span className="math"><b>數學</b><small>思考・運算</small></span></div></div><aside className="launch-desk"><div className="desk-heading"><span>今天的開課檯</span><b>三步設定</b></div><ol><li><b>01</b><div><strong>選擇年級</strong><small>P1 至 P6</small></div></li><li><b>02</b><div><strong>選擇學科</strong><small>中文、英文、數學</small></div></li><li><b>03</b><div><strong>開啟課程或示範題</strong><small>目錄與互動練習</small></div></li></ol><div className="desk-note"><CircleHelp size={17} /><span>小一英文已可直接開始練習。</span></div></aside></section><section className="class-start-strip"><div className="start-step"><span>1</span><div><b>先選年級</b><small>P1 至 P6</small></div></div><i></i><div className="start-step subject-step"><span>2</span><div><b>再選學科</b><small><em className="chinese-dot">中文</em><em className="english-dot">英文</em><em className="math-dot">數學</em></small></div></div><i></i><div className="start-step"><span>3</span><div><b>開啟課堂</b><small>目錄或示範題</small></div></div></section><section className="home-stats"><article><b>6</b><span>小學年級</span></article><article><b>3</b><span>核心學科</span></article><article><b>60</b><span>小一英文練習題</span></article></section></main>;
+function Home({ onStart, onCatalog, onOpenQuestionManager }) {
+  const [grade, setGrade] = useState('P1');
+  const [subject, setSubject] = useState('中文');
+  const subjects = [{ key: '中文', label: '中文', note: '閱讀・寫作', action: '開啟中文課程', Icon: BookOpen }, { key: '英文', label: '英文', note: '詞彙・文法・聽讀', action: '開啟英文課程', Icon: Languages }, { key: '數學', label: '數學', note: '數感・推理・操作', action: '開啟數學課程', Icon: Calculator }];
+  const selectedSubject = subjects.find((item) => item.key === subject) || subjects[0];
+  const SelectedIcon = selectedSubject.Icon;
+  return <main className="site-shell home-page"><Header onOpenQuestionManager={onOpenQuestionManager} /><div className="floaters" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><section className="home-hero home-hero-workbench"><div className="hero-copy"><span className="kicker"><Sparkles size={15} /> EDUQUEST・課堂工作檯</span><h1>今天的課堂，<em>從這裡開始。</em></h1><p>由年級、學科到互動任務，所有入口都放在同一張開課檯面。先選好今天的班別，再開啟最合適的課程。</p><div className="hero-actions"><button className="primary-button" onClick={onStart}><Play size={18} fill="currentColor" /> 查看全部年級與學科 <ChevronRight size={18} /></button><span>右側可直接選擇今天的開課組合。</span></div><div className="home-route-note" aria-label="開課步驟"><span><b>01</b> 選年級</span><i></i><span><b>02</b> 選學科</span><i></i><span><b>03</b> 開啟任務</span></div></div><aside className="launch-desk launch-desk-interactive" aria-label="今天的開課檯"><div className="desk-heading"><span><i>✦</i> EDUQUEST・開課檔案</span><b>選好就開課</b></div><section className="home-grade-picker"><div><span>01・年級籤</span><small>選擇班別</small></div><div role="group" aria-label="選擇年級">{GRADES.map((item, index) => <button key={item} className={grade === item ? 'active' : ''} onClick={() => setGrade(item)}><b>{item}</b><small>小{GRADE_LABELS[index]}</small></button>)}</div></section><section className="home-subject-picker"><div><span>02・學科工作帶</span><small>選擇今天的重點</small></div>{subjects.map((item) => { const Icon = item.Icon; return <button key={item.key} className={`${item.key === subject ? 'active' : ''} ${item.key === '中文' ? 'chinese' : item.key === '英文' ? 'english' : 'math'}`} onClick={() => setSubject(item.key)}><span><Icon size={18} /></span><div><b>{item.label}</b><small>{item.note}</small></div><i>{item.key === subject ? '已選' : '選擇'}</i></button>; })}</section><button className={`home-demo-task ${subject === '中文' ? 'chinese' : subject === '英文' ? 'english' : 'math'}`} onClick={() => onCatalog(grade, subject)}><span>03・課堂任務卡</span><div><SelectedIcon size={22} /><p><b>{grade}・{selectedSubject.label}</b><small>{selectedSubject.note}</small></p><ChevronRight size={21} /></div><strong>{selectedSubject.action}</strong></button><div className="desk-note"><CircleHelp size={17} /><span>可先選年級與學科，再直接進入對應目錄。</span></div></aside></section><section className="home-stats"><article><b>6</b><span>小學年級</span></article><article><b>3</b><span>核心學科</span></article><article><b>1,805</b><span>已覆核題目</span></article></section></main>;
 }
 
 function CourseCard({ topic, onOpen, onCatalog }) {
@@ -74,11 +84,11 @@ function CourseCard({ topic, onOpen, onCatalog }) {
   return <button type="button" className={`course-card ${subject.color} clickable-card`} onClick={openCard} aria-label={isCatalog ? `開啟 ${topic.grade} ${topic.subject}課程目錄` : `開啟 ${topic.title} 示範題`}><div className="course-card-icon"><Icon size={27} /></div><div className="course-card-main"><span>{topic.grade}・{topic.subject}</span><h3>{topic.subject}</h3><p>{description}</p></div><div className="course-card-action"><strong className="course-card-cta">{isCatalog ? '開啟課程' : '開啟示範'} <ChevronRight size={17} /></strong></div></button>;
 }
 
-function Courses({ onBack, onOpen, onCatalog }) {
+function Courses({ onBack, onOpen, onCatalog, onOpenQuestionManager }) {
   const [grade, setGrade] = useState('P1');
   const gradeTopics = useMemo(() => curriculumDB.topics.filter((topic) => topic.grade === grade), [grade]);
   const gradeIndex = GRADES.indexOf(grade);
-  return <main className="site-shell courses-page"><Header onHome={onBack} action={<button className="text-button" onClick={onBack}><ArrowLeft size={17} /> 返回首頁</button>} /><section className="course-header"><div><span className="kicker">今天開課</span><h1>選擇今天的<br /><em>年級與學科。</em></h1><p>每一個年級都有中文、英文、數學三科。中文已整理分級目錄；小一英文已先開放字母、生活詞彙與基礎文法四個互動單元。</p></div><div className="course-summary"><span>已建立</span><b>6 年級 × 3 學科</b><small>中文目錄 + 小一英文題庫</small></div></section><div className="route-trail"><span className="done"><b>01</b> 選年級</span><i></i><span className="active"><b>02</b> 選學科</span><i></i><span><b>03</b> 查看目錄或試玩</span></div><section className="course-workbench"><aside className="grade-rail"><span>年級</span>{GRADES.map((item, index) => <button className={grade === item ? 'active' : ''} onClick={() => setGrade(item)} key={item}><b>{item}</b><small>小{GRADE_LABELS[index]}</small></button>)}</aside><div className="subject-workspace"><div className="workspace-heading"><span className="grade-chip">{grade}・小{GRADE_LABELS[gradeIndex]}</span><h2>選一科，查看目錄或試玩示範。</h2></div><div className="course-stack">{gradeTopics.map((topic) => <CourseCard key={topic.id} topic={topic} onOpen={onOpen} onCatalog={onCatalog} />)}</div><p className="workspace-note">中文各級目錄已按分級重點整理；小一英文可開啟四個入門單元，其他英文與數學內容將逐步擴充。</p></div></section></main>;
+  return <main className="site-shell courses-page"><Header onHome={onBack} onOpenQuestionManager={onOpenQuestionManager} action={<button className="text-button" onClick={onBack}><ArrowLeft size={17} /> 返回首頁</button>} /><section className="course-header"><div><span className="kicker">今天開課</span><h1>選擇今天的<br /><em>年級與學科。</em></h1><p>每一個年級均已設有中文、英文和數學課程目錄；可按班別開啟分級互動題庫、寫作活動及數學操作工作紙。</p></div><div className="course-summary"><span>已建立</span><b>6 年級 × 3 學科</b><small>三科分級目錄及互動題庫</small></div></section><div className="route-trail"><span className="done"><b>01</b> 選年級</span><i></i><span className="active"><b>02</b> 選學科</span><i></i><span><b>03</b> 查看目錄或試玩</span></div><section className="course-workbench"><aside className="grade-rail"><span>年級</span>{GRADES.map((item, index) => <button className={grade === item ? 'active' : ''} onClick={() => setGrade(item)} key={item}><b>{item}</b><small>小{GRADE_LABELS[index]}</small></button>)}</aside><div className="subject-workspace"><div className="workspace-heading"><span className="grade-chip">{grade}・小{GRADE_LABELS[gradeIndex]}</span><h2>選一科，查看目錄或試玩示範。</h2></div><div className="course-stack">{gradeTopics.map((topic) => <CourseCard key={topic.id} topic={topic} onOpen={onOpen} onCatalog={onCatalog} />)}</div><p className="workspace-note">三科課程均已按年級重點整理；可由課程卡直接開啟相應目錄、題組和互動學習活動。</p></div></section></main>;
 }
 
 function QuestionBankStatus({ questionBank, completedUnits, onStartUnit }) {
@@ -111,7 +121,7 @@ export default function App() {
   const previewEnglishUnit = previewEnglishGrade ? getEnglishQuestionBank(previewEnglishGrade)?.units.find((unit) => unit.id === params.get('unit')) || null : null;
   const previewMathGrade = params.get('unit')?.split('-')[0];
   const previewMathUnit = previewMathGrade ? getMathQuestionBank(previewMathGrade)?.units.find((unit) => unit.id === params.get('unit')) || null : null;
-  const previewChineseConfig = { 'p1-story': ['P1', 'P1-CN-R04'], 'p2-tale': ['P2', 'P2-CN-R03'], 'p6-classical': ['P6', 'P6-CN-R01'] }[params.get('activity')];
+  const previewChineseConfig = { 'p1-story': ['P3', 'P3-CN-R09'], 'p2-tale': ['P2', 'P2-CN-R03'], 'p3-story-structure': ['P3', 'P3-CN-R09'], 'p3-metaphor': ['P3', 'P3-CN-R04'], 'p3-personification': ['P3', 'P3-CN-R05'], 'p3-parallelism': ['P3', 'P3-CN-R06'], 'p3-word-relations': ['P3', 'P3-CN-R08'], 'p4-main-idea': ['P4', 'P4-CN-R06'], 'p4-paragraph-sort': ['P4', 'P4-CN-R07'], 'p4-summary-fill': ['P4', 'P4-CN-R08'], 'p5-expository-methods': ['P5', 'P5-CN-W05'], 'p5-expository-framework': ['P5', 'P5-CN-W06'], 'p6-classical': ['P6', 'P6-CN-R01'], 'p6-argument-evidence': ['P6', 'P6-CN-W06'], 'p6-counterargument': ['P6', 'P6-CN-W07'], 'p6-argument-rewrite': ['P6', 'P6-CN-W08'] }[params.get('activity')];
   const previewChineseUnit = previewChineseConfig ? getChineseQuestionBank(previewChineseConfig[0]).units.find((unit) => unit.id === previewChineseConfig[1]) || null : null;
   const previewUnit = previewEnglishUnit || previewMathUnit || previewChineseUnit;
   const chineseCatalogPreview = params.get('view') === 'chinese-catalog';
@@ -120,24 +130,137 @@ export default function App() {
   const [catalogGrade, setCatalogGrade] = useState(previewChineseConfig?.[0] || (GRADES.includes(params.get('grade')) ? params.get('grade') : 'P1'));
   const [catalogSubject, setCatalogSubject] = useState(params.get('view') === 'english-catalog' || previewEnglishUnit ? '英文' : previewMathUnit || params.get('view') === 'math-catalog' ? '數學' : '中文');
   const [activeUnit, setActiveUnit] = useState(previewUnit);
+  const [questionManagerReturnScreen, setQuestionManagerReturnScreen] = useState('home');
   const [completedUnits, setCompletedUnits] = useState(() => { try { return JSON.parse(window.localStorage.getItem('eduquest-unit-progress') || '{}'); } catch { return {}; } });
   useEffect(() => {
-    const applyMotionPreference = (value) => { try { const settings = value || JSON.parse(window.localStorage.getItem('eduquest-feedback-settings') || '{}'); document.documentElement.dataset.eduquestAnimation = settings.animation === false ? 'off' : 'on'; } catch { document.documentElement.dataset.eduquestAnimation = 'on'; } };
+    const applyMotionPreference = (value) => { try { const settings = value || JSON.parse(window.localStorage.getItem('eduquest-feedback-settings') || '{}'); document.documentElement.dataset.eduquestAnimation = settings.animation === false ? 'off' : 'on'; document.documentElement.dataset.eduquestProjection = settings.projectionSize || 'standard'; document.documentElement.dataset.eduquestMinimalProjection = settings.minimalProjection === true ? 'on' : 'off'; document.documentElement.dataset.eduquestReadingLineHeight = settings.readingLineHeight || 'comfortable'; document.documentElement.dataset.eduquestReadingColumnWidth = settings.readingColumnWidth || 'standard'; } catch { document.documentElement.dataset.eduquestAnimation = 'on'; document.documentElement.dataset.eduquestProjection = 'standard'; document.documentElement.dataset.eduquestMinimalProjection = 'off'; document.documentElement.dataset.eduquestReadingLineHeight = 'comfortable'; document.documentElement.dataset.eduquestReadingColumnWidth = 'standard'; } };
     applyMotionPreference();
     const onSettingsChange = (event) => applyMotionPreference(event.detail);
     window.addEventListener('eduquest-feedback-settings', onSettingsChange);
     return () => window.removeEventListener('eduquest-feedback-settings', onSettingsChange);
   }, []);
   useEffect(() => {
+    if (screen !== 'activity') return undefined;
+    let frame = 0;
+    const applyTitleScale = () => {
+      document.querySelectorAll('main.site-shell h1').forEach((heading) => {
+        const length = heading.textContent.replace(/\s+/g, '').length;
+        heading.dataset.eduquestQuestionLength = length > 96 ? 'xlong' : length > 58 ? 'long' : length > 30 ? 'medium' : 'short';
+      });
+    };
+    const schedule = () => { window.cancelAnimationFrame(frame); frame = window.requestAnimationFrame(applyTitleScale); };
+    schedule();
+    const activityRoot = document.querySelector('main.site-shell');
+    if (!activityRoot) return () => window.cancelAnimationFrame(frame);
+    const observer = new MutationObserver(schedule);
+    observer.observe(activityRoot, { childList: true, subtree: true, characterData: true });
+    return () => { window.cancelAnimationFrame(frame); observer.disconnect(); };
+  }, [screen, activeUnit]);
+  useEffect(() => {
     let lastCorrect = 0;
+    let lastWrong = 0;
     let lastComplete = 0;
-    const inspect = (node) => { if (!(node instanceof Element)) return; [node, ...node.querySelectorAll('*')].forEach((item) => { const classes = item.classList; if (classes?.contains('activity-summary') && Date.now() - lastComplete > 900) { lastComplete = Date.now(); playCompletionSound(); } if ((classes?.contains('selected-correct') || classes?.contains('correct-pop') || classes?.contains('right')) && Date.now() - lastCorrect > 340) { lastCorrect = Date.now(); playCorrectSound(); } }); };
+    const inspect = (node) => { if (!(node instanceof Element)) return; [node, ...node.querySelectorAll('*')].forEach((item) => { const classes = item.classList; if (classes?.contains('activity-summary') && Date.now() - lastComplete > 900) { lastComplete = Date.now(); playCompletionSound(); } if ((classes?.contains('selected-correct') || classes?.contains('correct-pop') || classes?.contains('right')) && Date.now() - lastCorrect > 340) { lastCorrect = Date.now(); playCorrectSound(); } if ((classes?.contains('selected-wrong') || classes?.contains('wrong')) && Date.now() - lastWrong > 340) { lastWrong = Date.now(); playWrongSound(); } }); };
     const observer = new MutationObserver((mutations) => mutations.forEach((mutation) => { if (mutation.type === 'attributes') inspect(mutation.target); mutation.addedNodes.forEach(inspect); }));
     observer.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['class'] });
     return () => observer.disconnect();
   }, []);
+  useEffect(() => {
+    if (screen !== 'activity' || !activeUnit) return undefined;
+    const questionSignals = (question) => [question.prompt, question.sentence, question.translation, question.title, question.baseWord, question.word, question.target, question.context, question.source, question.answer, question.profile, question.document, ...(question.matches || []).flatMap((item) => [item.word, item.meaning]), ...(question.blocks || []).map((item) => item.text), ...(question.paragraphs || []).map((item) => item.text)].filter((value) => typeof value === 'string' && value.trim().length > 1);
+    const signalCounts = activeUnit.questions.flatMap(questionSignals).reduce((counts, signal) => ({ ...counts, [signal]: (counts[signal] || 0) + 1 }), {});
+    const questionIndexFromPage = (pageText) => {
+      const candidates = activeUnit.questions.map((question, index) => ({
+        index,
+        score: questionSignals(question).filter((signal) => signalCounts[signal] === 1 && pageText.includes(signal)).reduce((total, signal) => total + Math.min(signal.length, 40), 0),
+      })).sort((left, right) => right.score - left.score);
+      return candidates[0]?.score ? candidates[0].index : -1;
+    };
+    const decorateCourseHeader = () => {
+      const courseFile = document.querySelector('.activity-workbench-frame .activity-course-file');
+      if (!courseFile) return;
+      const pageText = document.querySelector('main.site-shell')?.textContent || '';
+      const questionIndex = questionIndexFromPage(pageText);
+      if (questionIndex < 0) return;
+      const total = activeUnit.questions.length;
+      const stars = total <= 1 ? 3 : Math.round((questionIndex / (total - 1)) * 4) + 1;
+      let difficulty = courseFile.querySelector('.activity-question-difficulty');
+      if (!difficulty) {
+        difficulty = document.createElement('span');
+        difficulty.className = 'activity-question-difficulty';
+        courseFile.append(difficulty);
+      }
+      if (difficulty.dataset.value === String(stars)) return;
+      difficulty.dataset.value = String(stars);
+      difficulty.setAttribute('role', 'img');
+      difficulty.setAttribute('aria-label', `本題在此單元的難度：${stars} 星，共 5 星`);
+      difficulty.title = '星級只在同一單元內比較';
+      difficulty.replaceChildren(...Array.from({ length: 5 }, (_, index) => {
+        const star = document.createElement('i');
+        star.className = index < stars ? 'filled' : 'empty';
+        star.textContent = index < stars ? '★' : '☆';
+        return star;
+      }));
+    };
+    const initialRender = window.requestAnimationFrame(decorateCourseHeader);
+    const observer = new MutationObserver(decorateCourseHeader);
+    observer.observe(document.body, { subtree: true, childList: true, characterData: true });
+    return () => { window.cancelAnimationFrame(initialRender); observer.disconnect(); };
+  }, [screen, activeUnit]);
+  useEffect(() => {
+    if (screen !== 'activity' || !activeUnit) return undefined;
+    const choicesQuestions = activeUnit.questions?.length ? activeUnit.questions : activeUnit.passageSets?.flatMap((set) => set.questions) || activeUnit.stories?.flatMap((story) => story.questions) || [];
+    const normaliseChoice = (value) => String(value ?? '').replace(/\s+/gu, '').replace(/^[$]/u, '');
+    const questionSignals = (question) => [question.prompt, question.sentence, question.context, question.text, question.source, question.title, question.target, question.profile, question.document].filter((value) => typeof value === 'string' && value.trim().length > 1);
+    const findQuestion = () => {
+      const pageText = document.querySelector('main.site-shell')?.textContent || '';
+      return choicesQuestions.map((question) => ({ question, score: questionSignals(question).filter((signal) => pageText.includes(signal)).reduce((total, signal) => total + Math.min(signal.length, 40), 0) })).sort((left, right) => right.score - left.score)[0]?.question;
+    };
+    const restoreChoices = () => document.querySelectorAll('.eliminated-choice, .eliminating-choice').forEach((option) => { option.classList.remove('eliminated-choice', 'eliminating-choice'); option.disabled = false; option.removeAttribute('aria-hidden'); option.removeAttribute('aria-disabled'); });
+    const removeSatchels = () => document.querySelectorAll('.eliminate-choice-satchel').forEach((satchel) => satchel.remove());
+    const settingsEnabled = () => { try { const stored = JSON.parse(window.localStorage.getItem('eduquest-feedback-settings') || '{}'); return stored.eliminateTwoOptionsConfigured === true ? stored.eliminateTwoOptions === true : true; } catch { return true; } };
+    const installSatchel = () => {
+      if (!settingsEnabled()) { restoreChoices(); removeSatchels(); return; }
+      const question = findQuestion();
+      const correctAnswer = question?.answer ?? question?.radical;
+      if (!question?.choices?.length || correctAnswer === undefined) return;
+      document.querySelectorAll('.english-option-grid, .math-option-grid, .team-battle-options, .worksheet-options > div:last-child, .writing-choice-bank > div:last-child, .p3-choice-bank > div:last-child, .tale-choice-bank > div:last-child, .radical-choice-grid, .punctuation-choice-grid').forEach((grid) => {
+        const options = [...grid.querySelectorAll(':scope > button')];
+        const existingSatchel = grid.parentElement?.querySelector('.eliminate-choice-satchel');
+        if (existingSatchel?.dataset.used === 'true' && !options.some((option) => option.classList.contains('eliminated-choice') || option.classList.contains('eliminating-choice'))) existingSatchel.remove();
+        if (options.length !== 4 || grid.parentElement?.querySelector('.eliminate-choice-satchel')) return;
+        const satchel = document.createElement('aside');
+        satchel.className = 'eliminate-choice-satchel';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.innerHTML = '<b>幫我排除兩個錯誤選項</b>';
+        button.setAttribute('aria-label', '刪去兩個錯誤選項，只保留正確答案和一個干擾選項');
+        button.addEventListener('click', () => {
+          const wrongOptions = options.filter((option) => normaliseChoice(option.querySelector('b')?.textContent || option.textContent) !== normaliseChoice(correctAnswer));
+          for (let index = wrongOptions.length - 1; index > 0; index -= 1) { const swapIndex = Math.floor(Math.random() * (index + 1)); [wrongOptions[index], wrongOptions[swapIndex]] = [wrongOptions[swapIndex], wrongOptions[index]]; }
+          const reducedMotion = document.documentElement.dataset.eduquestAnimation === 'off' || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          satchel.classList.add('satchel-activating');
+          wrongOptions.slice(0, 2).forEach((option) => { option.classList.add('eliminating-choice'); option.disabled = true; option.setAttribute('aria-disabled', 'true'); });
+          window.setTimeout(() => wrongOptions.slice(0, 2).forEach((option) => { option.classList.remove('eliminating-choice'); option.classList.add('eliminated-choice'); option.setAttribute('aria-hidden', 'true'); }), reducedMotion ? 0 : 620);
+          window.setTimeout(() => satchel.classList.remove('satchel-activating'), reducedMotion ? 0 : 620);
+          satchel.dataset.used = 'true';
+          button.disabled = true;
+          button.innerHTML = '<b>已協助排除兩個選項</b>';
+        });
+        satchel.append(button);
+        grid.parentElement?.insertBefore(satchel, grid);
+      });
+    };
+    const observer = new MutationObserver(installSatchel);
+    const onSettingsChange = installSatchel;
+    observer.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['disabled', 'class'] });
+    window.addEventListener('eduquest-feedback-settings', onSettingsChange);
+    const initialRender = window.requestAnimationFrame(installSatchel);
+    return () => { window.cancelAnimationFrame(initialRender); observer.disconnect(); window.removeEventListener('eduquest-feedback-settings', onSettingsChange); removeSatchels(); };
+  }, [screen, activeUnit]);
   const openDemo = (selectedTopic) => { setTopic(selectedTopic); setScreen('demo'); };
   const openCatalog = (grade = 'P1', subject = '中文') => { setCatalogGrade(grade); setCatalogSubject(subject); setScreen('catalog'); };
+  const openQuestionManager = (returnScreen = screen) => { setQuestionManagerReturnScreen(returnScreen); setScreen('question-manager'); };
   const markUnitCompleted = (unit, questionIds = unit.questions.map((question) => question.id)) => setCompletedUnits((current) => { const previous = Array.isArray(current[unit.id]) ? current[unit.id] : current[unit.id] >= unit.questions.length ? unit.questions.map((question) => question.id) : []; const next = { ...current, [unit.id]: [...new Set([...previous, ...questionIds])] }; window.localStorage.setItem('eduquest-unit-progress', JSON.stringify(next)); return next; });
   if (screen === 'activity' && activeUnit) {
     const [unitGrade, unitSubjectCode] = activeUnit.id?.split('-') || [];
@@ -152,12 +275,14 @@ export default function App() {
     if (activeUnit.interaction === 'english-sentence-read' || activeUnit.interaction === 'english-sentence-build') return <EnglishSentenceActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
     if (activeUnit.interaction === 'english-reading-comprehension') return <EnglishReadingActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
     if (activeUnit.interaction === 'english-sentence-rewrite-conditional' || activeUnit.interaction === 'english-sentence-rewrite-reported') return <EnglishSentenceRewriteActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
+    if (activeUnit.interaction === 'english-writing-template') return <EnglishWritingTemplateActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
     if (activeUnit.interaction === 'english-verb-memory') return <EnglishVerbMemoryActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
     if (activeUnit.id.includes('-EN-')) return <EnglishChoiceActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
     if (activeUnit.activityMode === 'team-battle' && activeUnit.id.includes('-MATH-')) return <><TeamMonsterMathActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} /><TeacherSettingsDock /></>;
-    if (['math-shopping', 'math-fraction-pie', 'math-fraction-compare'].includes(activeUnit.interaction)) return <MathInteractiveActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
+    if (['math-shopping', 'math-fraction-pie', 'math-fraction-compare', 'math-equal-groups', 'math-sharing', 'math-sharing-remainder'].includes(activeUnit.interaction)) return <MathInteractiveActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
     if (activeUnit.id.includes('-MATH-')) return <MathActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
     if (activeUnit.interaction === 'paragraph-mark') return <ParagraphMarkActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
+    if (activeUnit.interaction === 'chinese-writing-scaffold') return <ChineseWritingScaffoldActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
     if (activeUnit.interaction === 'p3-reading' || activeUnit.interaction === 'p3-idiom' || activeUnit.interaction === 'p3-figure') return <P3StudyActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
     if (activeUnit.interaction === 'format-sort') return <FormatSortActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
     if (activeUnit.interaction === 'writing-choice') return <P2WritingActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
@@ -169,8 +294,9 @@ export default function App() {
     if (activeUnit.interaction === 'radical-sort') return <RadicalSortActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
     return <WordMatchActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />;
   }
-  if (screen === 'catalog') return <>{catalogSubject === '英文' ? <EnglishCatalog initialGrade={catalogGrade} onBack={() => setScreen('courses')} onHome={() => setScreen('home')} completedUnits={completedUnits} onStartUnit={(unit, activityMode = 'worksheet') => { setActiveUnit({ ...unit, activityMode }); setScreen('activity'); }} /> : catalogSubject === '數學' ? <MathCatalog initialGrade={catalogGrade} onBack={() => setScreen('courses')} onHome={() => setScreen('home')} completedUnits={completedUnits} onStartUnit={(unit, activityMode = 'worksheet') => { setActiveUnit({ ...unit, activityMode }); setScreen('activity'); }} /> : <UnifiedChineseCatalog initialGrade={catalogGrade} onBack={() => setScreen('courses')} onHome={() => setScreen('home')} completedUnits={completedUnits} onStartUnit={(unit, activityMode = 'worksheet') => { setActiveUnit({ ...unit, activityMode }); setScreen('activity'); }} />}<TeacherSettingsDock /></>;
-  if (screen === 'courses') return <Courses onBack={() => setScreen('home')} onOpen={openDemo} onCatalog={openCatalog} />;
+  if (screen === 'question-manager') return <QuestionProfilePanel questionBanks={{ 中文: chineseQuestionBanks, 英文: englishQuestionBanks, 數學: mathQuestionBanks }} onBack={() => setScreen(questionManagerReturnScreen)} />;
+  if (screen === 'catalog') return <>{catalogSubject === '英文' ? <EnglishCatalog initialGrade={catalogGrade} onBack={() => setScreen('courses')} onHome={() => setScreen('home')} completedUnits={completedUnits} onStartUnit={(unit, activityMode = 'worksheet') => { setActiveUnit({ ...unit, activityMode }); setScreen('activity'); }} /> : catalogSubject === '數學' ? <MathCatalog initialGrade={catalogGrade} onBack={() => setScreen('courses')} onHome={() => setScreen('home')} completedUnits={completedUnits} onStartUnit={(unit, activityMode = 'worksheet') => { setActiveUnit({ ...unit, activityMode }); setScreen('activity'); }} /> : <UnifiedChineseCatalog initialGrade={catalogGrade} onBack={() => setScreen('courses')} onHome={() => setScreen('home')} completedUnits={completedUnits} onStartUnit={(unit, activityMode = 'worksheet') => { setActiveUnit({ ...unit, activityMode }); setScreen('activity'); }} />}<TeacherSettingsDock onOpenQuestionManager={() => openQuestionManager('catalog')} /></>;
+  if (screen === 'courses') return <Courses onBack={() => setScreen('home')} onOpen={openDemo} onCatalog={openCatalog} onOpenQuestionManager={() => openQuestionManager('courses')} />;
   if (screen === 'demo' && topic) return <Demo topic={topic} onBack={() => setScreen('courses')} />;
-  return <Home onStart={() => setScreen('courses')} />;
+  return <Home onStart={() => setScreen('courses')} onCatalog={openCatalog} onOpenQuestionManager={() => openQuestionManager('home')} />;
 }

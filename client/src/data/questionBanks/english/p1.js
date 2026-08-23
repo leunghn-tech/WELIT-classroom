@@ -42,6 +42,21 @@ const p1EnglishBank = {
       ],
     },
     {
+      id: 'P1-EN-P01',
+      area: '字母與拼讀',
+      title: '首音與尾音',
+      objective: '聽辨常見短字的開首和結尾發音，建立基礎拼讀意識。',
+      interaction: 'english-initial-final-phonics-choice',
+      questions: [
+        { id: 'P1-EN-P01-Q01', prompt: '讀一讀 ball。哪一個單字有相同的開首聲音？', symbol: '⚽', sentence: 'ball begins with /b/.', choices: ['bag', 'cat', 'sun', 'fish'], answer: 'bag', explanation: 'ball 和 bag 都以 /b/ 開首。' },
+        { id: 'P1-EN-P01-Q02', prompt: '讀一讀 sun。哪一個單字有相同的開首聲音？', symbol: '☀️', sentence: 'sun begins with /s/.', choices: ['sock', 'dog', 'pen', 'hat'], answer: 'sock', explanation: 'sun 和 sock 都以 /s/ 開首。' },
+        { id: 'P1-EN-P01-Q03', prompt: '讀一讀 cat。哪一個單字有相同的結尾聲音？', symbol: '🐱', sentence: 'cat ends with /t/.', choices: ['hat', 'dog', 'pen', 'bus'], answer: 'hat', explanation: 'cat 和 hat 都以 /t/ 結尾。' },
+        { id: 'P1-EN-P01-Q04', prompt: '讀一讀 dog。哪一個單字有相同的結尾聲音？', symbol: '🐶', sentence: 'dog ends with /g/.', choices: ['bag', 'fish', 'sun', 'pen'], answer: 'bag', explanation: 'dog 和 bag 都以 /g/ 結尾。' },
+        { id: 'P1-EN-P01-Q05', prompt: '讀一讀 pen。哪一個單字有相同的開首聲音？', symbol: '🖊️', sentence: 'pen begins with /p/.', choices: ['pig', 'cat', 'sun', 'bag'], answer: 'pig', explanation: 'pen 和 pig 都以 /p/ 開首。' },
+        { id: 'P1-EN-P01-Q06', prompt: '讀一讀 fish。哪一個單字有相同的結尾聲音？', symbol: '🐟', sentence: 'fish ends with /sh/.', choices: ['dish', 'cat', 'dog', 'pen'], answer: 'dish', explanation: 'fish 和 dish 都以 /sh/ 結尾。' },
+      ],
+    },
+    {
       id: 'P1-EN-G01',
       area: '基礎文法',
       title: 'A 或 An？',
@@ -154,7 +169,7 @@ const p1EnglishBank = {
         { id: 'P1-EN-S01-Q10', sentence: 'They are good friends.', translation: '他們是好朋友。' },
       ],
     },
-  ],
+  ].sort((left, right) => ['P1-EN-A01', 'P1-EN-P01', 'P1-EN-V01', 'P1-EN-G04', 'P1-EN-G05', 'P1-EN-G03', 'P1-EN-G01', 'P1-EN-G02', 'P1-EN-L01', 'P1-EN-S01'].indexOf(left.id) - ['P1-EN-A01', 'P1-EN-P01', 'P1-EN-V01', 'P1-EN-G04', 'P1-EN-G05', 'P1-EN-G03', 'P1-EN-G01', 'P1-EN-G02', 'P1-EN-L01', 'P1-EN-S01'].indexOf(right.id)),
 };
 
 export default p1EnglishBank;

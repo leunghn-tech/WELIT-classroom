@@ -64,7 +64,7 @@ export default {
     },
     { id: 'P2-CN-R03', area: '閱讀', title: '寓言故事與童話大意', interaction: 'tale-reading', stories: taleStories, questions: taleStories.flatMap((story) => story.questions) },
     {
-      id: 'P2-CN-W01', area: '寫作', title: '基礎人物描寫：外貌特徵', interaction: 'writing-choice', writingType: 'portrait',
+      id: 'P2-CN-W01', area: '寫作', title: '擴寫句子：人物外貌與動作', interaction: 'writing-choice', writingType: 'portrait',
       questions: [
         { id: 'P2-CN-W01-Q01', profile: '小欣有一張圓圓的臉，戴著紅色眼鏡，常常笑瞇瞇。', prompt: '選出最能寫出小欣外貌的句子。', answer: '小欣圓圓的臉上戴著一副紅色眼鏡，笑起來很親切。', choices: ['小欣圓圓的臉上戴著一副紅色眼鏡，笑起來很親切。', '小欣每天都喜歡做功課。', '小欣跑步跑得最快。', '小欣很想去公園。'], explanation: '人物外貌要寫出看得見的特徵，例如臉形、眼鏡和表情。' },
         { id: 'P2-CN-W01-Q02', profile: '阿朗個子高高，頭髮剪得短短的，笑時會露出兩個酒窩。', prompt: '選出最能寫出阿朗外貌的句子。', answer: '阿朗個子高高，短短的頭髮下有兩個可愛的酒窩。', choices: ['阿朗個子高高，短短的頭髮下有兩個可愛的酒窩。', '阿朗喜歡吃蘋果。', '阿朗明天會去游泳。', '阿朗把書借給同學。'], explanation: '這句寫出身高、頭髮和笑容，是清楚的外貌描寫。' },
@@ -108,5 +108,5 @@ export default {
         { id: 'P2-CN-W03-Q10', title: '書信：邀請朋友看展覽', type: '書信', blocks: [{ id: 'a', text: '親愛的小健：', order: 0 }, { id: 'b', text: '星期日有一個恐龍展覽，我想邀請你一起去參觀。', order: 1 }, { id: 'c', text: '祝　天天進步！', order: 2 }, { id: 'd', text: '你的同學　小明', order: 3 }], explanation: '邀請信的正文要交代時間、活動和邀請對象。' },
       ],
     },
-  ],
+  ].sort((left, right) => ['P2-CN-R03', 'P2-CN-R01', 'P2-CN-R02', 'P2-CN-W01', 'P2-CN-W02', 'P2-CN-W03'].indexOf(left.id) - ['P2-CN-R03', 'P2-CN-R01', 'P2-CN-R02', 'P2-CN-W01', 'P2-CN-W02', 'P2-CN-W03'].indexOf(right.id)),
 };

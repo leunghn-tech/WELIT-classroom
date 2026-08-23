@@ -1,0 +1,438 @@
+/* 具體數學模型與可列印答題紙條：在四選一前先讓學生看見可操作的數量關係。 */
+.math-choice-model {
+  position: relative;
+  overflow: hidden;
+  padding: 1rem 1.05rem .85rem;
+  border: 1px dashed #9bd9b7;
+  border-left: 8px solid var(--math);
+  border-radius: .15rem .8rem .8rem .15rem;
+  background: repeating-linear-gradient(0deg, rgba(77,181,128,.045) 0 1px, transparent 1px 27px), #fbfffc;
+}
+
+.math-choice-model::after {
+  position: absolute;
+  right: .75rem;
+  top: .7rem;
+  padding: .16rem .4rem;
+  border: 1px solid #a9dfc0;
+  color: #247a50;
+  background: #effbf4;
+  content: '✦ EDUQUEST · MATH MODEL';
+  font: 900 .52rem var(--display);
+  letter-spacing: .08em;
+}
+
+.math-choice-model header { display: flex; justify-content: space-between; gap: .7rem; padding: 0 0 .6rem; border-bottom: 1px dashed #a6d8bc; }
+.math-choice-model header span { color: #287b55; font: 900 .78rem var(--display); }
+.math-choice-model header small { color: #5e8671; font-size: .67rem; font-weight: 800; }
+.grouping-board { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0; }
+.pair-box { display: flex; gap: .24rem; align-items: center; min-width: 64px; padding: .42rem .55rem; border: 1px dashed #8fd2ae; border-radius: .18rem; background: #fff; }
+.pair-box i, .parity-pairs i { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; color: #fff; background: var(--math); font-size: 0; }
+.pair-box.remainder { border-color: #e7b44d; background: #fffaf0; }
+.pair-box.remainder i { background: #d9a43b; }
+.math-model-note { display: flex; gap: .38rem; padding-top: .58rem; border-top: 1px dotted #acdabe; color: #4f7661; font-size: .72rem; line-height: 1.6; }
+.math-model-note b { color: #277950; }
+.reset-grouping { margin-left: auto; padding: .24rem .42rem; border: 1px dashed #78c69a; border-left: 4px solid #4cb078; border-radius: 0 .3rem .3rem 0; color: #287b55; background: #fff; font: 900 .64rem var(--display); }
+.reset-grouping:disabled { opacity: .5; }
+.parity-pairs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem .8rem; align-items: center; margin: .8rem 0; }
+.parity-pairs > div { display: flex; gap: .22rem; padding: .42rem; border: 1px dashed #9bd8b6; background: #fff; }
+.parity-pairs b { color: #3f7660; font-size: .7rem; }
+.parity-pairs > div:nth-of-type(2) i:last-child { background: #e1ad42; }
+.calculation-lines { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; margin: .8rem 0; }
+.calculation-lines span { color: #387158; font: 900 .68rem var(--display); }
+.calculation-lines i { min-height: 25px; border-bottom: 2px solid #9bd7b5; background: repeating-linear-gradient(90deg, transparent 0 12px, rgba(77,181,128,.18) 12px 13px); }
+
+.math-answer-zone .math-option-grid button {
+  position: relative;
+  overflow: hidden;
+  border-style: dashed;
+  border-radius: 0 .38rem .38rem 0;
+  box-shadow: inset 5px 0 0 #63bf8c;
+  background: repeating-linear-gradient(0deg, rgba(77,181,128,.028) 0 1px, transparent 1px 25px), #fff;
+}
+.math-answer-zone .math-option-grid button::after { position: absolute; top: .48rem; right: .55rem; width: 8px; height: 8px; border: 1px solid #479d70; border-radius: 50%; content: ''; opacity: .38; }
+.grouping-interaction { display: grid; grid-template-columns: minmax(130px, .62fr) minmax(0, 1.38fr); gap: .75rem; margin: .8rem 0; }
+.group-token-pool, .group-drop-zones { padding: .65rem; border: 1px dashed #9bd8b6; background: rgba(255,255,255,.72); }
+.group-token-pool > span { display: block; margin-bottom: .45rem; color: #287b55; font: 900 .68rem var(--display); }
+.group-token-pool > div { display: flex; flex-wrap: wrap; gap: .35rem; min-height: 48px; align-content: flex-start; }
+.group-token-pool button, .pair-drop-zone button { display: grid; place-items: center; width: 31px; height: 31px; padding: 0; border: 1px solid #7fcaa0; border-radius: 50%; color: #fff; background: #48af78; box-shadow: inset 0 -3px 0 rgba(22,111,70,.18); transition: transform .14s var(--ease), background .14s; }
+.group-token-pool button:hover:not(:disabled), .pair-drop-zone button:hover:not(:disabled) { transform: translateY(-2px) scale(1.05); background: #298c5b; }
+.group-token-pool button i, .pair-drop-zone button i { font-size: 0; }
+.group-token-pool button i::after, .pair-drop-zone button i::after { content: '●'; font-size: 1rem; }
+.group-token-pool small { color: #668674; font-size: .66rem; font-weight: 800; }
+.group-drop-zones { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: .5rem; }
+.pair-drop-zone { min-height: 94px; padding: .45rem; border: 1px dashed #8cd0aa; border-left: 5px solid #82cda2; background: #fbfffc; transition: border .16s, background .16s; }
+.pair-drop-zone:hover { border-color: var(--math); background: #f0fbf4; }
+.pair-drop-zone.full { border-style: solid; border-left-color: #2da66a; background: #effbf4; }
+.pair-drop-zone.one-left { border-left-color: #dfa43a; background: #fffaf0; }
+.pair-drop-zone > span { display: block; color: #4e7c62; font: 900 .62rem var(--display); }
+.pair-drop-zone > div { display: flex; gap: .28rem; align-items: center; min-height: 40px; margin: .3rem 0; }
+.pair-drop-zone em { display: grid; place-items: center; width: 29px; height: 29px; border: 1px dashed #9dceb2; border-radius: 50%; color: #83aa91; font-style: normal; }
+.pair-drop-zone small { color: #5a856b; font-size: .61rem; font-weight: 800; }
+.math-answer-locked { display: flex; align-items: center; gap: .4rem; margin-top: .8rem; padding: .58rem .7rem; border: 1px dashed #e4b34c; border-left: 5px solid #e1aa3c; color: #78591e; background: #fffaf0; font: 900 .72rem var(--display); }
+.grouping-model.complete { border-color: #8fd3ad; background: repeating-linear-gradient(0deg, rgba(77,181,128,.05) 0 1px, transparent 1px 27px), #f5fcf7; }
+
+/* 小一加法與港幣：把數量點或硬幣移入同一張草綠工作紙托盤；點選是拖曳的觸控備援。 */
+.collection-drag-interaction { display: grid; grid-template-columns: minmax(170px, .8fr) minmax(0, 1.2fr); gap: .75rem; margin: .8rem 0; }
+.collection-token-pool, .collection-drop-zone { padding: .65rem; border: 1px dashed #9bd8b6; background: rgba(255,255,255,.72); }
+.collection-token-pool > span, .collection-drop-zone > span { display: block; margin-bottom: .45rem; color: #287b55; font: 900 .68rem var(--display); }
+.collection-token-pool > div, .collection-drop-zone > div { display: flex; flex-wrap: wrap; align-content: flex-start; gap: .35rem; min-height: 56px; }
+.collection-token { display: grid; place-items: center; min-width: 33px; height: 33px; padding: 0 .28rem; border: 1px solid #7fcaa0; color: #fff; background: #48af78; box-shadow: inset 0 -3px 0 rgba(22,111,70,.18); transition: transform .14s var(--ease), background .14s; }
+.collection-token.counter { width: 33px; min-width: 33px; border-radius: 50%; padding: 0; }
+.collection-token.counter i { font-size: 0; }
+.collection-token.counter i::after { content: '●'; font-size: 1rem; }
+.collection-token.coin { min-width: 42px; border-radius: 50%; background: #effaf3; color: #287a55; box-shadow: inset 0 -3px 0 rgba(43,127,82,.15); }
+.collection-token.coin b { font: 900 .65rem var(--display); }
+.collection-token:hover:not(:disabled) { transform: translateY(-2px) scale(1.05); background: #298c5b; }
+.collection-token.coin:hover:not(:disabled) { color: #fff; }
+.collection-token-pool small { color: #668674; font-size: .66rem; font-weight: 800; }
+.collection-drop-zone { border-left: 6px solid #82cda2; background: #fbfffc; transition: border .16s, background .16s; }
+.collection-drop-zone:hover { border-color: var(--math); background: #f0fbf4; }
+.collection-drop-zone.full { border-style: solid; border-left-color: #2da66a; background: #effbf4; }
+.collection-drop-zone em { display: grid; place-items: center; width: 30px; height: 30px; border: 1px dashed #9dceb2; border-radius: 50%; color: #83aa91; font-style: normal; }
+.collection-drop-zone small { display: block; margin-top: .45rem; color: #5a856b; font-size: .61rem; font-weight: 800; }
+.drag-collection-model.complete { border-color: #8fd3ad; background: repeating-linear-gradient(0deg, rgba(77,181,128,.05) 0 1px, transparent 1px 27px), #f5fcf7; }
+.math-activity-page .drag-collection-model { padding: 1.25rem 1.35rem 1.05rem; border-left-width: 10px; }
+.math-activity-page .drag-collection-model header span { font-size: .9rem; }
+.math-activity-page .drag-collection-model header small { font-size: .76rem; }
+.math-activity-page .drag-collection-model .collection-drag-interaction { gap: .95rem; margin: 1rem 0; }
+.math-activity-page .drag-collection-model .collection-token-pool, .math-activity-page .drag-collection-model .collection-drop-zone { min-height: 118px; padding: .85rem; }
+.math-activity-page .drag-collection-model .collection-token { min-width: 39px; height: 39px; }
+.math-activity-page .drag-collection-model .collection-token.counter { width: 39px; min-width: 39px; }
+.math-activity-page .drag-collection-model .collection-token.coin { min-width: 50px; }
+.math-activity-page .drag-collection-model .collection-token.coin b { font-size: .74rem; }
+.math-activity-page .drag-collection-model .collection-drop-zone em { width: 36px; height: 36px; }
+.math-activity-page .math-worksheet:has(.drag-collection-model)::before { display: none; }
+.subtraction-removal-model .collection-token-pool { border-left: 6px solid #6bc18e; }
+.subtraction-removal-model .removal-drop-zone { border-left-color: #3baa70; background: repeating-linear-gradient(135deg, rgba(59,170,112,.05) 0 8px, transparent 8px 16px), #f7fdf9; }
+.subtraction-removal-model .removed-token { opacity: .72; filter: saturate(.72); }
+.subtraction-removal-model.complete { border-color: #8fd3ad; background: repeating-linear-gradient(0deg, rgba(77,181,128,.05) 0 1px, transparent 1px 27px), #f5fcf7; }
+
+/* 購物籃沿用草綠工作紙，但把商品移動與落入籃內的動作變成可見回饋。 */
+.shopping-drag-workbench .shop-item[draggable='true'] { cursor: grab; }
+.shopping-drag-workbench .shop-item.dragging { opacity: .45; outline: 2px dashed #38aa70; outline-offset: 4px; transform: rotate(-1.5deg) scale(.98); }
+.shopping-drag-workbench .shop-item.added-pop { animation: shop-item-added .48s var(--ease-out) both; }
+.shopping-drag-workbench .basket-panel { position: relative; transition: transform .18s var(--ease-out), border-color .18s, background .18s; }
+.shopping-drag-workbench .basket-panel.drag-ready { border-color: #3baa70; background: #effaf3; box-shadow: inset 0 0 0 3px rgba(59,170,112,.14), 0 6px 0 rgba(43,128,88,.1); transform: translateY(-2px); }
+.shopping-drag-workbench .basket-panel.basket-receiving { animation: basket-receive .42s var(--ease-out) both; }
+.shopping-drag-workbench .basket-drop-hint { display: block; margin-top: .5rem; padding: .34rem .45rem; border: 1px dashed #9dd3b5; color: #2b7b54; background: #f5fcf7; font-size: .64rem; font-weight: 900; }
+.shopping-drag-workbench .basket-item-arrived { animation: basket-item-land .42s var(--ease-out) both; }
+.shopping-drag-workbench .basket-line-item { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: .38rem; width: 100%; padding: .43rem .48rem; border: 1px dashed #a5d9bc; color: #2d704f; background: #fff; text-align: left; font-size: .72rem; font-weight: 900; cursor: grab; }
+.shopping-drag-workbench .basket-line-item:hover { border-color: #3baa70; background: #f1fbf5; }
+.shopping-drag-workbench .basket-line-item span { color: #1e704a; }
+.shopping-drag-workbench .basket-line-item i { padding: .12rem .26rem; border: 1px solid #b9dfc8; color: #4b8065; background: #f6fcf8; font-size: .55rem; font-style: normal; }
+.shopping-drag-workbench .shop-item-list.shelf-return-ready { outline: 3px dashed #5aba84; outline-offset: 5px; background: #f0fbf4; }
+.shopping-drag-workbench .shop-item.returned-pop { animation: shelf-return .48s var(--ease-out) both; }
+.shopping-drag-workbench .basket-panel.basket-returning { border-color: #79bd96; background: #f8fdf9; opacity: .82; }
+@keyframes shop-item-added { 0% { transform: scale(1); } 45% { transform: translateX(7px) scale(.98); } 100% { transform: scale(1); } }
+@keyframes basket-receive { 0% { transform: scale(1); } 40% { transform: translateY(-3px) scale(1.018); } 100% { transform: scale(1); } }
+@keyframes basket-item-land { 0% { opacity: 0; transform: translateY(-8px) scale(.94); } 100% { opacity: 1; transform: none; } }
+@keyframes shelf-return { 0% { transform: translateX(-7px) scale(.98); background: #e8f9ee; } 65% { transform: translateX(3px) scale(1.02); } 100% { transform: none; } }
+
+/* 小一乘法：每組相同數量的草綠分組托盤。 */
+.equal-groups-model { padding: 1.1rem; border-left: 10px solid #3baa70; }
+.equal-groups-workbench { display: grid; grid-template-columns: minmax(150px,.8fr) minmax(0,1.35fr); gap: .8rem; margin: .85rem 0; }
+.equal-groups-pool, .equal-group-drop { padding: .68rem; border: 1px dashed #9bd6b4; background: #fbfffd; }
+.equal-groups-pool > span, .equal-group-drop > span { display: block; margin-bottom: .48rem; color: #277a53; font: 900 .72rem var(--display); }
+.equal-groups-pool > div, .equal-group-drop > div { display: flex; flex-wrap: wrap; gap: .32rem; min-height: 48px; }
+.equal-groups-pool button, .equal-group-drop button { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #70c493; border-radius: 50%; color: #fff; background: #47af77; box-shadow: inset 0 -3px 0 rgba(26,105,65,.18); }
+.equal-groups-pool button:hover:not(:disabled), .equal-group-drop button:hover:not(:disabled) { transform: translateY(-2px); background: #278d5c; }
+.equal-groups-pool i, .equal-group-drop i { font-style: normal; font-size: .92rem; }
+.equal-group-drop-zones { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .55rem; }
+.equal-group-drop { border-left: 6px solid #8fd1aa; }
+.equal-group-drop.full { border-color: #55b97d; border-left-color: #2da66a; background: #effbf4; }
+.equal-group-drop em { display: grid; place-items: center; width: 29px; height: 29px; border: 1px dashed #a2d7b8; border-radius: 50%; color: #78a88c; font-style: normal; }
+.equal-group-drop small, .equal-groups-pool small { display: block; margin-top: .4rem; color: #58826a; font-size: .61rem; font-weight: 800; }
+.equal-groups-model.complete { border-color: #89d2a8; background: repeating-linear-gradient(0deg,rgba(77,181,128,.05) 0 1px,transparent 1px 27px),#f5fcf7; }
+.equal-sharing-model { border-left-color: #2d9b67; }
+.equal-sharing-model .equal-groups-pool { border-left: 7px solid #7fc8a0; }
+.equal-sharing-model .equal-group-drop { border-left-color: #5fb989; }
+.equal-sharing-model.complete { border-color: #86d1a6; background: repeating-linear-gradient(0deg,rgba(77,181,128,.05) 0 1px,transparent 1px 27px),#f5fcf7; }
+.repeated-addition-card { margin: .9rem 0; padding: .7rem .8rem; border: 1px solid #84cda3; border-left: 8px solid #39aa70; background: linear-gradient(90deg,#eefaf2,rgba(255,255,255,.78)); }
+.repeated-addition-card > span { color: #287a53; font: 900 .66rem var(--display); }
+.repeated-addition-card > div { display: flex; flex-wrap: wrap; align-items: center; gap: .42rem; margin: .48rem 0 .36rem; }
+.repeated-addition-card b, .repeated-addition-card strong { padding: .3rem .45rem; border: 1px solid #a7d7ba; color: #1f6845; background: #fff; font: 900 clamp(1rem,2vw,1.35rem) var(--display); }
+.repeated-addition-card i { color: #3ca46d; font: 900 1.1rem var(--display); font-style: normal; }
+.repeated-addition-card p { margin: 0; color: #4e7b62; font-size: .68rem; font-weight: 800; }
+.division-link-card { border-left-color: #208a59; background: linear-gradient(90deg,#eaf8ef,rgba(255,255,255,.8)); }
+.relation-card header { display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
+.relation-card header button { padding: .28rem .42rem; border: 1px solid #80c9a0; border-left: 5px solid #39aa70; color: #246e49; background: #fff; box-shadow: 2px 2px 0 rgba(43,128,88,.1); font: 900 .62rem var(--display); }
+.relation-card > div b { flex: 1; }
+.remainder-sharing-model { border-left-color: #248b5a; }
+.remainder-sharing-model .equal-groups-pool { border-left: 7px solid #7ec6a0; }
+.remainder-drop-zone { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: .7rem; margin: .8rem 0; padding: .7rem .8rem; border: 2px dashed #68bd8c; border-left: 10px solid #2c9a63; background: repeating-linear-gradient(135deg,rgba(59,170,112,.055) 0 8px,transparent 8px 16px),#f4fcf7; }
+.remainder-drop-zone > span { color: #1e734b; font: 900 .76rem var(--display); }
+.remainder-drop-zone > div { display: flex; flex-wrap: wrap; gap: .32rem; min-height: 38px; }
+.remainder-drop-zone button, .remainder-drop-zone em { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; }
+.remainder-drop-zone button { border: 2px solid #5cbd85; color: #fff; background: #3aa970; box-shadow: inset 0 -3px 0 rgba(27,103,64,.18); }
+.remainder-drop-zone em { border: 1px dashed #8bc9a5; color: #5f9276; background: #fff; font-style: normal; font-size: .62rem; }
+.remainder-drop-zone > small { color: #4c7b60; font-size: .63rem; font-weight: 900; }
+.remainder-drop-zone.full { border-style: solid; background: #eaf9ef; }
+.equation-fill-mode { margin-top: .72rem; padding: .58rem .65rem; border-top: 2px solid #9dd5b4; background: rgba(255,255,255,.62); }
+.equation-fill-mode > span { color: #2b7d55; font: 900 .64rem var(--display); }
+.equation-fill-mode header { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.equation-fill-mode header button { padding: .22rem .38rem; border: 1px dashed #73bc92; color: #29794f; background: #f7fcf8; font: 900 .58rem var(--display); }
+.equation-fill-mode > div { display: flex; flex-wrap: wrap; align-items: center; gap: .42rem; margin-top: .35rem; }
+.equation-fill-mode b { padding: 0 !important; border: 0 !important; background: transparent !important; font-size: .84rem !important; }
+.equation-fill-mode input { width: 68px; min-height: 34px; border: 2px dashed #74bd92; color: #1d6d47; background: #fbfffc; text-align: center; font: 900 1rem var(--display); }
+.equation-fill-mode button { min-height: 34px; padding: .3rem .52rem; border: 1px solid #62b783; border-left: 5px solid #29985f; color: #236e49; background: #fff; font: 900 .66rem var(--display); }
+.equation-fill-mode button:disabled { opacity: .5; }
+.equation-fill-mode small { display: block; margin-top: .38rem; font: 800 .63rem var(--display); }
+.equation-fill-mode small.correct { color: #1e7a4d; }
+.equation-fill-mode small.wrong { color: #9a5a30; }
+
+/* 有餘數的生活情境：每位小朋友的材料以短促抵達動態呈現，餘數另放入盒中。 */
+.remainder-story-strip { margin: .72rem 0 .88rem; padding: .68rem .75rem; border: 1px solid #96cfad; border-left: 9px solid #42aa70; background: linear-gradient(90deg,#effaf3,rgba(255,255,255,.86)); }
+.remainder-story-strip header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .45rem; margin-bottom: .52rem; }
+.remainder-story-strip header span { color: #25794f; font: 900 .68rem var(--display); }
+.remainder-story-strip header b { color: #215e40; font: 900 .7rem var(--display); }
+.remainder-story-strip header small { color: #55816a; font-size: .58rem; font-weight: 800; text-align: right; }
+.story-distribution { display: grid; grid-template-columns: 80px repeat(3,minmax(0,1fr)) 88px; gap: .35rem; align-items: stretch; }
+.story-supply, .story-recipient, .story-remainder { min-height: 68px; padding: .35rem; border: 1px dashed #9ed4b5; background: #fff; }
+.story-supply span, .story-recipient span, .story-remainder span { display: block; color: #427a5c; font: 900 .55rem var(--display); }
+.story-supply b { display: grid; place-items: center; width: 31px; height: 31px; margin-top: .35rem; border-radius: 50%; color: #fff; background: #4bae76; font: 900 .75rem var(--display); }
+.story-recipient.full { border-color: #55b87d; background: #f0fbf4; }
+.story-recipient > div, .story-remainder > div { display: flex; flex-wrap: wrap; gap: .15rem; margin-top: .25rem; }
+.story-recipient.character-card { padding: .32rem; border-style: solid; border-left: 5px solid #63bd87; }
+.story-character { display: flex; align-items: center; gap: .28rem; padding-bottom: .22rem; border-bottom: 1px dashed #b4dfc5; }
+.story-character > i { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 50%; background: #dff3e7; font-size: .92rem; font-style: normal; }
+.story-character span { display: grid; gap: .02rem; }
+.story-character b { color: #236f49; font: 900 .56rem var(--display); }
+.story-character small { color: #679078; font-size: .48rem; font-weight: 800; }
+.story-recipient .story-gifts { min-height: 20px; margin-top: .25rem; }
+.story-recipient i, .story-remainder i { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; color: #fff; background: #3daa6e; font-size: .56rem; font-style: normal; }
+.story-recipient small, .story-remainder small { display: block; margin-top: .22rem; color: #58846b; font-size: .52rem; font-weight: 800; }
+.story-remainder { border-left: 5px solid #29985f; background: repeating-linear-gradient(135deg,rgba(59,170,112,.05) 0 6px,transparent 6px 12px),#fbfffc; }
+.story-remainder.active { border-color: #49af73; background: #edf9f1; }
+.story-theme-picker { display: flex; align-items: center; justify-content: space-between; gap: .45rem; margin: .34rem 0 .54rem; padding: .35rem .42rem; border: 1px dashed #aadbbd; background: rgba(255,255,255,.62); }
+.story-theme-picker > span { color: #2c7952; font: 900 .58rem var(--display); white-space: nowrap; }
+.story-theme-picker > div { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .25rem; }
+.story-theme-picker button { display: inline-flex; align-items: center; gap: .16rem; padding: .22rem .3rem; border: 1px solid #b5dfc5; color: #4d7e64; background: #fbfffc; font: 900 .53rem var(--display); }
+.story-theme-picker button i { font-style: normal; font-size: .7rem; }
+.story-theme-picker button.active { border-color: #47ad73; border-left: 4px solid #2d9b62; color: #1e6c46; background: #eaf8ef; }
+.theme-candy .story-supply > i, .theme-toy .story-supply > i, .theme-stationery .story-supply > i, .theme-party .story-supply > i { display: inline-grid; place-items: center; width: 22px; height: 22px; margin-top: .2rem; border-radius: 50%; background: #e2f5e9; font-size: .76rem; font-style: normal; }
+.story-token-arrive { animation: story-token-arrive .42s var(--ease-out) both; }
+.story-leftover-arrive { animation: story-leftover-arrive .58s var(--ease-out) both; }
+@keyframes story-token-arrive { 0% { opacity: 0; transform: translate(-17px,-8px) scale(.65); } 100% { opacity: 1; transform: none; } }
+@keyframes story-leftover-arrive { 0% { opacity: 0; transform: translateY(-15px) scale(.6); } 65% { transform: translateY(2px) scale(1.12); } 100% { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .story-token-arrive, .story-leftover-arrive { animation: none; } }
+html[data-eduquest-animation='off'] .story-token-arrive, html[data-eduquest-animation='off'] .story-leftover-arrive { animation: none; }
+
+/* 乘除操作紙面：材料、分配／分組方格、餘數與算式是投影主角。 */
+.math-activity-page .equal-groups-model, .math-activity-page .equal-sharing-model, .math-activity-page .remainder-sharing-model { width: 100%; padding: 1.55rem 1.65rem 1.35rem; border-left-width: 14px; box-shadow: 7px 8px 0 rgba(43,128,88,.13); }
+.math-activity-page .equal-groups-model header, .math-activity-page .equal-sharing-model header, .math-activity-page .remainder-sharing-model header { padding-bottom: .48rem; border-bottom: 2px solid #77c796; }
+.math-activity-page .equal-groups-model header span, .math-activity-page .equal-sharing-model header span, .math-activity-page .remainder-sharing-model header span { font-size: .92rem; }
+.math-activity-page .equal-groups-workbench { grid-template-columns: minmax(220px,.88fr) minmax(0,1.45fr); gap: 1.15rem; margin: 1.05rem 0; }
+.math-activity-page .equal-groups-pool, .math-activity-page .equal-group-drop { min-height: 180px; padding: 1rem; border-width: 2px; background-image: linear-gradient(90deg,rgba(59,170,112,.04) 1px,transparent 1px),linear-gradient(rgba(59,170,112,.04) 1px,transparent 1px); background-size: 24px 24px; }
+.math-activity-page .equal-groups-pool > span, .math-activity-page .equal-group-drop > span { padding-bottom: .42rem; border-bottom: 2px solid #a9dcbf; font-size: .84rem; }
+.math-activity-page .equal-groups-pool button, .math-activity-page .equal-group-drop button { width: 48px; height: 48px; border-width: 2px; box-shadow: inset 0 -4px 0 rgba(26,105,65,.18), 1px 2px 0 rgba(43,128,88,.12); }
+.math-activity-page .equal-groups-pool i, .math-activity-page .equal-group-drop i { font-size: 1.2rem; }
+.math-activity-page .equal-group-drop { position: relative; border-left-width: 9px; }
+.math-activity-page .equal-group-drop::after { position: absolute; right: .45rem; bottom: .4rem; color: #73b890; content: '〔等量〕'; font: 900 .5rem var(--display); letter-spacing: .04em; }
+.math-activity-page .equal-group-drop.full::after { color: #278b58; content: '✦ 剛好等量'; }
+.math-activity-page .remainder-drop-zone { min-height: 88px; padding: .85rem 1rem; border-left-width: 12px; box-shadow: inset 0 0 0 1px rgba(93,189,133,.15); }
+.math-activity-page .remainder-drop-zone > span { font-size: .86rem; }
+.math-activity-page .remainder-drop-zone button, .math-activity-page .remainder-drop-zone em { width: 42px; height: 42px; }
+.math-activity-page .relation-card { padding: .92rem 1rem; border-left-width: 10px; }
+.math-activity-page .relation-card > div b { font-size: clamp(1.25rem,2.6vw,1.7rem); }
+@media (max-width: 820px) {
+  .math-activity-page .equal-groups-model, .math-activity-page .equal-sharing-model, .math-activity-page .remainder-sharing-model { padding: .95rem .82rem .85rem; border-left-width: 9px; }
+  .math-activity-page .equal-groups-workbench { grid-template-columns: 1fr; gap: .72rem; }
+  .math-activity-page .equal-groups-pool, .math-activity-page .equal-group-drop { min-height: 0; padding: .74rem; }
+  .math-activity-page .equal-groups-pool button, .math-activity-page .equal-group-drop button { width: 40px; height: 40px; }
+}
+
+/* 乘除模型採三段課堂路徑，讓學生由材料、操作至算式一眼追讀。 */
+.math-operation-route { display: grid; grid-template-columns: auto 1fr auto 1fr auto; align-items: center; gap: .42rem; margin: .7rem 0 .85rem; padding: .42rem .5rem; border-top: 2px solid #67ba8b; border-bottom: 1px dashed #a6d7b9; background: linear-gradient(90deg,#eefaf3,rgba(255,255,255,.8)); }
+.math-operation-route span { color: #287951; font: 900 .64rem var(--display); white-space: nowrap; }
+.math-operation-route span b { display: inline-grid; place-items: center; width: 19px; height: 19px; margin-right: .18rem; border-radius: 50%; color: #fff; background: #3baa70; font-size: .56rem; }
+.math-operation-route i { height: 2px; background: linear-gradient(90deg,#52b57c,#bde5cc); }
+.math-activity-page .equal-groups-model, .math-activity-page .equal-sharing-model { border-top: 4px solid #55b77d; }
+.math-activity-page .equal-groups-model .equal-groups-workbench, .math-activity-page .equal-sharing-model .equal-groups-workbench { border-top: 3px solid #7bc99b; padding-top: .85rem; }
+.math-activity-page .equal-groups-model .equal-groups-pool, .math-activity-page .equal-sharing-model .equal-groups-pool { background: linear-gradient(135deg,#f4fcf7,rgba(255,255,255,.86)); }
+.math-activity-page .equal-groups-model .equal-group-drop, .math-activity-page .equal-sharing-model .equal-group-drop { background: rgba(251,255,252,.9); box-shadow: inset 0 0 0 1px rgba(124,202,156,.08); }
+.math-activity-page .repeated-addition-card { border-top: 3px solid #6bbc8c; box-shadow: 3px 4px 0 rgba(43,128,88,.09); }
+@media (max-width: 820px) {
+  .math-operation-route { grid-template-columns: 1fr; gap: .28rem; padding: .46rem .52rem; }
+  .math-operation-route i { display: none; }
+  .math-operation-route span { font-size: .61rem; }
+  .relation-card header { align-items: flex-start; flex-direction: column; }
+  .remainder-drop-zone { grid-template-columns: 1fr; gap: .42rem; padding: .62rem; }
+  .story-distribution { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .story-supply, .story-remainder { min-height: 56px; }
+  .remainder-story-strip header { grid-template-columns: 1fr; gap: .16rem; }
+  .remainder-story-strip header small { text-align: left; }
+  .story-character > i { width: 24px; height: 24px; font-size: .78rem; }
+  .story-theme-picker { align-items: flex-start; flex-direction: column; }
+  .story-theme-picker > div { justify-content: flex-start; }
+}
+
+/* 操作模型是數學紙的中心教具：強調材料、分組與下一步，不與微型格線競爭。 */
+.math-activity-page .equal-groups-model, .math-activity-page .shopping-drag-workbench { position: relative; padding: 1.35rem 1.45rem 1.2rem; border-left-width: 12px; box-shadow: 5px 6px 0 rgba(43,128,88,.1); }
+.math-activity-page .equal-groups-model header span::before, .math-activity-page .shopping-drag-workbench::before { display: inline-grid; place-items: center; width: 22px; height: 22px; margin-right: .38rem; border-radius: 50%; color: #fff; background: #3baa70; content: '✦'; font-size: .72rem; vertical-align: middle; }
+.math-activity-page .shopping-drag-workbench::before { position: absolute; top: .58rem; left: .7rem; margin: 0; z-index: 1; }
+.math-activity-page .equal-groups-workbench { gap: 1rem; margin: 1.05rem 0; }
+.math-activity-page .equal-groups-pool, .math-activity-page .equal-group-drop { min-height: 145px; padding: .95rem; border-color: #8fcfb0; }
+.math-activity-page .equal-groups-pool > span, .math-activity-page .equal-group-drop > span { font-size: .82rem; }
+.math-activity-page .equal-groups-pool button, .math-activity-page .equal-group-drop button { width: 42px; height: 42px; border-width: 2px; }
+.math-activity-page .equal-groups-pool i, .math-activity-page .equal-group-drop i { font-size: 1.1rem; }
+.math-activity-page .equal-group-drop em { width: 38px; height: 38px; }
+.math-activity-page .equal-groups-model .math-model-note { border-top: 2px solid #8fcfb0; padding-top: .75rem; }
+.math-activity-page .shopping-drag-workbench .shop-item { min-height: 98px; border-color: #a0d6b7; }
+.math-activity-page .shopping-drag-workbench .shop-item button { min-width: 88px; border: 1px solid #7fc59d; border-left: 6px solid #3baa70; color: #236c47; background: repeating-linear-gradient(0deg,rgba(59,170,112,.045) 0 1px,transparent 1px 19px),#fff; box-shadow: 2px 2px 0 rgba(43,128,88,.1); font-family: var(--display); }
+.math-activity-page .shopping-drag-workbench .shop-item button:disabled { opacity: 1; border-color: #a5d5b7; color: #477961; background: #f1fbf4; box-shadow: none; }
+.math-activity-page .shopping-drag-workbench .basket-panel { min-height: 232px; border-left: 10px solid #3baa70; }
+.math-activity-page .shopping-drag-workbench .basket-drop-hint { border-left: 5px solid #69bb8c; }
+.math-activity-page .shopping-drag-workbench .basket-line-item { min-height: 39px; border-left: 5px solid #79c99a; }
+@media (max-width: 820px) {
+  .site-shell.math-activity-page .math-match-topbar { border-left-width: 6px !important; }
+  .math-activity-page .equal-groups-model, .math-activity-page .shopping-drag-workbench { padding: .92rem .82rem .8rem; border-left-width: 8px; }
+  .math-activity-page .equal-groups-pool, .math-activity-page .equal-group-drop { min-height: 0; padding: .72rem; }
+  .math-activity-page .equal-groups-pool button, .math-activity-page .equal-group-drop button { width: 36px; height: 36px; }
+  .math-activity-page .shopping-drag-workbench .shop-item { min-height: 78px; }
+}
+
+/* 投影時只保留功能性紙本標記：題目、提示、模型、答案與進度優先。 */
+.math-activity-page .math-worksheet::after { display: none; }
+.math-activity-page .math-choice-model::after { display: none; }
+.math-activity-page .math-working-strip { gap: .85rem; padding: 1.25rem 1.15rem 1.05rem; border-left-width: 10px; }
+.math-activity-page .math-working-strip header span { font-size: 1.1rem; }
+.visible-calculation-frame { display: flex; align-items: center; justify-content: center; gap: .65rem; padding: .85rem; border: 2px solid #95d3ae; background: #f4fcf7; }
+.visible-calculation-frame span, .visible-calculation-frame b, .visible-calculation-frame i, .visible-calculation-frame em { display: grid; place-items: center; min-width: 54px; min-height: 54px; border: 1px solid #b8dfc8; color: #195d3d; background: #fff; font: 900 clamp(1.2rem, 2.2vw, 1.8rem) var(--display); font-style: normal; }
+.visible-calculation-frame b, .visible-calculation-frame i { min-width: auto; border: 0; color: #319265; background: transparent; }
+.visible-calculation-frame em { border-style: dashed; color: #50816a; background: #fcfffd; }
+.math-activity-page .math-working-strip ol { gap: .7rem; }
+.math-activity-page .math-working-strip li { min-height: 64px; border-color: #c5e7d2; }
+
+@media (max-width: 820px) {
+  .grouping-interaction { grid-template-columns: 1fr; }
+  .collection-drag-interaction { grid-template-columns: 1fr; }
+  .math-activity-page .drag-collection-model { padding: .92rem .84rem .8rem; }
+  .math-activity-page .drag-collection-model .collection-token-pool, .math-activity-page .drag-collection-model .collection-drop-zone { min-height: 0; padding: .68rem; }
+  .shopping-drag-workbench .basket-panel { min-height: 0; }
+  .equal-groups-workbench { grid-template-columns: 1fr; }
+  .equal-group-drop-zones { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .math-activity-page .math-working-strip { padding: .9rem .8rem .8rem; }
+  .visible-calculation-frame { gap: .3rem; padding: .6rem; }
+  .visible-calculation-frame span, .visible-calculation-frame b, .visible-calculation-frame i, .visible-calculation-frame em { min-width: 39px; min-height: 42px; font-size: 1.1rem; }
+  .group-drop-zones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pair-drop-zone { min-height: 88px; }
+}
+
+@media (max-width: 820px) {
+  .math-choice-model { padding: .82rem .75rem .7rem; }
+  .math-choice-model::after { display: none; }
+  .math-choice-model header { align-items: flex-start; flex-direction: column; gap: .16rem; }
+  .parity-pairs, .calculation-lines { grid-template-columns: 1fr; }
+}
+
+/* 投影級學習路徑：檔案身分 → 題目 → 指示 → 模型 → 答題，全部由同一條草綠紙軌串連。 */
+.math-activity-page .math-activity-frame { min-height: 108px !important; padding-top: .65rem !important; padding-bottom: .65rem !important; border-bottom-width: 7px !important; }
+.math-activity-page .math-activity-frame .activity-brand-lockup { padding-right: 1.1rem; border-right: 2px solid #b9e1ca; }
+.math-activity-page .math-activity-frame .activity-course-file { position: relative; padding-left: 1rem; }
+.math-activity-page .math-activity-frame .activity-course-file::before { position: absolute; left: 0; top: .12rem; bottom: .12rem; width: 6px; background: #42ad75; content: ''; }
+.math-activity-page .math-activity-frame .math-file-stamp { border-color: #6fc294 !important; color: #1e704b !important; background: #effbf4 !important; }
+.math-activity-page .math-activity-controls { position: relative; border-bottom: 2px solid #66bd8d; }
+.math-activity-page .math-progress-readout { min-width: 82px; padding: .3rem .65rem; border-left: 5px solid #3baa70; background: #f2fbf6; }
+.math-activity-page .math-progress-readout b { color: #1e6d49; font-size: 1rem; }
+.math-activity-page .math-progress-readout small { color: #498364; font-weight: 900; }
+.math-activity-page .math-heading { border-left: 10px solid #36ad70; padding: .35rem 0 .5rem 1.1rem; }
+.math-activity-page .math-heading > span { border-left: 5px solid #4bb57c; border-radius: 0 .22rem .22rem 0; background: #eaf9f0; font-size: .78rem; }
+.math-activity-page .math-heading h1 { max-width: 26ch; margin-top: .5rem; color: #142a45; font-size: clamp(2.1rem, 4.25vw, 3.8rem); }
+.math-activity-page .math-heading p { padding: .36rem .52rem; border-left: 4px solid #74ca99; color: #3b745a; background: #f1fbf5; font-size: .96rem; font-weight: 800; }
+.math-activity-page .math-worksheet { border-left-color: #2ca568; }
+.math-activity-page .math-worksheet::before { border-color: #7bcda0; color: #1f704b; background: #effbf4; content: '✦ EDUQUEST · 看材料 → 動手分組 → 作答'; }
+.math-activity-page .math-choice-model::after { border-color: #68c18f; color: #1d704a; background: #edf9f2; content: '✦ EDUQUEST · 操作模型'; }
+.math-activity-page .math-answer-zone .bank-title { border-bottom: 2px solid #6bc292; }
+.math-activity-page .math-answer-zone .bank-title span { color: #1d6d49; font-size: 1.02rem; }
+.math-activity-page .math-answer-zone .bank-title small { color: #4f8065; font-weight: 900; }
+.math-activity-page .eliminate-choice-availability { border-color: #77c89a; border-left-color: #39aa70; color: #1d704a; background: #eefaf3; }
+.math-activity-page .eliminate-choice-availability span { color: #278158; }
+.math-activity-page .eliminate-choice-satchel button { border-color: #79c99c; border-left-color: #39aa70; color: #1d704a; background: #effaf3; }
+.math-activity-page .eliminate-choice-satchel button:not(:disabled):hover { background: #e1f6e9; }
+.math-activity-page .eliminate-choice-satchel button:disabled { border-color: #9bd8b5; border-left-color: #469f70; color: #286c4e; background: #effaf3; }
+.math-activity-page .math-answer-locked { border-color: #85cfaa; border-left-color: #3baa70; color: #1e704b; background: #effbf4; }
+.math-activity-page .pair-drop-zone.one-left { border-left-color: #5ab982; background: #f4fcf7; }
+.math-activity-page .pair-box.remainder { border-color: #63bc89; background: #f3fcf6; }
+.math-activity-page .pair-box.remainder i, .math-activity-page .parity-pairs > div:nth-of-type(2) i:last-child { background: #47ae76; }
+
+@media (max-width: 820px) {
+  .math-activity-page .math-activity-frame { min-height: 0 !important; padding-top: .45rem !important; padding-bottom: .45rem !important; }
+  .math-activity-page .math-activity-frame .activity-brand-lockup { padding-right: .55rem; }
+  .math-activity-page .math-heading { padding-left: .72rem; border-left-width: 7px; }
+  .math-activity-page .math-heading h1 { font-size: 2rem; }
+  .math-activity-page .math-heading p { font-size: .84rem; }
+}
+
+/* 投影優先收斂：任務材料大於檔案裝飾，題型以專屬數學紙本記號提示。 */
+.math-activity-page .math-worksheet:has(.equal-groups-model, .equal-sharing-model, .remainder-sharing-model)::before,
+.math-activity-page .math-choice-model::after { display: none !important; }
+.math-activity-page .equal-groups-model, .math-activity-page .equal-sharing-model, .math-activity-page .remainder-sharing-model { padding: 1.35rem 1.45rem 1.22rem; border-left-width: 16px; box-shadow: 8px 9px 0 rgba(43,128,88,.12); }
+.math-activity-page .equal-groups-workbench { grid-template-columns: minmax(248px,.92fr) minmax(0,1.48fr); gap: 1.3rem; margin: 1.12rem 0; }
+.math-activity-page .equal-groups-pool, .math-activity-page .equal-group-drop { min-height: 202px; padding: 1.05rem; border-color: #77c99a; border-style: solid; }
+.math-activity-page .equal-groups-pool { position: relative; border-left: 10px solid #3baa70; }
+.math-activity-page .equal-groups-pool::before { position: absolute; top: -.6rem; left: .65rem; padding: .12rem .36rem; color: #1f7049; background: #eaf9f0; content: '✦ 可操作材料'; font: 900 .52rem var(--display); letter-spacing: .07em; }
+.math-activity-page .equal-groups-pool button, .math-activity-page .equal-group-drop button { width: 52px; height: 52px; }
+.math-activity-page .equal-groups-pool i, .math-activity-page .equal-group-drop i { font-size: 1.3rem; }
+.math-activity-page .equal-groups-model .equal-group-drop::before { position: absolute; top: .35rem; right: .42rem; color: #4b9b6c; content: '⟮每組同量⟯'; font: 900 .52rem var(--display); }
+.math-activity-page .equal-sharing-model .equal-groups-workbench, .math-activity-page .remainder-sharing-model .equal-groups-workbench { position: relative; padding-top: 1.05rem; border-top: 5px solid #4bb57a; }
+.math-activity-page .equal-sharing-model .equal-groups-workbench::before, .math-activity-page .remainder-sharing-model .equal-groups-workbench::before { position: absolute; top: -.02rem; left: .62rem; padding: .12rem .44rem; color: #fff; background: #3baa70; content: '↳ 依次平均分配'; font: 900 .55rem var(--display); letter-spacing: .05em; }
+.math-activity-page .remainder-sharing-model .equal-groups-workbench::before { content: '↳ 先平均分配，再找餘數'; }
+.math-activity-page .remainder-sharing-model .remainder-drop-zone { position: relative; min-height: 104px; margin-top: 1rem; border-left-width: 15px; background: repeating-linear-gradient(135deg,rgba(59,170,112,.08) 0 8px,transparent 8px 16px),#effaf3; }
+.math-activity-page .remainder-sharing-model .remainder-drop-zone::before { position: absolute; top: -.62rem; left: .65rem; padding: .12rem .38rem; color: #1f7049; background: #eaf9f0; content: '✦ 不能再平均分的物件'; font: 900 .52rem var(--display); }
+.math-activity-page .remainder-sharing-model .remainder-drop-zone button, .math-activity-page .remainder-sharing-model .remainder-drop-zone em { width: 48px; height: 48px; }
+.math-activity-page .math-model-note { min-height: 42px; padding: .7rem .05rem 0; border-top: 3px solid #8bcfab; color: #2d704e; font-size: .78rem; }
+.math-activity-page .math-model-note b::before { color: #3baa70; content: '✦ '; }
+@media (min-width: 821px) {
+  .site-shell.math-activity-page .math-activity-frame { min-height: 134px; padding-bottom: 1.95rem; }
+  .site-shell.math-activity-page .math-activity-frame .math-file-lesson-strip { bottom: .38rem; padding: .42rem .62rem; border-top-width: 3px; }
+  .site-shell.math-activity-page .math-file-lesson-strip span { font-size: .64rem; }
+}
+@media (max-width: 820px) {
+  .math-activity-page .equal-groups-model, .math-activity-page .equal-sharing-model, .math-activity-page .remainder-sharing-model { padding: .9rem .78rem .8rem; border-left-width: 9px; }
+  .math-activity-page .equal-groups-workbench { grid-template-columns: 1fr; gap: .82rem; }
+  .math-activity-page .equal-groups-pool, .math-activity-page .equal-group-drop { min-height: 0; padding: .8rem; }
+  .math-activity-page .equal-groups-pool button, .math-activity-page .equal-group-drop button { width: 42px; height: 42px; }
+  .math-activity-page .remainder-sharing-model .remainder-drop-zone { min-height: 0; padding: .72rem; }
+  .math-activity-page .remainder-sharing-model .remainder-drop-zone button, .math-activity-page .remainder-sharing-model .remainder-drop-zone em { width: 40px; height: 40px; }
+}
+
+/* 投影版收斂：任務、材料、作答與進度優先於文件裝飾。 */
+.math-activity-page .math-activity-frame { min-height: 88px !important; padding-top: .45rem !important; padding-bottom: .45rem !important; border-bottom-width: 4px !important; }
+.math-activity-page .math-activity-frame::after, .math-activity-page .math-file-stamp, .math-activity-page .math-file-lesson-strip, .math-activity-page .math-worksheet::before, .math-activity-page .math-worksheet::after, .math-activity-page .equal-groups-pool::before, .math-activity-page .equal-groups-model .equal-group-drop::before, .math-activity-page .equal-sharing-model .equal-groups-workbench::before, .math-activity-page .remainder-sharing-model .equal-groups-workbench::before, .math-activity-page .remainder-sharing-model .remainder-drop-zone::before { display: none !important; }
+.math-activity-page .math-file-status, .math-activity-page .math-heading p { display: none; }
+.math-activity-page .math-activity-frame .activity-brand-lockup { padding-right: .8rem; border-right: 0; }
+.math-activity-page .math-activity-frame .activity-course-file { padding-left: .72rem; }
+.math-activity-page .math-activity-frame .activity-course-file::before { width: 4px; }
+.math-activity-page .math-activity-stage { padding-top: clamp(1.15rem, 2.4vw, 1.8rem); background: #fbfffd; box-shadow: none; }
+.math-activity-page .math-activity-stage::before, .math-activity-page .math-activity-stage::after { display: none; }
+.math-activity-page .math-heading { padding-left: .9rem; border-left-width: 7px; }
+.math-activity-page .math-heading > span { padding: .28rem .48rem; border-left-width: 4px; font-size: .7rem; }
+.math-activity-page .math-heading h1 { max-width: 31ch; margin-top: .42rem; font-size: clamp(1.95rem, 3.8vw, 3.25rem); }
+.math-activity-page .math-worksheet { margin-top: 1rem; padding: clamp(.9rem, 2.2vw, 1.2rem); border: 1px solid #c9e5d6; border-left: 8px solid #2ca568; border-top: 0; border-bottom: 0; border-radius: 0 .55rem .55rem 0; background: #fff; }
+.math-activity-page .math-choice-model { padding: 1rem 1.05rem .9rem; border: 1px solid #a8d9be; border-left: 8px solid #3baa70; border-radius: 0 .45rem .45rem 0; background: #fbfffd; box-shadow: none; }
+.math-activity-page .math-choice-model header { padding-bottom: .55rem; border-bottom: 1px solid #c9e6d6; }
+.math-activity-page .math-choice-model header span { font-size: .9rem; }
+.math-activity-page .math-choice-model header small { font-size: .73rem; }
+.math-activity-page .math-operation-route { margin: .55rem 0 .75rem; padding: .34rem 0; border-top: 0; border-bottom: 1px solid #c9e6d6; background: transparent; }
+.math-activity-page .equal-groups-model, .math-activity-page .equal-sharing-model, .math-activity-page .remainder-sharing-model { padding: 1rem 1.05rem .9rem; border-top: 0; border-left-width: 8px; box-shadow: none; }
+.math-activity-page .equal-groups-workbench, .math-activity-page .equal-sharing-model .equal-groups-workbench, .math-activity-page .remainder-sharing-model .equal-groups-workbench { gap: .85rem; margin: .8rem 0; padding-top: 0; border-top: 0; }
+.math-activity-page .equal-groups-pool, .math-activity-page .equal-group-drop { min-height: 150px; padding: .78rem; border: 1px solid #b9dfc8; background: #fff; }
+.math-activity-page .equal-groups-pool { border-left: 5px solid #6cc38d; }
+.math-activity-page .equal-group-drop { border-left: 5px solid #9bd7b4; }
+.math-activity-page .equal-groups-pool > span, .math-activity-page .equal-group-drop > span { padding-bottom: .28rem; border-bottom: 0; font-size: .76rem; }
+.math-activity-page .equal-groups-pool button, .math-activity-page .equal-group-drop button { width: 44px; height: 44px; }
+.math-activity-page .remainder-story-strip { margin: .72rem 0; padding: .58rem .65rem; border: 1px solid #b1dcc3; border-left: 5px solid #55b67d; background: #f8fdf9; }
+.math-activity-page .story-theme-picker { margin: .35rem 0 .45rem; padding: .28rem 0; border: 0; border-top: 1px solid #d3eadc; border-bottom: 1px solid #d3eadc; background: transparent; }
+.math-activity-page .story-theme-picker button { padding: .2rem .28rem; font-size: .56rem; }
+.math-activity-page .story-supply, .math-activity-page .story-recipient, .math-activity-page .story-remainder { border: 1px solid #c7e5d3; background: #fff; }
+.math-activity-page .remainder-sharing-model .remainder-drop-zone { min-height: 0; margin-top: .78rem; padding: .72rem .8rem; border: 1px solid #9ed6b6; border-left: 8px solid #3baa70; background: #f4fbf6; box-shadow: none; }
+.math-activity-page .math-model-note { min-height: 0; padding-top: .55rem; border-top: 1px solid #c9e5d6; font-size: .74rem; }
+.math-activity-page .math-model-note b::before { content: ''; }
+.math-activity-page .math-answer-zone { margin-top: 1rem; padding: .78rem; border-top: 1px solid #b8dfc9; border-left: 7px solid #3baa70; background: #fafffb; }
+.math-activity-page .math-answer-zone::before { display: none; }
+.math-activity-page .math-answer-zone .bank-title { padding-bottom: .35rem; border-bottom: 1px solid #cbe8d7; }
+.math-activity-page .math-answer-zone .bank-title small { font-size: .65rem; }
+.math-activity-page .math-option-grid { gap: .52rem; margin-top: .7rem; }
+.math-activity-page .math-option-grid button { min-height: 58px; border: 1px solid #c6e4d3; border-left: 5px solid #7bc99b; border-radius: 0 .4rem .4rem 0; background: #fff; box-shadow: none; }
+@media (max-width: 820px) { .math-activity-page .math-activity-frame { min-height: 0 !important; } .math-activity-page .math-heading h1 { font-size: 1.9rem; } .math-activity-page .math-choice-model, .math-activity-page .equal-groups-model, .math-activity-page .equal-sharing-model, .math-activity-page .remainder-sharing-model { padding: .82rem .75rem .74rem; border-left-width: 7px; } .math-activity-page .equal-groups-pool, .math-activity-page .equal-group-drop { min-height: 0; padding: .68rem; } .math-activity-page .equal-groups-pool button, .math-activity-page .equal-group-drop button { width: 38px; height: 38px; } }

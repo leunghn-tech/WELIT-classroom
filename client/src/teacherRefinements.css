@@ -1,0 +1,1345 @@
+/* 單一活動標頭：年級／學科保留在左側檔籤，課題名稱與當題星級回到工作檯檔頭。 */
+.activity-workbench-frame .activity-task-stamp {
+  display: none !important;
+}
+
+.activity-workbench-frame {
+  grid-template-columns: auto minmax(0, 1fr) auto !important;
+}
+
+.activity-workbench-frame .activity-brand-lockup {
+  min-width: 0;
+}
+
+.activity-workbench-frame .activity-course-file {
+  display: grid !important;
+  justify-items: start;
+  gap: .1rem;
+  min-width: 0;
+}
+
+.activity-workbench-frame .activity-course-file > span {
+  color: #c05c45;
+  font: 900 .66rem var(--display);
+  letter-spacing: .08em;
+}
+
+.activity-workbench-frame .activity-course-file > b {
+  color: #1c3858;
+  font: 900 clamp(.96rem, 1.4vw, 1.2rem)/1.25 var(--display);
+}
+
+.activity-question-difficulty {
+  display: inline-flex;
+  align-items: center;
+  gap: .02rem;
+  color: #d79a27;
+  font-size: .82rem;
+  letter-spacing: .03em;
+  white-space: nowrap;
+}
+
+.activity-question-difficulty::before {
+  margin-right: .3rem;
+  color: #718096;
+  content: '本題難度';
+  font: 800 .65rem var(--display);
+  letter-spacing: .04em;
+}
+
+.activity-question-difficulty i {
+  font-style: normal;
+}
+
+.activity-question-difficulty .empty {
+  color: #c9d4dc;
+}
+
+/* 標題已在工作檯檔頭顯示，導覽列只保留返回與進度，避免同一資訊重覆。 */
+.match-topbar > div:nth-child(2) > span {
+  display: none;
+}
+
+/* 英文頁原本隱藏了整個題目中繼欄，令目前題號一併消失；只隱藏重複課題名稱，保留第幾題。 */
+.site-shell.english-choice-page .match-topbar > div:nth-of-type(1) {
+  display: grid !important;
+  justify-items: center;
+  gap: .1rem;
+}
+
+.site-shell.english-choice-page .match-topbar > div:nth-of-type(1) > span {
+  display: none !important;
+}
+
+/* 教師題庫難度採同一單元內的五級星等，避免跨課題誤讀為絕對難度。 */
+.difficulty-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: .03rem;
+  color: #d7a138;
+  font-size: .78rem;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+.difficulty-stars .empty {
+  color: #c9d4dc;
+}
+
+.teacher-question-meta .difficulty-stars {
+  padding: .2rem .42rem;
+  border: 1px solid #ead9af;
+  border-radius: 999px;
+  background: #fffaf0;
+}
+
+/* 教師可控的刪錯選項錦囊：只在四選一題目出現，使用後保留正確答案和一個干擾選項。 */
+.eliminate-choice-satchel {
+  display: flex;
+  justify-content: flex-start;
+  margin: .78rem 0 1rem;
+  padding: .18rem 0 .18rem .55rem;
+  border-left: 2px dashed #cbc2ee;
+}
+
+.eliminate-choice-satchel button {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .62rem;
+  min-height: 56px;
+  max-width: 390px;
+  padding: .48rem .7rem .48rem .46rem;
+  border: 1px solid #b7a9e8;
+  border-radius: .82rem .14rem .82rem .14rem;
+  color: #40336f;
+  background: linear-gradient(135deg, #f5f1ff, #ebe5ff);
+  box-shadow: 3px 3px 0 rgba(109,83,184,.16);
+  font-weight: 900;
+  text-align: left;
+  transition: transform .16s var(--ease), box-shadow .16s, background .16s;
+}
+
+.eliminate-choice-satchel button::before { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50% 50% 50% .15rem; color: #fff; background: #7057c2; box-shadow: inset 0 -3px 0 rgba(54,36,113,.2); content: '✦'; font: 900 1rem var(--display); }
+.eliminate-choice-satchel button::after { color: #7057c2; content: '→'; font: 900 1.15rem/1 var(--display); }
+.eliminate-choice-satchel button:not(:disabled) span { grid-column: 2; grid-row: 1; }
+.eliminate-choice-satchel button:not(:disabled) b { grid-column: 2; grid-row: 2; min-width: 0; }
+.eliminate-choice-satchel button:not(:disabled)::after { grid-column: 3; grid-row: 1 / 3; }
+.eliminate-choice-satchel button:not(:disabled):hover { transform: translateY(-3px) rotate(-.35deg); box-shadow: 0 0 0 3px rgba(131,106,220,.14), 0 8px 19px rgba(103,78,181,.24); background: linear-gradient(135deg, #faf8ff, #e3dcff); }
+.eliminate-choice-satchel button:not(:disabled):hover::before { animation: hint-icon-hover .7s var(--ease-out) infinite alternate; }
+.eliminate-choice-satchel button:not(:disabled):hover::after { animation: hint-arrow-hover .55s var(--ease-out) infinite alternate; }
+@keyframes hint-icon-hover { from { transform: translateY(0) rotate(-3deg); filter: brightness(1); } to { transform: translateY(-3px) rotate(4deg); filter: brightness(1.16) drop-shadow(0 3px 3px rgba(72,50,145,.26)); } }
+@keyframes hint-arrow-hover { from { transform: translateX(0); } to { transform: translateX(3px); } }
+.eliminate-choice-satchel button:disabled { cursor: default; grid-template-columns: 25px minmax(0, 1fr); min-height: 40px; padding: .34rem .58rem .34rem .38rem; border-color: #c9c1df; color: #635d76; background: #f7f5fb; box-shadow: none; }
+.eliminate-choice-satchel button:disabled::before { width: 24px; height: 24px; color: #fff; background: #9187ae; content: '✓'; font-size: .72rem; }
+.eliminate-choice-satchel button:disabled::after { display: none; }
+.eliminate-choice-satchel button span { color: #7869a7; font-size: .62rem; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; }
+.eliminate-choice-satchel button b { color: inherit; font: 900 .8rem/1.2 var(--display); }
+.eliminate-choice-satchel button:disabled span { color: #8a839d; font-size: .59rem; }
+.eliminate-choice-satchel button:disabled b { font-size: .7rem; }
+.eliminate-choice-satchel button:disabled span { grid-column: 2; grid-row: 1; align-self: end; white-space: nowrap; }
+.eliminate-choice-satchel button:disabled b { grid-column: 2; grid-row: 2; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
+
+.eliminate-choice-satchel.satchel-activating { position: relative; isolation: isolate; }
+.eliminate-choice-satchel.satchel-activating button { animation: hint-card-flash .62s var(--ease-out) both; }
+.eliminate-choice-satchel.satchel-activating::before { position: absolute; z-index: 3; top: -1rem; left: .7rem; color: #876ee2; content: '✦  ·  ✦  ·  ✧'; font: 900 1rem/1 var(--display); letter-spacing: .16rem; pointer-events: none; animation: hint-sparkle-rise .62s var(--ease-out) both; }
+.eliminate-choice-satchel.satchel-activating::after { position: absolute; z-index: 2; top: 50%; left: 1.4rem; width: 2.1rem; height: 2.1rem; border: 2px solid rgba(135,110,226,.55); border-radius: 50%; content: ''; pointer-events: none; animation: hint-sparkle-ring .54s var(--ease-out) both; }
+@keyframes hint-card-flash { 0% { filter: brightness(1); transform: none; } 32% { filter: brightness(1.2); transform: translateY(-2px) scale(1.015); } 100% { filter: brightness(1); transform: none; } }
+@keyframes hint-sparkle-rise { 0% { opacity: 0; transform: translateY(.55rem) scale(.72); } 35% { opacity: 1; } 100% { opacity: 0; transform: translateY(-1.1rem) scale(1.1); } }
+@keyframes hint-sparkle-ring { 0% { opacity: .9; transform: translate(-50%, -50%) scale(.4); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(2.4); } }
+.eliminate-choice-setting-note { display: block; margin: -.18rem .2rem .36rem; color: #7a6a4c; font-size: .67rem; font-weight: 800; }
+/* 錦囊是跨學科的提示工具，不沿用任何學科答案紙條的顏色或造型。 */
+.math-activity-page .eliminate-choice-satchel button { border-color: #b7a9e8 !important; border-left: 1px solid #b7a9e8 !important; color: #40336f !important; background: linear-gradient(135deg, #f5f1ff, #ebe5ff) !important; }
+.math-activity-page .eliminate-choice-satchel button:not(:disabled):hover { background: linear-gradient(135deg, #faf8ff, #e3dcff) !important; }
+.math-activity-page .eliminate-choice-satchel button:disabled { border-color: #c9c1df !important; color: #635d76 !important; background: #f7f5fb !important; }
+
+.eliminating-choice {
+  position: relative;
+  overflow: hidden;
+  pointer-events: none;
+  animation: eliminate-choice-fade .62s var(--ease-out) forwards;
+}
+
+.eliminating-choice::after {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 7%;
+  width: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: #cf6251;
+  box-shadow: 0 0 0 3px rgba(255,255,255,.64);
+  content: '';
+  transform: rotate(-4deg);
+  animation: eliminate-choice-strike .3s .08s var(--ease-out) forwards;
+}
+
+.eliminating-choice b,
+.eliminating-choice span { text-decoration: line-through; text-decoration-color: #cf6251; text-decoration-thickness: 2px; }
+.eliminated-choice { display: none !important; }
+
+@keyframes eliminate-choice-strike { to { width: 86%; } }
+@keyframes eliminate-choice-fade { 0%, 45% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateX(12px) scale(.98); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .eliminating-choice { animation: none; opacity: .42; }
+  .eliminating-choice::after { width: 86%; animation: none; }
+  .eliminate-choice-satchel.satchel-activating button,
+  .eliminate-choice-satchel.satchel-activating::before,
+  .eliminate-choice-satchel.satchel-activating::after,
+  .eliminate-choice-satchel button:not(:disabled):hover::before,
+  .eliminate-choice-satchel button:not(:disabled):hover::after { animation: none; }
+}
+
+html[data-eduquest-animation='off'] .eliminate-choice-satchel.satchel-activating button,
+html[data-eduquest-animation='off'] .eliminate-choice-satchel.satchel-activating::before,
+html[data-eduquest-animation='off'] .eliminate-choice-satchel.satchel-activating::after,
+html[data-eduquest-animation='off'] .eliminate-choice-satchel button:not(:disabled):hover::before,
+html[data-eduquest-animation='off'] .eliminate-choice-satchel button:not(:disabled):hover::after { animation: none; }
+
+/* 提示是課堂工作紙的工具標籤，沿用每科的學習色而不引入第四種介面色。 */
+.english-choice-page .eliminate-choice-satchel,
+.english-reading-page .eliminate-choice-satchel { padding: .38rem .55rem .42rem; border: 1px dashed #8ed1f2; border-left: 7px solid #55b7ee; background: linear-gradient(90deg, #edfaff, rgba(237,250,255,.42)); }
+.english-choice-page .eliminate-choice-satchel button,
+.english-reading-page .eliminate-choice-satchel button { border-color: #8ed1f2 !important; border-left-color: #8ed1f2 !important; color: #246c98 !important; background: #f7fdff !important; box-shadow: 3px 3px 0 rgba(85,183,238,.16) !important; }
+.english-choice-page .eliminate-choice-satchel button::before,
+.english-reading-page .eliminate-choice-satchel button::before { background: #55b7ee; }
+.english-choice-page .eliminate-choice-satchel button::after,
+.english-reading-page .eliminate-choice-satchel button::after { color: #338ec3; }
+.english-choice-page .eliminate-choice-satchel button span,
+.english-reading-page .eliminate-choice-satchel button span { color: #3184b4; }
+.english-choice-page .eliminate-choice-satchel button:not(:disabled):hover,
+.english-reading-page .eliminate-choice-satchel button:not(:disabled):hover { background: #eaf8ff !important; box-shadow: 0 0 0 3px rgba(85,183,238,.16), 0 8px 19px rgba(52,151,202,.22) !important; }
+.english-choice-page .eliminate-choice-satchel button:disabled,
+.english-reading-page .eliminate-choice-satchel button:disabled { border-color: #b9d8e8 !important; color: #5d7888 !important; background: #f4fafc !important; }
+.english-choice-page .eliminate-choice-satchel button:disabled::before,
+.english-reading-page .eliminate-choice-satchel button:disabled::before { background: #77a9c4; }
+.english-choice-page .eliminate-choice-satchel.satchel-activating::before,
+.english-reading-page .eliminate-choice-satchel.satchel-activating::before { color: #55b7ee; }
+.english-choice-page .eliminate-choice-satchel.satchel-activating::after,
+.english-reading-page .eliminate-choice-satchel.satchel-activating::after { border-color: rgba(85,183,238,.58); }
+
+.choice-worksheet-page .eliminate-choice-satchel,
+.p2-writing-page .eliminate-choice-satchel,
+.p3-study-page .eliminate-choice-satchel,
+.tale-reading-page .eliminate-choice-satchel { border-left-color: #ef765c; }
+.choice-worksheet-page .eliminate-choice-satchel button,
+.p2-writing-page .eliminate-choice-satchel button,
+.p3-study-page .eliminate-choice-satchel button,
+.tale-reading-page .eliminate-choice-satchel button { border-color: #f2b7aa; color: #a24a38; background: #fff8f5; box-shadow: 3px 3px 0 rgba(239,118,92,.13); }
+.choice-worksheet-page .eliminate-choice-satchel button::before,
+.p2-writing-page .eliminate-choice-satchel button::before,
+.p3-study-page .eliminate-choice-satchel button::before,
+.tale-reading-page .eliminate-choice-satchel button::before { background: #ef765c; }
+.choice-worksheet-page .eliminate-choice-satchel button::after,
+.p2-writing-page .eliminate-choice-satchel button::after,
+.p3-study-page .eliminate-choice-satchel button::after,
+.tale-reading-page .eliminate-choice-satchel button::after { color: #c95d47; }
+
+.math-activity-page .eliminate-choice-satchel button::before { background: #3baa70; }
+.math-activity-page .eliminate-choice-satchel button::after { color: #277e55; }
+.math-activity-page .eliminate-choice-satchel button span { color: #307953; }
+
+/* 數學所有工具皆屬草綠工作紙：提示不再使用跨科紫色工具色。 */
+.site-shell.math-activity-page .eliminate-choice-satchel { padding: .38rem .55rem .42rem; border: 1px dashed #83cda5; border-left: 7px solid #3baa70; background: linear-gradient(90deg, #edf9f1, rgba(237,249,241,.42)); }
+.site-shell.math-activity-page .eliminate-choice-satchel button { border-color: #83cda5 !important; border-left-color: #83cda5 !important; color: #1d704a !important; background: #f8fdf9 !important; box-shadow: 3px 3px 0 rgba(52,157,105,.16) !important; }
+.site-shell.math-activity-page .eliminate-choice-satchel button::before { background: #3baa70 !important; }
+.site-shell.math-activity-page .eliminate-choice-satchel button::after { color: #277e55 !important; }
+.site-shell.math-activity-page .eliminate-choice-satchel button span { color: #307953 !important; }
+.site-shell.math-activity-page .eliminate-choice-satchel button:not(:disabled):hover { background: #e9f8ef !important; box-shadow: 0 0 0 3px rgba(59,170,112,.15), 0 8px 19px rgba(39,126,85,.22) !important; }
+.site-shell.math-activity-page .eliminate-choice-satchel button:not(:disabled):hover::before { filter: brightness(1.15) drop-shadow(0 3px 3px rgba(31,105,70,.22)); }
+.site-shell.math-activity-page .eliminate-choice-satchel button:disabled { border-color: #b6d8c2 !important; color: #5a7967 !important; background: #f2faf5 !important; }
+.site-shell.math-activity-page .eliminate-choice-satchel button:disabled::before { background: #74a789 !important; }
+.site-shell.math-activity-page .eliminate-choice-satchel.satchel-activating::before { color: #48b276; }
+.site-shell.math-activity-page .eliminate-choice-satchel.satchel-activating::after { border-color: rgba(59,170,112,.6); }
+
+.site-shell.math-activity-page .math-activity-frame { position: relative; overflow: hidden; }
+.site-shell.math-activity-page .math-activity-frame::after { display: none; }
+.site-shell.math-activity-page .math-activity-frame .activity-file-tab { box-shadow: inset -4px 0 0 rgba(255,255,255,.25); }
+.site-shell.math-activity-page .math-activity-frame .activity-brand-lockup { border-right-color: #a7dabb; }
+.site-shell.math-activity-page .math-activity-frame .activity-course-file { padding-left: 1.15rem; }
+.site-shell.math-activity-page .math-activity-frame .activity-course-file::before { background: #3baa70; }
+.site-shell.math-activity-page .math-activity-frame .math-file-stamp { box-shadow: inset 0 -2px 0 rgba(43,134,83,.12); }
+
+.site-shell.math-activity-page .parity-pairs > div { position: relative; padding-left: 1.25rem; }
+.site-shell.math-activity-page .parity-pairs > div::before { position: absolute; left: .28rem; top: .15rem; bottom: .15rem; width: .5rem; border-left: 2px solid #4bb57c; border-top: 2px solid #4bb57c; border-bottom: 2px solid #4bb57c; content: ''; }
+.site-shell.math-activity-page .parity-pairs > div::after { position: absolute; right: .28rem; top: .15rem; bottom: .15rem; width: .5rem; border-right: 2px solid #4bb57c; border-top: 2px solid #4bb57c; border-bottom: 2px solid #4bb57c; content: ''; }
+.site-shell.math-activity-page .parity-pairs > div:nth-of-type(2)::before,
+.site-shell.math-activity-page .parity-pairs > div:nth-of-type(2)::after { border-color: #68b989; }
+
+/* 數學檔頭是課堂檔案封面：綠色身分帶集中年級、單元、題號與操作路徑。 */
+.site-shell.math-activity-page .math-activity-frame .activity-brand-lockup { justify-self: center; min-width: 205px; padding: .45rem .85rem; border: 1px dashed #a9dcbf; border-right: 5px solid #3baa70; background: rgba(248,253,249,.88); }
+.site-shell.math-activity-page .math-activity-frame .activity-brand-lockup small { color: #39745a !important; }
+.site-shell.math-activity-page .math-activity-frame .activity-course-file { min-width: 214px; padding: .62rem .75rem .58rem 1.1rem; border: 1px solid #a6d8ba; border-left: 7px solid #38aa70; background: linear-gradient(90deg, #effaf3, rgba(255,255,255,.72)); }
+.site-shell.math-activity-page .math-activity-frame .activity-course-file::before { display: none; }
+.site-shell.math-activity-page .math-activity-frame .activity-course-file > span { color: #24764f !important; font-size: .63rem; }
+.site-shell.math-activity-page .math-activity-frame .activity-course-file > b { color: #184b35 !important; font-size: clamp(1.02rem, 1.45vw, 1.28rem); }
+.site-shell.math-activity-page .math-activity-frame .math-file-status { display: block; color: #37795a; font: 900 .6rem var(--display); letter-spacing: .035em; }
+.site-shell.math-activity-page .math-activity-frame .math-file-stamp { margin-top: .24rem; border-color: #5ebc84 !important; color: #176b45 !important; background: #e5f7ec !important; }
+.site-shell.math-activity-page .math-activity-frame .activity-file-tab { color: #fff; background: #3baa70 !important; }
+.site-shell.math-activity-page .math-activity-frame .activity-file-tab::after { border-color: rgba(255,255,255,.35) !important; }
+
+/* 答案選項已足夠表達作答位置，移除重複的工作紙標籤以收斂投影片版面。 */
+.p3-choice-bank .bank-title::before,
+.english-choice-page .english-answer-zone::before,
+.english-reading-page .english-reading-answer::before,
+.choice-worksheet-page .worksheet-options::before,
+.p2-writing-page .writing-choice-bank::before,
+.p3-study-page .p3-choice-bank::before,
+.tale-reading-page .tale-choice-bank::before { display: none !important; content: none !important; }
+
+@media (max-width: 820px) {
+  .site-shell.math-activity-page .math-activity-frame .activity-brand-lockup { justify-self: start; min-width: 0; padding: .28rem .46rem; border-right-width: 3px; }
+  .site-shell.math-activity-page .math-activity-frame .activity-course-file { min-width: 0; padding: .42rem .48rem .4rem .68rem; border-left-width: 5px; }
+  .site-shell.math-activity-page .math-activity-frame .math-file-status { font-size: .52rem; }
+}
+
+/* 首頁左欄同樣是一張已展開的教師開課檔案，不是獨立宣傳英雄。 */
+.home-page .hero-copy { position: relative; padding: 1.1rem 1.2rem 1.15rem; border-left: 8px solid #2c63f5; background: repeating-linear-gradient(0deg, rgba(44,99,245,.035) 0 1px, transparent 1px 29px), rgba(255,255,255,.34); }
+.home-page .hero-copy::before { display: inline-block; margin-bottom: .55rem; padding: .22rem .42rem; border: 1px solid #a8c5fb; color: #2858bc; background: #f4f8ff; content: '01 · 教師開課檔案'; font: 900 .58rem var(--display); letter-spacing: .1em; }
+.home-page .hero-copy .kicker { display: none; }
+.home-page .hero-copy h1 { max-width: 10ch; margin-top: .25rem; }
+.home-page .hero-copy p { max-width: 48ch; padding: .48rem .58rem; border-left: 3px solid #80a7f7; background: rgba(247,250,255,.72); }
+.home-page .hero-copy .hero-actions { padding-top: .72rem; border-top: 1px dashed #b9cef7; }
+.home-page .home-route-note { margin-top: .85rem; padding: .58rem .62rem; border: 1px dashed #b9cef7; background: rgba(255,255,255,.62); }
+.home-page .home-route-note span b { border-color: #9bbdf7; color: #2858bc; background: #f5f8ff; }
+@media (max-width: 820px) {
+  .home-page .hero-copy { padding: .85rem .78rem .9rem; border-left-width: 6px; }
+  .home-page .hero-copy::before { margin-bottom: .4rem; font-size: .51rem; }
+}
+
+/* 數學頁是一份連續展開的課堂檔案：檔頭、進度與主紙面使用同一條草綠路徑。 */
+.site-shell.math-activity-page .math-activity-frame { margin-bottom: 0 !important; border-bottom: 0; box-shadow: inset 0 -5px 0 #3baa70; }
+.site-shell.math-activity-page .math-match-topbar { position: relative; z-index: 2; margin-top: 0 !important; margin-bottom: 0 !important; border-top: 0 !important; border-left: 10px solid #3baa70 !important; border-bottom: 1px solid #b9e0c8; background: #fbfffc !important; box-shadow: none !important; }
+.site-shell.math-activity-page .math-activity-stage { margin-top: 0 !important; border-top: 0 !important; box-shadow: 0 8px 0 rgba(43,128,88,.08); }
+.site-shell.math-activity-page .math-match-topbar .match-back { border: 1px solid #8acda5 !important; border-left: 6px solid #3baa70 !important; color: #236d47 !important; background: repeating-linear-gradient(0deg,rgba(59,170,112,.045) 0 1px,transparent 1px 19px),#fff !important; box-shadow: 3px 3px 0 rgba(43,128,88,.11) !important; font-family: var(--display); }
+.site-shell.math-activity-page .math-match-topbar .match-back::before { content: '← '; color: #3baa70; }
+.site-shell.math-activity-page .math-match-topbar .match-progress { border-left: 1px dashed #a8d7b9; padding-left: .75rem; }
+
+@media (max-width: 820px) {
+  .site-shell.math-activity-page .math-activity-frame::after { display: none; }
+}
+
+.english-choice-page .english-answer-zone { position: relative; padding: .95rem .95rem 1rem; border-left-width: 8px; background: repeating-linear-gradient(0deg, rgba(85,183,238,.035) 0 1px, transparent 1px 27px), #fbfeff; }
+.english-choice-page .english-answer-zone::after { position: absolute; right: .74rem; bottom: .58rem; color: #66bce4; content: '✦ EDUQUEST · ANSWER STRIP'; font: 900 .5rem var(--display); letter-spacing: .08em; }
+.english-choice-page .english-answer-zone .eliminate-choice-satchel { margin: .5rem 0 .72rem; }
+.english-choice-page .english-option-grid { position: relative; z-index: 1; gap: .55rem; }
+.english-choice-page .english-option-grid button { min-height: 64px; border-width: 1px 1px 1px 8px !important; border-radius: 0 .22rem .22rem 0 !important; box-shadow: none !important; background: repeating-linear-gradient(0deg, rgba(85,183,238,.035) 0 1px, transparent 1px 23px), #fff !important; }
+.english-choice-page .english-option-grid button > span { display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid #89cdee; border-radius: 50%; color: #287eaf; background: #edfaff; }
+.english-choice-page .english-option-grid button > b { letter-spacing: .015em; }
+
+@media (max-width: 820px) {
+  .eliminate-choice-satchel { justify-content: stretch; margin: .66rem 0 .88rem; padding-left: .4rem; }
+  .eliminate-choice-satchel button { width: 100%; max-width: none; }
+  .eliminate-choice-satchel button:disabled { min-height: 48px; }
+  .eliminate-choice-satchel button:disabled b { font-size: .72rem; overflow-wrap: normal; }
+  .eliminate-choice-availability { width: 100%; justify-content: space-between; font-size: .66rem; }
+}
+
+/* 三科共用的連續課堂工作紙：英文用晴空藍、中文用珊瑚橙，令工具列、材料與答案區不再像獨立卡片。 */
+.english-choice-page .english-match-topbar,
+.english-reading-page .english-reading-topbar,
+.choice-worksheet-page .match-topbar,
+.p2-writing-page .match-topbar,
+.p3-study-page .match-topbar,
+.tale-reading-page .match-topbar {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: .65rem clamp(.85rem, 3vw, 2rem);
+  border: 1px solid #c7dfee;
+  border-top: 0;
+  border-left: 8px solid #4da8e8;
+  background: repeating-linear-gradient(0deg, rgba(77,168,232,.05) 0 1px, transparent 1px 28px), #fbfdff;
+}
+
+.choice-worksheet-page .match-topbar,
+.p2-writing-page .match-topbar,
+.p3-study-page .match-topbar,
+.tale-reading-page .match-topbar {
+  border-color: #efc3b7;
+  border-left-color: #ef765c;
+  background: repeating-linear-gradient(0deg, rgba(239,118,92,.05) 0 1px, transparent 1px 28px), #fffdfc;
+}
+
+.english-choice-page .english-match-topbar .match-back,
+.english-reading-page .english-reading-topbar .match-back,
+.choice-worksheet-page .match-topbar .match-back,
+.p2-writing-page .match-topbar .match-back,
+.p3-study-page .match-topbar .match-back,
+.tale-reading-page .match-topbar .match-back {
+  border-radius: 0 .48rem .48rem 0;
+  border-left: 5px solid #4da8e8;
+  background: #fff;
+}
+
+.choice-worksheet-page .match-topbar .match-back,
+.p2-writing-page .match-topbar .match-back,
+.p3-study-page .match-topbar .match-back,
+.tale-reading-page .match-topbar .match-back { border-left-color: #ef765c; }
+
+.english-choice-page .english-match-topbar .match-progress i,
+.english-reading-page .english-reading-topbar .match-progress i { background: linear-gradient(90deg, #4da8e8, #a5ddff); }
+.choice-worksheet-page .match-topbar .match-progress i,
+.p2-writing-page .match-topbar .match-progress i,
+.p3-study-page .match-topbar .match-progress i,
+.tale-reading-page .match-topbar .match-progress i { background: linear-gradient(90deg, #ef765c, #ffb3a1); }
+
+.english-choice-page .english-activity-stage,
+.english-reading-page .english-reading-stage,
+.choice-worksheet-page .choice-worksheet-stage,
+.p2-writing-page .p2-writing-stage,
+.p3-study-page .p3-study-stage,
+.tale-reading-page .tale-reading-stage {
+  position: relative;
+  overflow: hidden;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(1.25rem, 3vw, 2.6rem) clamp(1rem, 3vw, 2.35rem) 2.25rem;
+  border: 1px solid #c7dfee;
+  border-top: 0;
+  border-left: 8px solid #4da8e8;
+  background: radial-gradient(circle, rgba(77,168,232,.18) 0 3px, transparent 3.5px) 12px 14px / 12px 28px repeat-y, repeating-linear-gradient(0deg, rgba(77,168,232,.05) 0 1px, transparent 1px 31px), #fbfdff;
+  box-shadow: 7px 7px 0 rgba(50,119,170,.07);
+}
+
+.choice-worksheet-page .choice-worksheet-stage,
+.p2-writing-page .p2-writing-stage,
+.p3-study-page .p3-study-stage,
+.tale-reading-page .tale-reading-stage {
+  border-color: #efc3b7;
+  border-left-color: #ef765c;
+  background: radial-gradient(circle, rgba(239,118,92,.18) 0 3px, transparent 3.5px) 12px 14px / 12px 28px repeat-y, repeating-linear-gradient(0deg, rgba(239,118,92,.05) 0 1px, transparent 1px 31px), #fffdfc;
+  box-shadow: 7px 7px 0 rgba(176,79,57,.07);
+}
+
+.english-choice-page .english-activity-stage::before,
+.english-reading-page .english-reading-stage::before,
+.choice-worksheet-page .choice-worksheet-stage::before,
+.p2-writing-page .p2-writing-stage::before,
+.p3-study-page .p3-study-stage::before,
+.tale-reading-page .tale-reading-stage::before {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: 30px;
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, #4da8e8 0 11px, transparent 11px 17px);
+  content: '';
+}
+
+.choice-worksheet-page .choice-worksheet-stage::before,
+.p2-writing-page .p2-writing-stage::before,
+.p3-study-page .p3-study-stage::before,
+.tale-reading-page .tale-reading-stage::before { background: repeating-linear-gradient(to bottom, #ef765c 0 11px, transparent 11px 17px); }
+
+.english-choice-page .english-activity-stage > *,
+.english-reading-page .english-reading-stage > *,
+.choice-worksheet-page .choice-worksheet-stage > *,
+.p2-writing-page .p2-writing-stage > *,
+.p3-study-page .p3-study-stage > *,
+.tale-reading-page .tale-reading-stage > * { position: relative; z-index: 1; }
+
+.english-choice-page .match-heading,
+.english-reading-page .english-reading-heading,
+.choice-worksheet-page .match-heading,
+.p2-writing-page .match-heading,
+.p3-study-page .match-heading,
+.tale-reading-page .match-heading {
+  padding-left: .95rem;
+  border-left: 5px solid #4da8e8;
+}
+
+.choice-worksheet-page .match-heading,
+.p2-writing-page .match-heading,
+.p3-study-page .match-heading,
+.tale-reading-page .match-heading { border-left-color: #ef765c; }
+
+.english-choice-page .match-heading > span,
+.english-reading-page .english-reading-heading > span { border-radius: 0 .32rem .32rem 0; border-left: 4px solid #4da8e8; }
+
+.english-choice-page .english-worksheet,
+.english-reading-page .english-reading-workbench,
+.choice-worksheet-page .context-paper,
+.p2-writing-page .writing-source-card,
+.p3-study-page .p3-source-card,
+.tale-reading-page .tale-story-sheet {
+  border-top: 2px solid #81c4ef;
+  border-bottom: 2px solid #d3eafa;
+  background-image: repeating-linear-gradient(0deg, rgba(77,168,232,.035) 0 1px, transparent 1px 28px);
+}
+
+.choice-worksheet-page .context-paper,
+.p2-writing-page .writing-source-card,
+.p3-study-page .p3-source-card,
+.tale-reading-page .tale-story-sheet {
+  border-top-color: #f19783;
+  border-bottom-color: #f5d4cc;
+  background-image: repeating-linear-gradient(0deg, rgba(239,118,92,.035) 0 1px, transparent 1px 28px);
+}
+
+.english-choice-page .english-answer-zone,
+.english-reading-page .english-reading-answer,
+.choice-worksheet-page .worksheet-options,
+.p2-writing-page .writing-choice-bank,
+.p3-study-page .p3-choice-bank,
+.tale-reading-page .tale-choice-bank {
+  position: relative;
+  margin-top: 1rem;
+  padding: .9rem;
+  border-top: 4px double #81c4ef;
+  border-left: 6px solid #4da8e8;
+  background: rgba(255,255,255,.78);
+}
+
+.choice-worksheet-page .worksheet-options,
+.p2-writing-page .writing-choice-bank,
+.p3-study-page .p3-choice-bank,
+.tale-reading-page .tale-choice-bank {
+  border-top-color: #f19783;
+  border-left-color: #ef765c;
+}
+
+.english-choice-page .english-answer-zone::before,
+.english-reading-page .english-reading-answer::before,
+.choice-worksheet-page .worksheet-options::before,
+.p2-writing-page .writing-choice-bank::before,
+.p3-study-page .p3-choice-bank::before,
+.tale-reading-page .tale-choice-bank::before {
+  position: absolute;
+  top: -.82rem;
+  left: .65rem;
+  padding: .15rem .42rem;
+  color: #fff;
+  background: #4da8e8;
+  content: '作答區';
+  font: 900 .58rem var(--display);
+  letter-spacing: .08em;
+}
+
+.choice-worksheet-page .worksheet-options::before,
+.p2-writing-page .writing-choice-bank::before,
+.p3-study-page .p3-choice-bank::before,
+.tale-reading-page .tale-choice-bank::before { background: #ef765c; }
+
+.english-choice-page .activity-workbench-frame,
+.english-reading-page .activity-workbench-frame { border-bottom: 5px solid #4da8e8 !important; background: repeating-linear-gradient(90deg, transparent 0 23px, rgba(77,168,232,.12) 23px 24px), #fbfdff !important; }
+.english-choice-page .activity-file-tab,
+.english-reading-page .activity-file-tab { background: #4da8e8 !important; }
+.choice-worksheet-page .activity-workbench-frame,
+.p2-writing-page .activity-workbench-frame,
+.p3-study-page .activity-workbench-frame,
+.tale-reading-page .activity-workbench-frame { border-bottom: 5px solid #ef765c !important; background: repeating-linear-gradient(90deg, transparent 0 23px, rgba(239,118,92,.12) 23px 24px), #fffdfc !important; }
+.choice-worksheet-page .activity-file-tab,
+.p2-writing-page .activity-file-tab,
+.p3-study-page .activity-file-tab,
+.tale-reading-page .activity-file-tab { background: #ef765c !important; }
+
+.tale-reading-page [class*='focus'] button,
+.tale-reading-page .focus-reading-trigger { border-left: 5px solid #ef765c; border-radius: 0 .45rem .45rem 0; background: #fffaf8; }
+
+/* 課堂投影用的印刷式答題紙條：以學科色側軌、虛線回應區和章印取代一般圓角測驗卡。 */
+.english-choice-page .activity-workbench-frame,
+.english-reading-page .activity-workbench-frame {
+  min-height: 88px !important;
+  padding-top: .42rem !important;
+  padding-bottom: .42rem !important;
+  border-bottom-color: #55b7ee !important;
+}
+
+.english-choice-page .activity-workbench-frame .activity-course-file > span,
+.english-reading-page .activity-workbench-frame .activity-course-file > span { color: #2687bd !important; }
+.english-choice-page .activity-workbench-frame .activity-course-file > b,
+.english-reading-page .activity-workbench-frame .activity-course-file > b { color: #235d87 !important; }
+.english-choice-page .match-heading,
+.english-reading-page .english-reading-heading { border-left-color: #55b7ee !important; }
+.english-choice-page .match-heading > span,
+.english-reading-page .english-reading-heading > span { color: #2379ae !important; background: #eefaff !important; border-left-color: #55b7ee !important; }
+.english-choice-page .english-activity-stage,
+.english-reading-page .english-reading-stage { border-left-color: #55b7ee !important; background: radial-gradient(circle, rgba(85,183,238,.19) 0 3px, transparent 3.5px) 12px 14px / 12px 28px repeat-y, repeating-linear-gradient(0deg, rgba(85,183,238,.05) 0 1px, transparent 1px 31px), #fbfdff; }
+.english-choice-page .english-activity-stage::before,
+.english-reading-page .english-reading-stage::before { background: repeating-linear-gradient(to bottom, #55b7ee 0 11px, transparent 11px 17px); }
+.english-choice-page .english-activity-stage::after,
+.english-reading-page .english-reading-stage::after { position: absolute; z-index: 1; top: .7rem; right: 1rem; bottom: auto; left: auto; width: auto; height: auto; padding: .18rem .42rem; border: 1px solid #9cd8f4; color: #2379ae; background: #effaff; content: 'ENGLISH · TASK FILE'; font: 900 .54rem var(--display); letter-spacing: .1em; }
+
+.english-choice-page .english-worksheet,
+.english-reading-page .english-reading-workbench { position: relative; border-left: 6px solid #55b7ee; border-radius: 0 .55rem .55rem 0; }
+.english-choice-page .english-answer-zone,
+.english-reading-page .english-reading-answer { border-left-color: #55b7ee; border-top-color: #8ed0f2; border-radius: 0 .45rem .45rem 0; }
+.english-choice-page .english-answer-zone::before,
+.english-reading-page .english-reading-answer::before { background: #55b7ee; }
+
+.english-choice-page .english-option-grid button,
+.english-reading-page .english-option-grid button,
+.choice-worksheet-page .worksheet-options button,
+.p2-writing-page .writing-choice-bank button,
+.p3-study-page .p3-choice-bank button,
+.tale-reading-page .tale-choice-bank button {
+  position: relative;
+  border-radius: 0 .38rem .38rem 0 !important;
+  border-style: dashed !important;
+  box-shadow: inset 4px 0 0 currentColor;
+}
+
+.english-choice-page .english-option-grid button,
+.english-reading-page .english-option-grid button { color: #235d87; border-color: #a6dcf5 !important; background: repeating-linear-gradient(0deg, rgba(85,183,238,.025) 0 1px, transparent 1px 24px), #fff; }
+.choice-worksheet-page .worksheet-options button,
+.p2-writing-page .writing-choice-bank button,
+.p3-study-page .p3-choice-bank button,
+.tale-reading-page .tale-choice-bank button { border-color: #f2c2b7 !important; background: repeating-linear-gradient(0deg, rgba(239,118,92,.025) 0 1px, transparent 1px 24px), #fff; }
+
+/* 教材不是空白卡：英文以描線格閱讀字母，中文以閱讀標記定位文章線索。 */
+.english-choice-page .english-worksheet { box-shadow: inset 0 0 0 1px rgba(85,183,238,.15), inset 16px 0 0 rgba(85,183,238,.06); }
+.english-choice-page .english-material-card.letter { position: relative; min-height: 250px; border-left: 6px solid #61c0ef; background: repeating-linear-gradient(0deg, transparent 0 30px, rgba(97,192,239,.14) 30px 31px), repeating-linear-gradient(90deg, transparent 0 30px, rgba(97,192,239,.09) 30px 31px), #fbfeff; }
+.english-choice-page .english-material-card.letter::before { position: absolute; top: .7rem; right: .78rem; padding: .2rem .42rem; border: 1px solid #9bdbf5; color: #287eaf; background: #effaff; content: '✦ EDUQUEST · TRACE & READ'; font: 900 .53rem var(--display); letter-spacing: .08em; }
+.english-choice-page .english-material-card.letter::after { position: absolute; right: 1rem; bottom: 1rem; width: 5.5rem; border-bottom: 2px solid #8bd1f2; content: ''; opacity: .75; }
+.english-choice-page .english-letter-cue { position: relative; z-index: 1; display: grid; place-items: center; min-height: 145px; color: #55b7ee; text-shadow: 2px 2px 0 rgba(255,255,255,.9); }
+.english-choice-page .english-letter-cue::after { width: 78px; border-bottom: 2px dashed #7dc9ee; content: ''; }
+.english-choice-page .english-material-head { position: relative; z-index: 2; }
+
+.choice-worksheet-page .context-paper,
+.p2-writing-page .writing-source-card,
+.p3-study-page .p3-source-card,
+.tale-reading-page .tale-story-sheet { position: relative; box-shadow: inset 12px 0 0 rgba(239,118,92,.055); }
+.tale-reading-page .tale-story-sheet { padding-top: 2.5rem !important; background-image: repeating-linear-gradient(0deg, rgba(239,118,92,.045) 0 1px, transparent 1px 28px), linear-gradient(90deg, rgba(239,118,92,.075) 0 1px, transparent 1px) !important; }
+.tale-reading-page .tale-story-sheet::before { position: absolute; top: .68rem; right: .8rem; padding: .18rem .42rem; border: 1px solid #f1ad9d; color: #b4513d; background: #fff8f5; content: '✦ EDUQUEST · 閱讀標記'; font: 900 .54rem var(--display); letter-spacing: .08em; }
+.tale-reading-page .tale-story-sheet::after { position: absolute; top: 2.25rem; bottom: .8rem; left: .72rem; width: 2px; background: repeating-linear-gradient(to bottom, #ef765c 0 9px, transparent 9px 15px); content: ''; opacity: .58; }
+.tale-reading-page .tale-story-sheet > * { position: relative; z-index: 1; }
+
+/* 投影時只讓四個主錨點保持高對比：題目、提示／材料、答案與進度。 */
+.english-choice-page .english-activity-stage::before,
+.english-reading-page .english-reading-stage::before,
+.choice-worksheet-page .choice-worksheet-stage::before,
+.p2-writing-page .p2-writing-stage::before,
+.p3-study-page .p3-study-stage::before,
+.tale-reading-page .tale-reading-stage::before { opacity: .55; }
+.english-choice-page .match-heading h1,
+.english-reading-page .english-reading-heading h1,
+.choice-worksheet-page .match-heading h1,
+.p2-writing-page .match-heading h1,
+.p3-study-page .match-heading h1,
+.tale-reading-page .match-heading h1 { margin-bottom: .38rem; }
+.english-choice-page .match-heading p,
+.english-reading-page .english-reading-heading p,
+.choice-worksheet-page .match-heading p,
+.p2-writing-page .match-heading p,
+.p3-study-page .match-heading p,
+.tale-reading-page .match-heading p { font-weight: 800; }
+
+@media (max-width: 820px) {
+  .english-choice-page .english-material-card.letter { min-height: 205px; }
+  .english-choice-page .english-material-card.letter::before { font-size: .47rem; }
+  .tale-reading-page .tale-story-sheet { padding-top: 2.25rem !important; }
+}
+
+.english-choice-page .english-option-grid button::after,
+.english-reading-page .english-option-grid button::after,
+.choice-worksheet-page .worksheet-options button::after,
+.p2-writing-page .writing-choice-bank button::after,
+.p3-study-page .p3-choice-bank button::after,
+.tale-reading-page .tale-choice-bank button::after { position: absolute; top: .48rem; right: .5rem; width: 7px; height: 7px; border: 1px solid currentColor; border-radius: 50%; content: ''; opacity: .28; }
+
+.english-choice-page .english-match-topbar,
+.english-reading-page .english-reading-topbar { border-left-color: #55b7ee; }
+.english-choice-page .english-match-topbar .match-back,
+.english-reading-page .english-reading-topbar .match-back { border-left-color: #55b7ee; }
+
+.choice-worksheet-page .choice-worksheet-stage,
+.p2-writing-page .p2-writing-stage,
+.p3-study-page .p3-study-stage,
+.tale-reading-page .tale-reading-stage { border-right: 1px solid #f1c7bd; }
+
+@media (max-width: 820px) {
+  .english-choice-page .activity-workbench-frame,
+  .english-reading-page .activity-workbench-frame { min-height: 0 !important; }
+  .english-choice-page .english-activity-stage::after,
+  .english-reading-page .english-reading-stage::after { display: none; }
+}
+
+@media (max-width: 820px) {
+  .english-choice-page .english-activity-stage,
+  .english-reading-page .english-reading-stage,
+  .choice-worksheet-page .choice-worksheet-stage,
+  .p2-writing-page .p2-writing-stage,
+  .p3-study-page .p3-study-stage,
+  .tale-reading-page .tale-reading-stage { padding: 1rem .78rem 1.45rem; }
+  .english-choice-page .match-heading,
+  .english-reading-page .english-reading-heading,
+  .choice-worksheet-page .match-heading,
+  .p2-writing-page .match-heading,
+  .p3-study-page .match-heading,
+  .tale-reading-page .match-heading { padding-left: .65rem; }
+  .english-choice-page .english-answer-zone,
+  .english-reading-page .english-reading-answer,
+  .choice-worksheet-page .worksheet-options,
+  .p2-writing-page .writing-choice-bank,
+  .p3-study-page .p3-choice-bank,
+  .tale-reading-page .tale-choice-bank { padding: .7rem; }
+}
+
+/* 首頁開課檯面：讓教師在首屏完成「選年級 → 選學科 → 開啟任務」。 */
+.home-hero-workbench {
+  grid-template-columns: minmax(0, .9fr) minmax(440px, 1.1fr);
+  align-items: stretch;
+}
+
+.home-page .home-hero.home-hero-workbench {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(440px, 1.1fr);
+  max-width: 1220px;
+  gap: clamp(2rem, 5vw, 4.8rem);
+  margin: clamp(2.4rem, 6vw, 4.6rem) auto 1.4rem;
+}
+
+.home-page .launch-desk-interactive {
+  display: grid !important;
+}
+
+.home-page .home-hero-workbench .hero-copy > p {
+  display: block;
+}
+
+.home-route-note {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin-top: 1.4rem;
+  color: #586b82;
+  font-size: .76rem;
+  font-weight: 800;
+}
+
+.home-route-note span {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+.home-route-note b {
+  display: inline-grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 1px solid #b8c8dc;
+  border-radius: 50%;
+  color: #2c63f5;
+  background: #fff;
+  font: 900 .65rem var(--display);
+}
+
+.home-route-note i {
+  width: 1.6rem;
+  height: 1px;
+  background: #c9d7e6;
+}
+
+.launch-desk-interactive {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .8rem;
+  min-height: 0;
+  padding: 1.2rem 1.25rem 1rem;
+  border: 1px solid #cddae8;
+  border-top: 6px solid #2c63f5;
+  border-radius: .35rem 1rem 1rem .35rem;
+  background: repeating-linear-gradient(0deg, rgba(44,99,245,.035) 0 1px, transparent 1px 28px), #fff;
+  box-shadow: 8px 8px 0 rgba(44,99,245,.09);
+}
+
+.launch-desk-interactive::before {
+  position: absolute;
+  right: 1.2rem;
+  top: .82rem;
+  width: 3.7rem;
+  border-top: 2px solid #c7d6e7;
+  border-bottom: 2px solid #e0e9f2;
+  content: '';
+}
+
+.launch-desk-interactive .desk-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: .7rem;
+  border-bottom: 1px dashed #b9cce1;
+}
+
+.launch-desk-interactive .desk-heading span,
+.home-grade-picker > div:first-child span,
+.home-subject-picker > div:first-child span,
+.home-demo-task > span {
+  color: #2c63f5;
+  font: 900 .68rem var(--display);
+  letter-spacing: .08em;
+}
+
+.launch-desk-interactive .desk-heading b {
+  color: #1f3858;
+  font: 900 1.06rem var(--display);
+}
+
+.home-grade-picker,
+.home-subject-picker {
+  display: grid;
+  gap: .45rem;
+}
+
+.home-grade-picker > div:first-child,
+.home-subject-picker > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-grade-picker > div:first-child small,
+.home-subject-picker > div:first-child small {
+  color: #7c8ba0;
+  font-size: .67rem;
+  font-weight: 800;
+}
+
+.home-grade-picker > div:last-child {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: .35rem;
+}
+
+.home-grade-picker button {
+  display: grid;
+  gap: .08rem;
+  min-height: 48px;
+  padding: .35rem .15rem;
+  border: 1px solid #d5e0ea;
+  border-bottom: 3px solid #c4d3e2;
+  border-radius: .2rem .55rem .55rem .2rem;
+  color: #38536f;
+  background: #fdfefe;
+  transition: transform .16s var(--ease), border-color .16s, background .16s;
+}
+
+.home-grade-picker button:hover,
+.home-grade-picker button.active {
+  border-color: #2c63f5;
+  border-bottom-color: #2c63f5;
+  color: #fff;
+  background: #2c63f5;
+  transform: translateY(-2px);
+}
+
+.home-grade-picker button b { font: 900 .84rem var(--display); }
+.home-grade-picker button small { font-size: .59rem; font-weight: 800; }
+
+.home-subject-picker > button {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  align-items: center;
+  gap: .55rem;
+  min-height: 52px;
+  padding: .48rem .6rem;
+  border: 1px solid #d7e2ec;
+  border-left: 5px solid #aab9c9;
+  border-radius: .22rem .7rem .7rem .22rem;
+  color: #2f4965;
+  text-align: left;
+  background: #fff;
+  transition: transform .16s var(--ease), border-color .16s, background .16s;
+}
+
+.home-subject-picker > button > span {
+  display: grid;
+  place-items: center;
+  width: 31px;
+  height: 31px;
+  border-radius: .35rem;
+}
+
+.home-subject-picker > button div { display: grid; gap: .04rem; }
+.home-subject-picker > button b { font: 900 .9rem var(--display); }
+.home-subject-picker > button small { color: #718197; font-size: .66rem; font-weight: 800; }
+.home-subject-picker > button > i { font-size: .62rem; font-style: normal; font-weight: 900; }
+.home-subject-picker > button:hover { transform: translateX(3px); }
+.home-subject-picker > button.chinese { border-left-color: #ef765c; }
+.home-subject-picker > button.chinese > span { color: #bf523e; background: #fff0ea; }
+.home-subject-picker > button.chinese.active { border-color: #efaa9a; background: #fff8f5; }
+.home-subject-picker > button.chinese.active > i { color: #bd503b; }
+.home-subject-picker > button.english { border-left-color: #4da8e8; }
+.home-subject-picker > button.english > span { color: #237ebc; background: #eaf7ff; }
+.home-subject-picker > button.english.active { border-color: #99d1f2; background: #f3fbff; }
+.home-subject-picker > button.english.active > i { color: #2179b5; }
+.home-subject-picker > button.math { border-left-color: #55bd86; }
+.home-subject-picker > button.math > span { color: #277e55; background: #effbf4; }
+.home-subject-picker > button.math.active { border-color: #9ad7b5; background: #f4fcf7; }
+.home-subject-picker > button.math.active > i { color: #287754; }
+
+.home-demo-task {
+  display: grid;
+  gap: .34rem;
+  padding: .75rem .8rem;
+  border: 1px dashed #b9cce1;
+  border-left: 6px solid #2c63f5;
+  border-radius: .22rem .8rem .8rem .22rem;
+  color: #28435e;
+  text-align: left;
+  background: #fbfdff;
+  transition: transform .16s var(--ease), box-shadow .16s;
+}
+
+.home-demo-task:hover { box-shadow: 4px 4px 0 rgba(44,99,245,.12); transform: translateY(-2px); }
+.home-demo-task > div { display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: .5rem; }
+.home-demo-task > div > p { display: grid; gap: .08rem; margin: 0; }
+.home-demo-task p b { font: 900 .95rem var(--display); }
+.home-demo-task p small { color: #718197; font-size: .66rem; font-weight: 800; }
+.home-demo-task strong { font-size: .7rem; font-weight: 900; }
+.home-demo-task.chinese { border-left-color: #ef765c; background: #fff9f6; }
+.home-demo-task.chinese > span, .home-demo-task.chinese strong { color: #bd523c; }
+.home-demo-task.english { border-left-color: #4da8e8; background: #f5fbff; }
+.home-demo-task.english > span, .home-demo-task.english strong { color: #247ab7; }
+.home-demo-task.math { border-left-color: #55bd86; background: #f5fcf7; }
+.home-demo-task.math > span, .home-demo-task.math strong { color: #287b55; }
+
+.launch-desk-interactive .desk-note {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  padding-top: .58rem;
+  border-top: 1px dashed #cbd8e5;
+  color: #64768c;
+  font-size: .67rem;
+  font-weight: 800;
+}
+
+/* 首屏的紙本開課檔案：以檔案邊、孔洞、格線、章印與三科色帶取代 SaaS 卡片感。 */
+.home-page {
+  background-image: linear-gradient(90deg, transparent 0 4.15rem, rgba(44,99,245,.1) 4.15rem 4.22rem, transparent 4.22rem), repeating-linear-gradient(0deg, transparent 0 41px, rgba(47,74,101,.035) 41px 42px);
+}
+
+.home-page .home-hero-workbench {
+  position: relative;
+}
+
+.home-page .home-hero-workbench::before,
+.home-page .home-hero-workbench::after {
+  position: absolute;
+  z-index: 0;
+  width: 2rem;
+  height: 2rem;
+  border-color: #ef765c;
+  content: '';
+  pointer-events: none;
+}
+
+.home-page .home-hero-workbench::before {
+  top: .2rem;
+  left: -1.15rem;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+.home-page .home-hero-workbench::after {
+  right: -.65rem;
+  bottom: -.5rem;
+  border-right: 2px solid #55bd86;
+  border-bottom: 2px solid #55bd86;
+}
+
+.home-page .home-hero-workbench > * { position: relative; z-index: 1; }
+
+.home-page .hero-copy .kicker {
+  padding-bottom: .42rem;
+  border-bottom: 2px solid #ef765c;
+  color: #ad4e3b;
+}
+
+.home-page .hero-copy .kicker svg { color: #d89a2a; }
+
+.home-page .primary-button {
+  border: 1px solid #1f57dc;
+  border-radius: .16rem .48rem .48rem .16rem;
+  box-shadow: 4px 4px 0 rgba(31,87,220,.22);
+}
+
+.home-route-note {
+  gap: .7rem;
+  padding: .58rem .72rem;
+  border-top: 1px dashed #bdcbda;
+  border-bottom: 1px dashed #bdcbda;
+  background: rgba(255,255,255,.58);
+}
+
+.home-route-note span { color: #2d4966; }
+.home-route-note span:nth-of-type(1) b { border-color: #ef765c; color: #b94f3a; }
+.home-route-note span:nth-of-type(2) b { border-color: #4da8e8; color: #247ab7; }
+.home-route-note span:nth-of-type(3) b { border-color: #55bd86; color: #287b55; }
+.home-route-note i { width: 1.9rem; border-top: 2px dotted #b6c4d5; background: transparent; }
+
+.launch-desk-interactive {
+  position: relative;
+  isolation: isolate;
+  gap: .9rem;
+  padding: 1.05rem 1.1rem .95rem 1.4rem;
+  border: 1px solid #bfcfdd;
+  border-top: 0;
+  border-left: 8px solid #ef765c;
+  border-radius: .12rem .72rem .72rem .12rem;
+  background: repeating-linear-gradient(0deg, rgba(47,74,101,.055) 0 1px, transparent 1px 27px), #fffefb;
+  box-shadow: 6px 6px 0 rgba(49,75,104,.1);
+}
+
+.launch-desk-interactive::before {
+  right: 1rem;
+  top: .78rem;
+  width: 4rem;
+  border-top: 2px solid #4da8e8;
+  border-bottom: 2px solid #55bd86;
+}
+
+.launch-desk-interactive::after {
+  position: absolute;
+  z-index: -1;
+  top: .15rem;
+  bottom: .15rem;
+  left: -.9rem;
+  width: 1rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #f2f5f8 0 .22rem, transparent .25rem) center top / 1rem 1.35rem repeat-y;
+  content: '';
+}
+
+.launch-desk-interactive .desk-heading {
+  padding: .1rem 0 .68rem;
+  border-bottom: 2px solid #203957;
+}
+
+.launch-desk-interactive .desk-heading span {
+  color: #1e3c5c;
+  font-size: .71rem;
+}
+
+.launch-desk-interactive .desk-heading span i {
+  display: inline-grid;
+  place-items: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-right: .26rem;
+  color: #fff;
+  background: linear-gradient(135deg, #3978f5 0 47%, #ef765c 47% 67%, #55bd86 67%);
+  font-style: normal;
+}
+
+.launch-desk-interactive .desk-heading b { font-size: 1.18rem; }
+
+.home-grade-picker,
+.home-subject-picker { gap: .36rem; }
+
+.home-grade-picker > div:first-child,
+.home-subject-picker > div:first-child {
+  padding: .28rem .42rem .26rem;
+  border-left: 4px solid #ef765c;
+  background: #fff7f3;
+}
+
+.home-subject-picker > div:first-child { border-left-color: #4da8e8; background: #f2faff; }
+
+.home-grade-picker > div:first-child span,
+.home-subject-picker > div:first-child span {
+  color: #8e3b2d;
+  font-size: .77rem;
+}
+
+.home-subject-picker > div:first-child span { color: #1d6d9f; }
+
+.home-grade-picker > div:last-child { gap: .28rem; }
+
+.home-grade-picker button {
+  min-height: 52px;
+  border: 1px solid #c6d2dc;
+  border-bottom: 4px solid #aebfcd;
+  border-radius: .1rem .38rem .38rem .1rem;
+  background: #fffefb;
+}
+
+.home-grade-picker button:hover,
+.home-grade-picker button.active {
+  border-color: #ef765c;
+  border-bottom-color: #c5513b;
+  background: #ef765c;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
+}
+
+.home-grade-picker button b { font-size: .92rem; }
+
+.home-subject-picker > button {
+  min-height: 56px;
+  border-radius: .1rem .5rem .5rem .1rem;
+  background-image: linear-gradient(90deg, rgba(255,255,255,.92), rgba(255,255,255,.5));
+}
+
+.home-subject-picker > button::after {
+  align-self: stretch;
+  width: 5px;
+  border-radius: 0 3px 3px 0;
+  content: '';
+}
+
+.home-subject-picker > button.chinese::after { background: #ef765c; }
+.home-subject-picker > button.english::after { background: #4da8e8; }
+.home-subject-picker > button.math::after { background: #55bd86; }
+.home-subject-picker > button b { font-size: 1rem; }
+.home-subject-picker > button > i { letter-spacing: .06em; }
+
+.home-demo-task {
+  position: relative;
+  gap: .4rem;
+  padding: .82rem .9rem;
+  border-style: dashed;
+  border-radius: .12rem .62rem .62rem .12rem;
+  background-image: repeating-linear-gradient(0deg, transparent 0 25px, rgba(47,74,101,.055) 25px 26px);
+}
+
+.home-demo-task::after {
+  position: absolute;
+  right: .72rem;
+  top: .72rem;
+  width: 2.2rem;
+  height: .72rem;
+  border-top: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  opacity: .45;
+  content: '';
+}
+
+.home-demo-task > div { grid-template-columns: 34px 1fr auto; }
+.home-demo-task p b { font-size: 1.08rem; }
+.home-demo-task strong { padding-top: .35rem; border-top: 1px dotted currentColor; letter-spacing: .035em; }
+
+.home-page .home-stats {
+  max-width: 980px;
+  border-top: 2px solid #203957;
+  border-bottom: 1px solid #ced8e0;
+  background: repeating-linear-gradient(90deg, transparent 0 32%, rgba(54,79,104,.14) 32% 32.12%, transparent 32.12% 66%, rgba(54,79,104,.14) 66% 66.12%, transparent 66.12%);
+}
+
+.home-page .home-stats article:nth-child(1) b { color: #ef765c; }
+.home-page .home-stats article:nth-child(2) b { color: #4da8e8; }
+.home-page .home-stats article:nth-child(3) b { color: #55bd86; }
+
+@media (max-width: 820px) {
+  .home-page { background-image: repeating-linear-gradient(0deg, transparent 0 34px, rgba(47,74,101,.035) 34px 35px); }
+  .home-page .home-hero-workbench::before { left: .25rem; top: -.25rem; }
+  .home-page .home-hero-workbench::after { right: .25rem; bottom: -.25rem; }
+  .launch-desk-interactive { padding: .95rem .8rem .85rem 1.08rem; }
+  .home-route-note { gap: .38rem; padding: .5rem; font-size: .69rem; }
+  .home-route-note i { width: .75rem; }
+  .home-grade-picker button { min-height: 47px; }
+  .home-subject-picker > button { min-height: 52px; }
+
+  .home-page .home-hero.home-hero-workbench { grid-template-columns: 1fr; }
+  .home-route-note { flex-wrap: wrap; }
+  .home-grade-picker > div:last-child { gap: .28rem; }
+  .home-grade-picker button { min-height: 44px; }
+
+  .activity-workbench-frame {
+    grid-template-columns: auto minmax(0, 1fr) !important;
+  }
+
+  .activity-workbench-frame .exam-timer {
+    display: none !important;
+  }
+
+  .activity-workbench-frame .activity-course-file > b {
+    font-size: .92rem;
+  }
+
+  .teacher-question-meta .difficulty-stars {
+    font-size: .72rem;
+  }
+}
+
+/* 乘除檔頭：保留草綠工作紙身份，並把課堂操作流程壓縮為功能性資訊帶。 */
+.site-shell.math-activity-page .math-activity-frame {
+  min-height: 158px;
+  padding-bottom: 2.2rem;
+  background: repeating-linear-gradient(90deg,rgba(61,166,110,.08) 0 1px,transparent 1px 26px),#fbfffc;
+}
+
+.site-shell.math-activity-page .math-activity-frame .math-file-lesson-strip {
+  position: absolute;
+  right: 1.05rem;
+  bottom: .48rem;
+  left: 1.05rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto;
+  align-items: center;
+  gap: .42rem;
+  padding: .34rem .52rem;
+  border-top: 2px solid #4fb176;
+  border-bottom: 1px dashed #abd9bc;
+  background: rgba(240,251,244,.92);
+}
+
+.site-shell.math-activity-page .math-file-lesson-strip span {
+  color: #26774e;
+  font: 900 .58rem var(--display);
+  letter-spacing: .055em;
+}
+
+.site-shell.math-activity-page .math-file-lesson-strip i {
+  height: 2px;
+  background: linear-gradient(90deg,#58b87e,#c1e7cf);
+}
+
+@media (max-width: 820px) {
+  .site-shell.math-activity-page .math-activity-frame {
+    min-height: 148px;
+    padding-bottom: 2.05rem;
+  }
+
+  .site-shell.math-activity-page .math-activity-frame .math-file-lesson-strip {
+    right: .55rem;
+    left: .55rem;
+    grid-template-columns: 1fr;
+    gap: .16rem;
+    padding: .28rem .4rem;
+  }
+
+  .site-shell.math-activity-page .math-file-lesson-strip i { display: none; }
+  .site-shell.math-activity-page .math-file-lesson-strip span { font-size: .48rem; }
+}
+
+.site-shell.math-activity-page .activity-course-file .math-file-route {
+  color: #28784f !important;
+  opacity: 1 !important;
+  font: 900 .58rem var(--display) !important;
+  letter-spacing: .04em;
+}
+
+@media (max-width: 820px) {
+  .site-shell.math-activity-page .activity-course-file .math-file-route {
+    display: none !important;
+  }
+
+  .site-shell.math-activity-page .math-activity-frame .math-file-lesson-strip { display: none; }
+
+  .site-shell.math-activity-page .math-activity-frame {
+    min-height: 108px;
+    padding-bottom: .45rem;
+  }
+}
+
+/* 全學科提示工具沿用英文晴空藍工具卡：與答案選項分層，但保持一致的可點選入口。 */
+.eliminate-choice-satchel {
+  display: block !important;
+  width: 100% !important;
+  margin: .78rem 0 1rem !important;
+  padding: .58rem !important;
+  border: 2px dashed #9ed8f5 !important;
+  border-left: 10px solid #55b7ee !important;
+  background: linear-gradient(90deg, #eefaff, #f9fdff) !important;
+}
+.eliminate-choice-satchel button {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 92px !important;
+  grid-template-columns: 50px minmax(0, 1fr) auto !important;
+  gap: .72rem !important;
+  padding: .72rem .92rem .72rem .62rem !important;
+  border: 2px solid #79c9f1 !important;
+  border-radius: 1.25rem .22rem 1.25rem .22rem !important;
+  color: #236f9f !important;
+  background: linear-gradient(135deg, #fafdff, #eaf8ff) !important;
+  box-shadow: 4px 4px 0 rgba(85,183,238,.18) !important;
+}
+.eliminate-choice-satchel button::before {
+  width: 46px !important;
+  height: 46px !important;
+  border-radius: 50% 50% 50% .18rem !important;
+  background: #55b7ee !important;
+  box-shadow: inset 0 -4px 0 rgba(31,115,161,.2) !important;
+  font-size: 1.3rem !important;
+}
+.eliminate-choice-satchel button::after { color: #3196cc !important; font-size: 1.55rem !important; }
+.eliminate-choice-satchel button span { color: #3188bb !important; font-size: .75rem !important; }
+.eliminate-choice-satchel button b { color: #236f9f !important; font-size: 1.08rem !important; }
+.eliminate-choice-satchel button:not(:disabled):hover {
+  background: linear-gradient(135deg, #fff, #def4ff) !important;
+  box-shadow: 0 0 0 3px rgba(85,183,238,.16), 0 9px 20px rgba(52,151,202,.22) !important;
+}
+.eliminate-choice-satchel.satchel-activating::before { color: #55b7ee !important; }
+.eliminate-choice-satchel.satchel-activating::after { border-color: rgba(85,183,238,.58) !important; }
+.eliminate-choice-satchel button:disabled { border-color: #b8dce9 !important; color: #5d7a89 !important; background: #f4fafc !important; }
+.eliminate-choice-satchel button:disabled::before { background: #77a9c4 !important; }
+.eliminate-choice-satchel button:disabled span { color: #6d96ab !important; }
+.eliminate-choice-satchel button:disabled b { color: #5d7a89 !important; }
+@media (max-width: 820px) {
+  .eliminate-choice-satchel { padding: .44rem !important; }
+  .eliminate-choice-satchel button { min-height: 74px !important; grid-template-columns: 40px minmax(0, 1fr) auto !important; padding: .6rem .68rem .6rem .48rem !important; }
+  .eliminate-choice-satchel button::before { width: 38px !important; height: 38px !important; font-size: 1.08rem !important; }
+  .eliminate-choice-satchel button b { font-size: .9rem !important; }
+}
+
+/* WelitQuest 為全站唯一可見品牌；保留探索星與兩段式深藍／課程藍識別。 */
+.brand b,
+.activity-brand-lockup b { font-size: 0 !important; }
+.brand b > span,
+.activity-brand-lockup b > span { display: none !important; }
+.brand b::after { content: 'WelitQuest'; color: #1d2a45; font: 800 1.28rem/1 var(--display); letter-spacing: -.07em; }
+.activity-brand-lockup b::after { content: 'WelitQuest'; color: #1d2a45; font: 800 1.02rem/1 var(--display); letter-spacing: -.055em; }
+.brand b::after::first-letter,
+.activity-brand-lockup b::after::first-letter { color: inherit; }
+.home-page .hero-copy .kicker { font-size: 0 !important; }
+.home-page .hero-copy .kicker::after { content: 'WELITQUEST・課堂工作檯'; color: #ad4e3b; font: 900 .72rem var(--display); letter-spacing: .13em; }
+.home-page .hero-copy .kicker svg { font-size: initial; }
+.launch-desk-interactive .desk-heading > span { font-size: 0 !important; }
+.launch-desk-interactive .desk-heading > span i { font-size: .72rem !important; }
+.launch-desk-interactive .desk-heading > span::after { content: 'WELITQUEST・開課檔案'; color: #1e3c5c; font: 900 .71rem var(--display); letter-spacing: .08em; }
+.math-catalog-page .math-catalog-content::before { content: 'WELITQUEST・數學工作紙' !important; }
+.math-catalog-page .math-unit-card > div > span::after { content: 'WELITQUEST · MATH' !important; }
+.math-activity-page .math-worksheet::before { content: '✦ WELITQUEST · 看材料 → 動手分組 → 作答' !important; }
+.math-activity-page .math-choice-model::after { content: '✦ WELITQUEST · 操作模型' !important; }
+.math-activity-page .math-activity-frame .math-file-stamp { font-size: 0 !important; }
+.math-activity-page .math-activity-frame .math-file-stamp::after { content: '✦ WELITQUEST · MATH FILE'; font: 900 .56rem var(--display); }
+.english-choice-page .english-answer-zone::after { content: '✦ WELITQUEST · ANSWER STRIP' !important; }
+.english-choice-page .english-material-card.letter::before { content: '✦ WELITQUEST · TRACE & READ' !important; }
+.tale-reading-page .tale-story-sheet::before { content: '✦ WELITQUEST · 閱讀標記' !important; }
+
+/* 使用高優先序覆蓋舊有中文／數學學科色提示規則，所有提示卡均與英文工具卡一致。 */
+.site-shell .eliminate-choice-satchel button > span {
+  display: block !important;
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  align-self: end !important;
+  min-width: 0 !important;
+  color: #3188bb !important;
+  white-space: nowrap !important;
+  writing-mode: horizontal-tb !important;
+  word-break: keep-all !important;
+}
+.site-shell .eliminate-choice-satchel button > b {
+  display: block !important;
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  align-self: start !important;
+  min-width: 0 !important;
+  color: #236f9f !important;
+  white-space: normal !important;
+  writing-mode: horizontal-tb !important;
+}
+.site-shell .eliminate-choice-satchel button::before { background: #55b7ee !important; }
+.site-shell .eliminate-choice-satchel button::after { color: #3196cc !important; }
+.site-shell .eliminate-choice-satchel.satchel-activating::before { color: #55b7ee !important; }
+.site-shell .eliminate-choice-satchel.satchel-activating::after { border-color: rgba(85,183,238,.58) !important; }
+
+/* 活動檔頭保留現有探索星，字標則以 WelitQuest 取代舊名稱。 */
+.site-shell .brand b,
+.site-shell .activity-brand-lockup b { color: transparent !important; font-size: 0 !important; }
+.site-shell .brand b > span,
+.site-shell .activity-brand-lockup b > span { display: none !important; }
+.site-shell .brand b::after { content: 'WelitQuest'; color: #1d2a45 !important; font: 800 1.28rem/1 var(--display) !important; letter-spacing: -.07em; }
+.site-shell .activity-brand-lockup b::after { content: 'WelitQuest'; color: #1d2a45 !important; font: 800 1.02rem/1 var(--display) !important; letter-spacing: -.055em; }
+.site-shell .math-choice-model > header > span,
+.site-shell .life-application-model > header > span { font-size: 0 !important; }
+.site-shell .math-choice-model > header > span::after { content: '✦ WelitQuest 數學模型'; color: #25764f; font: 900 .74rem var(--display); }
+.site-shell .life-application-model > header > span::after { content: '✦ WelitQuest 解題模型'; color: #25764f; font: 900 .74rem var(--display); }

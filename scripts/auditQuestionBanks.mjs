@@ -7,6 +7,24 @@ const normalise = (value = '') => String(value).toLowerCase().replace(/\s+/gu, '
 const gramsNormalise = (value = '') => normalise(value).replace(/[「」『』（）()【】\[\],，。！？!?：:；;、—\-]/gu, '');
 const textFields = ['hint', 'prompt', 'sentence', 'context', 'text', 'source', 'instruction', 'target', 'title', 'translation', 'baseWord', 'pastWord', 'before', 'after', 'clueChinese', 'symbol', 'scene', 'document', 'profile', '__auditContext'];
 
+function answerLeakageCandidate(question) {
+  const prompt = String(question.prompt || '').trim();
+  const answer = question.answer;
+  if (!prompt || answer === undefined || answer === null) return null;
+  const answerText = String(answer).trim();
+  const normalizedPrompt = gramsNormalise(prompt);
+  const normalizedAnswer = gramsNormalise(answerText);
+  if (normalizedAnswer.length < 2 || !normalizedPrompt.includes(normalizedAnswer)) return null;
+  const numberLineTarget = Boolean(question.line) && /^[\d,.]+$/u.test(answerText);
+  const textualAnswer = !/^\d/u.test(answerText) && /[\p{L}\p{Script=Han}]/u.test(answerText) && normalizedAnswer.length >= 3;
+  if (!numberLineTarget && !textualAnswer) return null;
+  return {
+    answer: answerText,
+    prompt,
+    reason: numberLineTarget ? '數線題幹直接列出目標刻度' : '題幹直接覆述文字答案',
+  };
+}
+
 function questionText(question) {
   const blocks = Array.isArray(question.blocks) ? question.blocks.map((block) => block.text).join('｜') : '';
   const paragraphs = Array.isArray(question.paragraphs) ? question.paragraphs.map((paragraph) => paragraph.text).join('｜') : '';
@@ -46,7 +64,7 @@ function similarity(left, right) {
 }
 
 const banks = [];
-for (const [subject, label, availableGrades] of [['chinese', '中文', grades], ['english', '英文', grades], ['math', '數學', ['P1', 'P2', 'P3']]]) {
+for (const [subject, label, availableGrades] of [['chinese', '中文', grades], ['english', '英文', grades], ['math', '數學', grades]]) {
   for (const grade of availableGrades) {
     const module = await import(`../client/src/data/questionBanks/${subject}/${grade.toLowerCase()}.js`);
     banks.push({ subject: label, grade, bank: module.default });
@@ -54,7 +72,7 @@ for (const [subject, label, availableGrades] of [['chinese', '中文', grades], 
 }
 
 const allQuestions = [];
-const audit = { generatedAt: new Date().toISOString(), summary: {}, exactDuplicates: [], highSimilarityPairs: [], repeatedPromptPatterns: [], dataIssues: [] };
+const audit = { generatedAt: new Date().toISOString(), summary: {}, exactDuplicates: [], highSimilarityPairs: [], repeatedPromptPatterns: [], answerLeakageCandidates: [], dataIssues: [] };
 for (const { subject, grade, bank } of banks) {
   const unitSummaries = [];
   for (const unit of bank.units) {
@@ -63,13 +81,15 @@ for (const { subject, grade, bank } of banks) {
     for (const question of questions) {
       const record = { subject, grade, unitId: unit.id, unitTitle: unit.title, id: question.id, question, text: questionText(question) };
       allQuestions.push(record);
+      const leakage = answerLeakageCandidate(question);
+      if (leakage) audit.answerLeakageCandidates.push({ subject, grade, unitId: unit.id, unitTitle: unit.title, id: question.id, ...leakage });
       const prompt = normalise(question.prompt);
       if (prompt) prompts.set(prompt, [...(prompts.get(prompt) || []), question.id]);
       if (Array.isArray(question.choices)) {
         if (new Set(question.choices.map(normalise)).size !== question.choices.length) audit.dataIssues.push({ type: 'duplicate-choice', id: question.id, unitId: unit.id });
         if (question.answer && !question.choices.includes(question.answer)) audit.dataIssues.push({ type: 'answer-not-in-choices', id: question.id, unitId: unit.id });
       }
-      if (question.choices && question.choices.length === 4 && unit.interaction?.includes('choice') && (!question.answer || !question.explanation)) audit.dataIssues.push({ type: 'missing-answer-or-explanation', id: question.id, unitId: unit.id });
+      if (question.choices && question.choices.length === 4 && unit.interaction?.includes('choice') && ((question.answer === undefined || question.answer === null) || !question.explanation)) audit.dataIssues.push({ type: 'missing-answer-or-explanation', id: question.id, unitId: unit.id });
     }
     for (const [prompt, ids] of prompts) if (ids.length >= 3) audit.repeatedPromptPatterns.push({ subject, grade, unitId: unit.id, prompt, count: ids.length, ids });
     unitSummaries.push({ id: unit.id, title: unit.title, questions: questions.length });
@@ -107,4 +127,4 @@ audit.highSimilarityPairs.sort((left, right) => right.score - left.score);
 await mkdir('/home/ubuntu/question-bank-audit', { recursive: true });
 const outputPath = resolve('/home/ubuntu/question-bank-audit/question-bank-audit.json');
 await writeFile(outputPath, `${JSON.stringify(audit, null, 2)}\n`);
-console.log(JSON.stringify({ outputPath, questionsReviewed: allQuestions.length, exactDuplicateGroups: audit.exactDuplicates.length, highSimilarityPairs: audit.highSimilarityPairs.length, dataIssues: audit.dataIssues.length }, null, 2));
+console.log(JSON.stringify({ outputPath, questionsReviewed: allQuestions.length, exactDuplicateGroups: audit.exactDuplicates.length, highSimilarityPairs: audit.highSimilarityPairs.length, answerLeakageCandidates: audit.answerLeakageCandidates.length, dataIssues: audit.dataIssues.length }, null, 2));

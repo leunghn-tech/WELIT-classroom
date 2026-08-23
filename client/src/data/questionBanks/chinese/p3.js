@@ -11,6 +11,12 @@ const paragraphMarkQuestions = [
   { id: 'P3-CN-R03-Q09', title: '候鳥旅行', prompt: '請點擊說明「候鳥為甚麼飛到較暖的地方」的重點段落。', answer: 'P2', paragraphs: [{ id: 'P1', text: '有些鳥兒每年會在不同地方生活，這些鳥兒叫作候鳥。' }, { id: 'P2', text: '天氣變冷、食物減少時，候鳥會飛到較溫暖的地方尋找食物。' }, { id: 'P3', text: '天氣回暖後，候鳥會再飛回原來的地方，繼續繁殖下一代。' }], explanation: '第二段說明天冷和食物減少時，候鳥會飛往溫暖地方尋找食物。' },
   { id: 'P3-CN-R03-Q10', title: '候鳥旅行', prompt: '請點擊說明「天氣回暖後候鳥會做甚麼」的重點段落。', answer: 'P3', paragraphs: [{ id: 'P1', text: '有些鳥兒每年會在不同地方生活，這些鳥兒叫作候鳥。' }, { id: 'P2', text: '天氣變冷、食物減少時，候鳥會飛到較溫暖的地方尋找食物。' }, { id: 'P3', text: '天氣回暖後，候鳥會再飛回原來的地方，繼續繁殖下一代。' }], explanation: '第三段清楚指出候鳥會飛回原來的地方。' },
 ];
+
+const storyStructureStories = [
+  { id: 'P3-CN-R09-S01', title: '雨天遠足', intro: '閱讀四段短文，再按問題判斷各段在故事結構中的作用。', paragraphs: [{ id: 'S1-P1', text: '星期五早上，小琪和同學到郊外遠足。天氣晴朗，大家都很期待。' }, { id: 'S1-P2', text: '他們沿著小路走，看見小鳥在樹上唱歌，也看見蝴蝶在花間飛舞。' }, { id: 'S1-P3', text: '忽然，天空下起大雨，大家連忙跑到涼亭避雨。' }, { id: 'S1-P4', text: '不久，雨停了，天空出現彩虹。小琪覺得這次遠足十分難忘。' }], questions: [{ id: 'P3-CN-R09-Q01', stage: '起', prompt: '哪一段先交代時間、人物和遠足活動？', answer: 'S1-P1', explanation: '第一段交代時間、人物和活動，是故事的開始。' }, { id: 'P3-CN-R09-Q02', stage: '承', prompt: '哪一段承接開始，寫他們沿路看見的景物？', answer: 'S1-P2', explanation: '第二段讓遠足活動繼續發展。' }, { id: 'P3-CN-R09-Q03', stage: '轉', prompt: '哪一段令故事出現明顯變化？', answer: 'S1-P3', explanation: '第三段由晴天轉為大雨，故事出現變化。' }, { id: 'P3-CN-R09-Q04', stage: '合', prompt: '哪一段交代雨後結果和小琪的感受？', answer: 'S1-P4', explanation: '第四段交代結果和感受，收束故事。' }] },
+  { id: 'P3-CN-R09-S02', title: '校園植樹日', intro: '閱讀四段短文，再按問題判斷各段在故事結構中的作用。', paragraphs: [{ id: 'S2-P1', text: '星期三早上，小安和同學到學校花園參加植樹日。大家戴上手套，準備種小樹苗。' }, { id: 'S2-P2', text: '老師教大家先挖泥土，再放入樹苗，最後把泥土蓋好和澆水。' }, { id: 'S2-P3', text: '可是，小明的水壺忽然倒了，水全流到地上。他很着急。' }, { id: 'S2-P4', text: '老師拿來另一個水壺，大家一起把樹苗澆好。小安看見小樹苗站得直直的，十分高興。' }], questions: [{ id: 'P3-CN-R09-Q05', stage: '起', prompt: '哪一段介紹植樹日的時間、人物和活動？', answer: 'S2-P1', explanation: '第一段交代故事開始所需的時間、人物和活動。' }, { id: 'P3-CN-R09-Q06', stage: '承', prompt: '哪一段寫老師教大家怎樣種樹？', answer: 'S2-P2', explanation: '第二段承接活動，寫出事情的發展。' }, { id: 'P3-CN-R09-Q07', stage: '轉', prompt: '哪一段出現了令事情改變的小問題？', answer: 'S2-P3', explanation: '水壺倒了令事件出現轉折。' }, { id: 'P3-CN-R09-Q08', stage: '合', prompt: '哪一段寫出問題解決後的結果和感受？', answer: 'S2-P4', explanation: '最後一段交代問題解決和人物感受。' }] },
+  { id: 'P3-CN-R09-S03', title: '圖書館借書', intro: '閱讀四段短文，再按問題判斷各段在故事結構中的作用。', paragraphs: [{ id: 'S3-P1', text: '星期日下午，小朗和媽媽到圖書館。他想借一本有關海洋的圖畫書。' }, { id: 'S3-P2', text: '小朗找到《小鯨魚的家》，安靜地坐在椅子上閱讀，知道海洋要保持清潔。' }, { id: 'S3-P3', text: '正當他準備借書時，他發現借書證不在口袋裏，便四處尋找。' }, { id: 'S3-P4', text: '媽媽在書包的小袋裏找到借書證。小朗借到圖畫書，答應以後把借書證放好。' }], questions: [{ id: 'P3-CN-R09-Q09', stage: '起', prompt: '哪一段交代小朗到哪裏和想借甚麼書？', answer: 'S3-P1', explanation: '第一段交代人物、地點和最初目標。' }, { id: 'P3-CN-R09-Q10', stage: '承', prompt: '哪一段寫小朗找到書後閱讀到的內容？', answer: 'S3-P2', explanation: '第二段承接借書活動的發展。' }, { id: 'P3-CN-R09-Q11', stage: '轉', prompt: '哪一段出現了借書前的小意外？', answer: 'S3-P3', explanation: '發現借書證不見了，令事情出現變化。' }, { id: 'P3-CN-R09-Q12', stage: '合', prompt: '哪一段寫出找到借書證後的結果？', answer: 'S3-P4', explanation: '最後一段交代結果和小朗的體會。' }] },
+];
 export default {
   grade: 'P3', subject: '中文',
   units: [
@@ -45,8 +51,9 @@ export default {
       ],
     },
     { id: 'P3-CN-R03', area: '閱讀', title: '說明文段落重點標記', interaction: 'paragraph-mark', questions: paragraphMarkQuestions },
+    { id: 'P3-CN-R09', area: '閱讀', title: '簡單短文的「起、承、轉、合」', interaction: 'story-structure', stories: storyStructureStories, questions: storyStructureStories.flatMap((story) => story.questions) },
     {
-      id: 'P3-CN-R04', area: '閱讀', title: '比喻手法', interaction: 'p3-figure', figureType: '比喻',
+      id: 'P3-CN-R04', area: '閱讀', title: '比喻', interaction: 'p3-figure', figureType: '比喻',
       questions: [
         { id: 'P3-CN-R04-Q01', hint: '比喻把有相似特點的兩種事物作比較。', prompt: '哪一句運用了比喻？', answer: '太陽像一個大火球，照亮了操場。', choices: ['太陽像一個大火球，照亮了操場。', '太陽慢慢升起來。', '今天的太陽很亮。', '我們在操場跑步。'], explanation: '把太陽比作大火球，突出了太陽又圓又亮的樣子。' },
         { id: 'P3-CN-R04-Q02', hint: '留意「像、好像、彷彿」等比較的詞語。', prompt: '哪一句運用了比喻？', answer: '妹妹的笑聲像銀鈴一樣清脆。', choices: ['妹妹的笑聲像銀鈴一樣清脆。', '妹妹笑得很開心。', '妹妹正在唱歌。', '妹妹有一個鈴鐺。'], explanation: '把笑聲比作銀鈴，寫出聲音清脆。' },
@@ -61,7 +68,7 @@ export default {
       ],
     },
     {
-      id: 'P3-CN-R05', area: '閱讀', title: '擬人手法', interaction: 'p3-figure', figureType: '擬人',
+      id: 'P3-CN-R05', area: '閱讀', title: '擬人', interaction: 'p3-figure', figureType: '擬人',
       questions: [
         { id: 'P3-CN-R05-Q01', hint: '擬人把物件或動物當作人來寫。', prompt: '哪一句運用了擬人？', answer: '小花向着太陽點點頭。', choices: ['小花向着太陽點點頭。', '小花開在花園裏。', '太陽照着小花。', '花園裏有很多小花。'], explanation: '花不會真的點頭，這是把小花當作人來寫。' },
         { id: 'P3-CN-R05-Q02', hint: '找出非人的事物有人的動作或感情的句子。', prompt: '哪一句運用了擬人？', answer: '風兒輕輕唱着歌，吹過樹梢。', choices: ['風兒輕輕唱着歌，吹過樹梢。', '風很大，樹葉在搖。', '我在唱歌。', '樹梢很高。'], explanation: '風不會唱歌，這是把風當作人來寫。' },
@@ -76,7 +83,7 @@ export default {
       ],
     },
     {
-      id: 'P3-CN-R06', area: '閱讀', title: '排比手法', interaction: 'p3-figure', figureType: '排比',
+      id: 'P3-CN-R06', area: '閱讀', title: '排比', interaction: 'p3-figure', figureType: '排比',
       questions: [
         { id: 'P3-CN-R06-Q01', hint: '排比把三個或以上結構相近的句子連在一起。', prompt: '哪一句運用了排比？', answer: '春天到了，花兒開了，樹葉綠了，小鳥唱歌了。', choices: ['春天到了，花兒開了，樹葉綠了，小鳥唱歌了。', '春天到了，花兒開了。', '小鳥在樹上唱歌。', '我喜歡春天。'], explanation: '三個結構相近的短句連在一起，形成排比。' },
         { id: 'P3-CN-R06-Q02', hint: '排比常用相同句式加強語氣。', prompt: '哪一句運用了排比？', answer: '我愛媽媽的笑容，我愛媽媽的擁抱，我愛媽媽的故事。', choices: ['我愛媽媽的笑容，我愛媽媽的擁抱，我愛媽媽的故事。', '我很愛媽媽。', '媽媽正在看故事書。', '笑容令人開心。'], explanation: '三句都以「我愛媽媽的」開始，結構相同。' },
@@ -90,7 +97,19 @@ export default {
         { id: 'P3-CN-R06-Q10', hint: '排比讓感受更有力量。', prompt: '哪一句運用了排比？', answer: '香港有高高的山，有長長的海岸，有繁忙的街道。', choices: ['香港有高高的山，有長長的海岸，有繁忙的街道。', '香港是一個城市。', '街道上有很多車。', '海岸很長。'], explanation: '三個「有」的相同句式，形成排比。' },
       ],
     },
-    { id: 'P3-CN-R07', area: '閱讀', title: '進階記敘、科普與抒情文', interaction: 'p3-figure', figureType: '篇章閱讀', questions: [
+    { id: 'P3-CN-R08', area: '閱讀', title: '同義詞與反義詞', interaction: 'p3-figure', figureType: '詞語關係', questions: [
+      { id: 'P3-CN-R08-Q01', hint: '小美收到朋友的生日卡，感到很快樂。', prompt: '「快樂」的同義詞是哪一個？', answer: '開心', choices: ['開心', '傷心', '安靜', '寒冷'], explanation: '「快樂」和「開心」都表示心情愉快。' },
+      { id: 'P3-CN-R08-Q02', hint: '值日生把課室打掃得很整潔。', prompt: '「整潔」的反義詞是哪一個？', answer: '凌亂', choices: ['整齊', '凌亂', '明亮', '安靜'], explanation: '「整潔」是整齊乾淨；「凌亂」則是雜亂無章。' },
+      { id: 'P3-CN-R08-Q03', hint: '小朗雖然害怕，仍勇敢地上台說話。', prompt: '「勇敢」的反義詞是哪一個？', answer: '膽小', choices: ['堅強', '膽小', '認真', '高興'], explanation: '「勇敢」是不怕困難；「膽小」是容易害怕。' },
+      { id: 'P3-CN-R08-Q04', hint: '救護車迅速到達現場。', prompt: '「迅速」的同義詞是哪一個？', answer: '快速', choices: ['緩慢', '快速', '安靜', '困難'], explanation: '「迅速」和「快速」都表示速度很快。' },
+      { id: 'P3-CN-R08-Q05', hint: '夏天的中午非常炎熱。', prompt: '「炎熱」的反義詞是哪一個？', answer: '寒冷', choices: ['溫暖', '明亮', '寒冷', '熱鬧'], explanation: '「炎熱」是很熱；「寒冷」是很冷。' },
+      { id: 'P3-CN-R08-Q06', hint: '同學不會做題時，老師會幫助他。', prompt: '「幫助」的同義詞是哪一個？', answer: '協助', choices: ['阻止', '協助', '忘記', '離開'], explanation: '「幫助」和「協助」都表示出力幫人完成事情。' },
+      { id: 'P3-CN-R08-Q07', hint: '圖書館裏很安靜，大家輕聲閱讀。', prompt: '「安靜」的反義詞是哪一個？', answer: '嘈雜', choices: ['寧靜', '嘈雜', '整齊', '清楚'], explanation: '「安靜」沒有吵鬧聲；「嘈雜」聲音很多、很吵。' },
+      { id: 'P3-CN-R08-Q08', hint: '老師把實驗步驟講得很仔細。', prompt: '「仔細」的反義詞是哪一個？', answer: '馬虎', choices: ['認真', '馬虎', '清楚', '勤勞'], explanation: '「仔細」是認真留意細節；「馬虎」是不夠認真。' },
+      { id: 'P3-CN-R08-Q09', hint: '這道題對小琪來說不太困難。', prompt: '「困難」的反義詞是哪一個？', answer: '容易', choices: ['複雜', '容易', '重要', '辛苦'], explanation: '「困難」是不容易做到；「容易」是較易做到。' },
+      { id: 'P3-CN-R08-Q10', hint: '媽媽稱讚小文誠實地承認錯誤。', prompt: '「誠實」最接近哪一個意思？', answer: '不說謊，說真話', choices: ['不說謊，說真話', '不停說話', '很快說話', '不想說話'], explanation: '誠實的人會說真話，勇於承認自己的錯誤。' },
+    ] },
+    { id: 'P3-CN-R07', area: '閱讀', title: '篇章類型與閱讀目的', interaction: 'p3-figure', figureType: '篇章閱讀', questions: [
       { id: 'P3-CN-R07-Q01', hint: '材料介紹珊瑚礁的形成、海洋生物和保護方法。', prompt: '這篇短文最可能是哪一類文章？', answer: '科普說明文', choices: ['科普說明文', '日記', '邀請信', '童話'], explanation: '介紹知識和保護方法的文章屬於科普說明文。' },
       { id: 'P3-CN-R07-Q02', hint: '作者回憶第一次游泳比賽，寫到緊張、努力和完成後的感受。', prompt: '這篇文章最可能是哪一類文章？', answer: '記敘文', choices: ['記敘文', '啟事', '說明書', '菜單'], explanation: '記錄親身經歷及其發展，屬於記敘文。' },
       { id: 'P3-CN-R07-Q03', hint: '作者描寫黃昏的海邊，並寫出思念外婆的心情。', prompt: '這篇文章最主要表達甚麼？', answer: '借景抒發思念', choices: ['借景抒發思念', '教人游泳', '列出活動規則', '介紹交通路線'], explanation: '海邊景色配合思念外婆的感情，是借景抒情。' },
@@ -138,5 +157,5 @@ export default {
       { id: 'P3-CN-W03-Q09', hint: '材料：下雨天，我帶着雨傘走到巴士站。看見一位同學沒有雨傘，我便和他共用一把傘。', prompt: '這段記敘的「事件」是甚麼？', answer: '我和沒有雨傘的同學共用一把傘', choices: ['我和沒有雨傘的同學共用一把傘', '下雨天', '巴士站', '我帶着雨傘'], explanation: '共用雨傘是這段文字的主要事件。' },
       { id: 'P3-CN-W03-Q10', hint: '材料：運動會當天，小琪第一次參加跳遠。雖然只得到第五名，她仍然感謝同學的加油，決定明年繼續練習。', prompt: '哪一句最能表現小琪最後的感受和想法？', answer: '她決定明年繼續練習', choices: ['她決定明年繼續練習', '她第一次參加跳遠', '她得到第五名', '同學在旁加油'], explanation: '決定繼續練習寫出她面對結果後積極的想法。' },
     ] },
-  ],
+  ].sort((left, right) => ['P3-CN-R01', 'P3-CN-R03', 'P3-CN-R09', 'P3-CN-R07', 'P3-CN-R08', 'P3-CN-R02', 'P3-CN-R04', 'P3-CN-R05', 'P3-CN-R06', 'P3-CN-W03', 'P3-CN-W01', 'P3-CN-W02'].indexOf(left.id) - ['P3-CN-R01', 'P3-CN-R03', 'P3-CN-R09', 'P3-CN-R07', 'P3-CN-R08', 'P3-CN-R02', 'P3-CN-R04', 'P3-CN-R05', 'P3-CN-R06', 'P3-CN-W03', 'P3-CN-W01', 'P3-CN-W02'].indexOf(right.id)),
 };

@@ -1,0 +1,525 @@
+/* 三科共用課堂資訊列與題目安全縮放：讓課題、進度、材料與答案維持一致層級。 */
+
+:is(.english-choice-page, .english-reading-page, .english-sentence-page, .english-sentence-rewrite-page, .english-verb-memory-page) { --activity-accent: #42a4e5; --activity-ink: #1b4568; --activity-pale: #f5fbff; }
+:is(.math-activity-page) { --activity-accent: #2eaf75; --activity-ink: #183d31; --activity-pale: #f7fdf9; }
+:is(.choice-worksheet-page, .word-match-page, .radical-sort-page, .punctuation-drop-page, .story-structure-page, .sentence-expand-page, .p2-writing-page, .format-sort-page, .p3-study-page, .tale-reading-page, .paragraph-mark-page) { --activity-accent: #e5725b; --activity-ink: #63342b; --activity-pale: #fff9f7; }
+
+.site-shell .activity-workbench-frame {
+  display: grid !important;
+  grid-template-columns: 64px minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: .42rem .8rem !important;
+  overflow: visible !important;
+  border: 1px solid color-mix(in srgb, var(--activity-accent, #4e9bd9) 30%, white) !important;
+  border-bottom: 4px solid var(--activity-accent, #4e9bd9) !important;
+  border-radius: 0 0 .48rem .48rem !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+.site-shell .activity-workbench-frame .activity-brand-lockup,
+.site-shell .activity-workbench-frame .activity-task-stamp,
+.site-shell .activity-workbench-frame .math-file-stamp,
+.site-shell .activity-workbench-frame .math-file-lesson-strip,
+.site-shell .activity-workbench-frame .math-file-status,
+.site-shell .activity-workbench-frame .math-file-route {
+  display: none !important;
+}
+
+.site-shell .activity-workbench-frame .activity-file-tab {
+  display: grid !important;
+  place-items: center !important;
+  align-self: stretch !important;
+  min-width: 0 !important;
+  min-height: 48px !important;
+  padding: .25rem !important;
+  border-radius: 0 !important;
+  background: var(--activity-accent, #4e9bd9) !important;
+  color: #fff !important;
+  font-size: .64rem !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
+  letter-spacing: .04em !important;
+}
+
+.site-shell .activity-workbench-frame .activity-course-file {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: baseline !important;
+  gap: .1rem .48rem !important;
+  min-width: 0 !important;
+  padding: 0 .8rem !important;
+  overflow: visible !important;
+}
+
+.site-shell .activity-workbench-frame .activity-course-file > span,
+.site-shell .activity-workbench-frame .activity-course-file > b {
+  display: inline !important;
+  margin: 0 !important;
+  white-space: normal !important;
+}
+
+.site-shell .activity-workbench-frame .activity-course-file > span {
+  color: color-mix(in srgb, var(--activity-accent, #4e9bd9) 66%, #1d2939) !important;
+  font-size: .67rem !important;
+  font-weight: 900 !important;
+  letter-spacing: .03em !important;
+}
+
+.site-shell .activity-workbench-frame .activity-course-file > span::after {
+  content: '｜';
+  margin-left: .48rem;
+  color: color-mix(in srgb, var(--activity-accent, #4e9bd9) 50%, white) !important;
+}
+
+.site-shell .activity-workbench-frame .activity-course-file > b {
+  color: var(--activity-ink, #183d31) !important;
+  font-size: clamp(.98rem, 2vw, 1.2rem) !important;
+  line-height: 1.25 !important;
+}
+
+.site-shell :is(.match-topbar, .math-activity-controls) {
+  display: grid !important;
+  grid-template-columns: auto auto minmax(90px, 1fr) !important;
+  align-items: center !important;
+  gap: .8rem !important;
+  min-height: 52px !important;
+  margin: 0 !important;
+  padding: .42rem .85rem !important;
+  border: 0 !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--activity-accent, #4e9bd9) 31%, white) !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+.site-shell :is(.match-topbar, .math-activity-controls)::before,
+.site-shell :is(.match-topbar, .math-activity-controls)::after { display: none !important; }
+
+.site-shell :is(.match-topbar, .math-activity-controls) .match-back {
+  min-height: 34px !important;
+  margin: 0 !important;
+  padding: .32rem .58rem !important;
+  border: 1px solid color-mix(in srgb, var(--activity-accent, #4e9bd9) 48%, white) !important;
+  border-left: 4px solid var(--activity-accent, #4e9bd9) !important;
+  border-radius: .2rem !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  color: var(--activity-ink, #183d31) !important;
+  font-size: .73rem !important;
+}
+
+.site-shell :is(.match-topbar, .math-activity-controls) > div:not(.match-progress) {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: .18rem !important;
+  min-width: max-content !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.site-shell :is(.match-topbar, .math-activity-controls) > div:not(.match-progress) b { color: var(--activity-ink, #183d31) !important; font-size: .82rem !important; }
+.site-shell :is(.match-topbar, .math-activity-controls) > div:not(.match-progress) span { color: color-mix(in srgb, var(--activity-accent, #4e9bd9) 60%, #415163) !important; font-size: .67rem !important; }
+
+.site-shell :is(.match-topbar, .math-activity-controls) .match-progress {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 7px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: color-mix(in srgb, var(--activity-accent, #4e9bd9) 15%, white) !important;
+  box-shadow: none !important;
+}
+
+.site-shell .match-progress i { background: var(--activity-accent, #4e9bd9) !important; }
+
+.site-shell .english-reading-stage::after { display: none !important; }
+
+html { --eduquest-reading-leading: 1.78; --eduquest-reading-column: 56rem; }
+html[data-eduquest-reading-line-height="compact"] { --eduquest-reading-leading: 1.56; }
+html[data-eduquest-reading-line-height="comfortable"] { --eduquest-reading-leading: 1.78; }
+html[data-eduquest-reading-line-height="spacious"] { --eduquest-reading-leading: 2.06; }
+html[data-eduquest-reading-column-width="narrow"] { --eduquest-reading-column: 44rem; }
+html[data-eduquest-reading-column-width="standard"] { --eduquest-reading-column: 56rem; }
+html[data-eduquest-reading-column-width="wide"] { --eduquest-reading-column: 68rem; }
+
+.site-shell :is(.english-passage-sheet, .tale-paper, .p3-source-card.passage-source, .marked-reading-sheet) {
+  inline-size: min(100%, var(--eduquest-reading-column)) !important;
+  max-inline-size: var(--eduquest-reading-column) !important;
+  margin-inline: auto !important;
+}
+
+.site-shell :is(.english-passage-copy, .tale-paper .answer-story-segments, .tale-paper .focus-story-segments, .p3-source-card.passage-source > p, .marked-reading-sheet button p) {
+  line-height: var(--eduquest-reading-leading) !important;
+}
+
+.site-shell .english-passage-copy p,
+.site-shell .tale-paper .answer-story-segments p,
+.site-shell .tale-paper .focus-story-segments p,
+.site-shell .marked-reading-sheet button p { margin-block: 0 1em !important; }
+
+.site-shell h1[data-eduquest-question-length] {
+  max-inline-size: 28ch !important;
+  overflow-wrap: anywhere !important;
+  text-wrap: balance;
+}
+
+.site-shell h1[data-eduquest-question-length="short"] { font-size: clamp(1.6rem, 4.2vw, 3rem) !important; line-height: 1.2 !important; }
+.site-shell h1[data-eduquest-question-length="medium"] { font-size: clamp(1.5rem, 3.65vw, 2.65rem) !important; line-height: 1.24 !important; }
+.site-shell h1[data-eduquest-question-length="long"] { font-size: clamp(1.36rem, 3vw, 2.3rem) !important; line-height: 1.3 !important; }
+.site-shell h1[data-eduquest-question-length="xlong"] { font-size: clamp(1.22rem, 2.5vw, 1.95rem) !important; line-height: 1.34 !important; }
+
+html[data-eduquest-minimal-projection="on"] .site-shell .activity-workbench-frame {
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  min-height: 48px !important;
+  padding: .32rem .75rem !important;
+}
+
+html[data-eduquest-minimal-projection="on"] .site-shell .activity-workbench-frame .activity-file-tab,
+html[data-eduquest-minimal-projection="on"] .site-shell .activity-workbench-frame .exam-timer,
+html[data-eduquest-minimal-projection="on"] .site-shell :is(.match-heading, .math-heading) > span,
+html[data-eduquest-minimal-projection="on"] .site-shell :is(.match-heading, .math-heading) > p,
+html[data-eduquest-minimal-projection="on"] .site-shell .hint-satchel,
+html[data-eduquest-minimal-projection="on"] .site-shell .eliminate-choice-availability,
+html[data-eduquest-minimal-projection="on"] .site-shell .math-answer-zone .bank-title small,
+html[data-eduquest-minimal-projection="on"] .site-shell .english-answer-zone .bank-title small { display: none !important; }
+
+html[data-eduquest-minimal-projection="on"] .site-shell .activity-workbench-frame .activity-course-file { padding: 0 !important; }
+html[data-eduquest-minimal-projection="on"] .site-shell .activity-workbench-frame .activity-course-file > span { font-size: .61rem !important; }
+html[data-eduquest-minimal-projection="on"] .site-shell :is(.match-topbar, .math-activity-controls) > div:not(.match-progress) > span { display: none !important; }
+html[data-eduquest-minimal-projection="on"] .site-shell :is(.match-heading, .math-heading) h1 { margin-top: 0 !important; }
+
+@media (max-width: 820px) {
+  .site-shell :is(.english-passage-sheet, .tale-paper, .p3-source-card.passage-source, .marked-reading-sheet) {
+    inline-size: 100% !important;
+    max-inline-size: 100% !important;
+  }
+  .site-shell .activity-workbench-frame { grid-template-columns: 50px minmax(0, 1fr) auto !important; min-height: 58px !important; padding: .34rem .46rem !important; }
+  .site-shell .activity-workbench-frame .activity-file-tab { min-height: 42px !important; }
+  .site-shell .activity-workbench-frame .activity-course-file { padding: 0 .52rem !important; }
+  .site-shell .activity-workbench-frame .activity-course-file > span { font-size: .59rem !important; }
+  .site-shell .activity-workbench-frame .activity-course-file > b { font-size: .92rem !important; }
+  .site-shell :is(.match-topbar, .math-activity-controls) { grid-template-columns: auto 1fr !important; gap: .45rem !important; min-height: 48px !important; padding: .35rem .55rem !important; }
+  .site-shell :is(.match-topbar, .math-activity-controls) .match-progress { grid-column: 1 / -1 !important; }
+  .site-shell :is(.match-topbar, .math-activity-controls) > div:not(.match-progress) > span { display: none !important; }
+  .site-shell h1[data-eduquest-question-length="short"] { font-size: 1.65rem !important; }
+  .site-shell h1[data-eduquest-question-length="medium"] { font-size: 1.48rem !important; }
+  .site-shell h1[data-eduquest-question-length="long"] { font-size: 1.32rem !important; }
+  .site-shell h1[data-eduquest-question-length="xlong"] { font-size: 1.18rem !important; }
+}
+
+/* 跨科一致化：EduQuest 識別、學科主色和單一連續工作紙。 */
+main.site-shell:is(.choice-worksheet-page, .word-match-page, .radical-sort-page, .punctuation-drop-page, .story-structure-page, .sentence-expand-page, .p2-writing-page, .format-sort-page, .p3-study-page, .tale-reading-page, .paragraph-mark-page) {
+  --activity-accent: #e5725b !important;
+  --activity-ink: #63342b !important;
+  --activity-pale: #fff9f7 !important;
+}
+
+main.site-shell.story-page {
+  --activity-accent: #e5725b !important;
+  --activity-ink: #63342b !important;
+  --activity-pale: #fff9f7 !important;
+}
+
+main.site-shell:is(.english-choice-page, .english-reading-page, .english-sentence-page, .english-sentence-rewrite-page, .english-verb-memory-page) {
+  --activity-accent: #42a4e5 !important;
+  --activity-ink: #1b4568 !important;
+  --activity-pale: #f5fbff !important;
+}
+
+main.site-shell.math-activity-page {
+  --activity-accent: #2eaf75 !important;
+  --activity-ink: #183d31 !important;
+  --activity-pale: #f7fdf9 !important;
+}
+
+main.site-shell:is(.choice-worksheet-page, .word-match-page, .radical-sort-page, .punctuation-drop-page, .story-structure-page, .sentence-expand-page, .p2-writing-page, .format-sort-page, .p3-study-page, .tale-reading-page, .paragraph-mark-page) .activity-file-tab,
+main.site-shell:is(.choice-worksheet-page, .word-match-page, .radical-sort-page, .punctuation-drop-page, .story-structure-page, .sentence-expand-page, .p2-writing-page, .format-sort-page, .p3-study-page, .tale-reading-page, .paragraph-mark-page) .match-progress i {
+  background: #e5725b !important;
+}
+
+main.site-shell.story-page .activity-file-tab,
+main.site-shell.story-page .match-progress i { background: #e5725b !important; }
+
+main.site-shell:is(.choice-worksheet-page, .word-match-page, .radical-sort-page, .punctuation-drop-page, .story-structure-page, .sentence-expand-page, .p2-writing-page, .format-sort-page, .p3-study-page, .tale-reading-page, .paragraph-mark-page) .activity-workbench-frame {
+  border-color: color-mix(in srgb, #e5725b 30%, white) !important;
+  border-bottom-color: #e5725b !important;
+}
+
+main.site-shell.story-page .activity-workbench-frame { border-color: color-mix(in srgb, #e5725b 30%, white) !important; border-bottom-color: #e5725b !important; }
+
+main.site-shell:is(.choice-worksheet-page, .word-match-page, .radical-sort-page, .punctuation-drop-page, .story-structure-page, .sentence-expand-page, .p2-writing-page, .format-sort-page, .p3-study-page, .tale-reading-page, .paragraph-mark-page) .match-topbar {
+  border-bottom-color: color-mix(in srgb, #e5725b 32%, white) !important;
+}
+
+main.site-shell.story-page .match-topbar { border-bottom-color: color-mix(in srgb, #e5725b 32%, white) !important; }
+
+.site-shell.math-activity-page .math-activity-frame {
+  grid-template-columns: 58px 132px minmax(0, 1fr) auto !important;
+  min-height: 64px !important;
+  padding: .42rem .8rem !important;
+  background: #fff !important;
+}
+
+.site-shell.math-activity-page .math-activity-frame .activity-brand-lockup {
+  justify-self: stretch !important;
+  min-width: 0 !important;
+  padding: 0 .55rem !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.site-shell.math-activity-page .math-activity-frame .activity-course-file {
+  min-width: 0 !important;
+  padding: 0 .55rem !important;
+}
+
+.site-shell.math-activity-page .math-activity-frame .exam-timer {
+  display: flex !important;
+  position: static !important;
+  grid-column: 4 !important;
+  grid-row: 1 !important;
+  justify-self: end !important;
+  align-self: center !important;
+  margin: 0 !important;
+  border-color: color-mix(in srgb, var(--activity-accent) 35%, white) !important;
+  box-shadow: none !important;
+}
+
+.site-shell .activity-workbench-frame {
+  grid-template-columns: 58px 132px minmax(0, 1fr) auto !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.site-shell .activity-workbench-frame::after {
+  position: absolute !important;
+  top: .55rem !important;
+  right: .72rem !important;
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 999px !important;
+  background: color-mix(in srgb, var(--activity-accent, #4e9bd9) 42%, white) !important;
+  box-shadow: 0 9px 0 color-mix(in srgb, var(--activity-accent, #4e9bd9) 28%, white), 0 18px 0 color-mix(in srgb, var(--activity-accent, #4e9bd9) 16%, white) !important;
+  content: '' !important;
+}
+
+.site-shell .activity-workbench-frame .activity-brand-lockup {
+  display: flex !important;
+  align-items: center !important;
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  min-width: 0 !important;
+  gap: .38rem !important;
+  padding: 0 .55rem !important;
+}
+
+.site-shell .activity-workbench-frame .activity-brand-mark {
+  display: grid !important;
+  flex: 0 0 auto !important;
+  width: 27px !important;
+  height: 27px !important;
+  place-items: center !important;
+  border: 1px solid #1e4cc9 !important;
+  border-radius: .38rem !important;
+  background: linear-gradient(135deg, #275ede 0 68%, var(--activity-accent, #42a4e5) 68%) !important;
+  color: #fff !important;
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--activity-accent, #42a4e5) 32%, white) !important;
+}
+
+.site-shell .activity-workbench-frame .activity-brand-mark i { display: none !important; }
+.site-shell .activity-workbench-frame .activity-brand-mark svg { width: 16px !important; height: 16px !important; }
+.site-shell .activity-workbench-frame .activity-brand-lockup > div { display: grid !important; gap: 0 !important; min-width: 0 !important; }
+.site-shell .activity-workbench-frame .activity-brand-lockup b { color: #183150 !important; font-size: .78rem !important; line-height: 1 !important; letter-spacing: -.04em !important; }
+.site-shell .activity-workbench-frame .activity-brand-lockup b span { color: #2c63f5 !important; }
+.site-shell .activity-workbench-frame .activity-brand-lockup small { color: #617189 !important; font-size: .47rem !important; font-weight: 800 !important; line-height: 1.25 !important; white-space: nowrap !important; }
+
+.site-shell .activity-workbench-frame .activity-file-tab { grid-column: 1 !important; grid-row: 1 !important; }
+.site-shell .activity-workbench-frame .activity-course-file { grid-column: 3 !important; grid-row: 1 !important; width: 100% !important; min-width: 0 !important; padding-inline: .55rem !important; }
+.site-shell .activity-workbench-frame .exam-timer { grid-column: 4 !important; grid-row: 1 !important; }
+.site-shell.math-activity-page .math-activity-frame .activity-course-file,
+.site-shell.math-activity-page .math-activity-frame .activity-course-file::before,
+.site-shell.math-activity-page .math-activity-frame .activity-course-file::after {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.site-shell.math-activity-page .math-activity-frame .activity-course-file::before,
+.site-shell.math-activity-page .math-activity-frame .activity-course-file::after { display: none !important; }
+
+.site-shell .english-activity-stage::after,
+.site-shell .english-activity-stage::before { display: none !important; }
+
+.site-shell :is(.english-activity-stage, .english-reading-stage, .tale-reading-stage, .p3-study-stage, .paragraph-mark-stage, .math-activity-stage, .math-interactive-stage) {
+  position: relative !important;
+  border-left: 7px solid var(--activity-accent, #4e9bd9) !important;
+  border-right: 1px solid color-mix(in srgb, var(--activity-accent, #4e9bd9) 22%, white) !important;
+  background-color: #fff !important;
+  background-image: repeating-linear-gradient(to bottom, transparent 0 33px, color-mix(in srgb, var(--activity-accent, #4e9bd9) 7%, white) 33px 34px) !important;
+}
+
+.site-shell :is(.english-activity-stage, .english-reading-stage, .tale-reading-stage, .p3-study-stage, .paragraph-mark-stage, .math-activity-stage, .math-interactive-stage)::before {
+  position: absolute !important;
+  z-index: 0 !important;
+  top: 1rem !important;
+  bottom: 1rem !important;
+  left: -4px !important;
+  width: 2px !important;
+  background: color-mix(in srgb, var(--activity-accent, #4e9bd9) 43%, white) !important;
+  content: '' !important;
+}
+
+.site-shell :is(.english-activity-stage, .english-reading-stage, .tale-reading-stage, .p3-study-stage, .paragraph-mark-stage, .math-activity-stage, .math-interactive-stage) > * { position: relative; z-index: 1; }
+
+.site-shell :is(.english-activity-stage, .english-reading-stage, .tale-reading-stage, .p3-study-stage, .paragraph-mark-stage, .math-activity-stage, .math-interactive-stage) .bank-title {
+  border-bottom-color: color-mix(in srgb, var(--activity-accent, #4e9bd9) 48%, white) !important;
+}
+
+@media (max-width: 820px) {
+  .site-shell.math-activity-page .math-activity-frame { grid-template-columns: 48px 34px minmax(0, 1fr) auto !important; min-height: 58px !important; height: auto !important; padding: .34rem .46rem !important; }
+  .site-shell.math-activity-page .math-activity-frame .activity-brand-lockup { padding: 0 !important; }
+  .site-shell.math-activity-page .math-activity-frame .exam-timer { display: none !important; }
+  .site-shell .activity-workbench-frame { grid-template-columns: 48px 34px minmax(0, 1fr) auto !important; grid-auto-rows: minmax(0, auto) !important; min-height: 58px !important; height: auto !important; }
+  .site-shell .activity-workbench-frame .activity-brand-lockup { padding: 0 !important; }
+  .site-shell .activity-workbench-frame .activity-brand-lockup > div { display: none !important; }
+  .site-shell .activity-workbench-frame .activity-brand-mark { width: 25px !important; height: 25px !important; }
+  .site-shell .activity-workbench-frame .activity-course-file { padding-inline: .38rem !important; }
+  .site-shell :is(.english-activity-stage, .english-reading-stage, .tale-reading-stage, .p3-study-stage, .paragraph-mark-stage, .math-activity-stage, .math-interactive-stage) { border-left-width: 5px !important; }
+}
+
+.site-shell .format-sort-stage.paragraph-main-idea-stage .match-heading > p:not(.sorting-source) {
+  display: block !important;
+  margin: .35rem 0 0 !important;
+  color: #79554c !important;
+  font-size: .86rem !important;
+  font-weight: 800 !important;
+}
+
+.site-shell .format-sort-stage.paragraph-main-idea-stage .sorting-source {
+  display: block !important;
+  max-inline-size: 68rem !important;
+  margin: .7rem 0 0 !important;
+  padding: .7rem .85rem !important;
+  border: 1px solid color-mix(in srgb, var(--activity-accent) 38%, white) !important;
+  border-left: 5px solid var(--activity-accent) !important;
+  border-radius: .3rem !important;
+  background: #fff !important;
+  color: #63342b !important;
+  font-size: clamp(1rem, 2vw, 1.24rem) !important;
+  font-weight: 700 !important;
+  line-height: var(--eduquest-reading-leading) !important;
+}
+
+@media (max-width: 820px) {
+  .site-shell .format-sort-stage.paragraph-main-idea-stage .sorting-source { padding: .62rem .7rem !important; font-size: 1rem !important; }
+}
+
+.site-shell .chinese-scaffold-stage {
+  display: grid !important;
+  gap: .9rem !important;
+  max-inline-size: 72rem !important;
+  margin-inline: auto !important;
+  padding: 1rem !important;
+}
+
+.site-shell .chinese-scaffold-source {
+  display: grid !important;
+  gap: .35rem !important;
+  padding: .8rem .95rem !important;
+  border: 1px solid color-mix(in srgb, var(--activity-accent) 40%, white) !important;
+  border-left: 6px solid var(--activity-accent) !important;
+  border-radius: .32rem !important;
+  background: #fff !important;
+}
+
+.site-shell .chinese-scaffold-source > span,
+.site-shell .chinese-scaffold-plan .bank-title span { color: var(--activity-accent) !important; font-size: .72rem !important; font-weight: 900 !important; letter-spacing: .07em !important; }
+.site-shell .chinese-scaffold-source h2 { margin: 0 !important; color: var(--activity-ink) !important; font-size: 1.2rem !important; }
+.site-shell .chinese-scaffold-source p { margin: 0 !important; color: #63342b !important; font-size: clamp(1rem, 2.1vw, 1.2rem) !important; font-weight: 700 !important; line-height: var(--eduquest-reading-leading) !important; }
+
+.site-shell .chinese-scaffold-plan { display: grid !important; gap: .7rem !important; }
+.site-shell .chinese-scaffold-plan .bank-title { display: flex !important; justify-content: space-between !important; align-items: baseline !important; margin: 0 !important; padding: 0 .1rem .42rem !important; border-bottom: 1px solid color-mix(in srgb, var(--activity-accent) 42%, white) !important; }
+.site-shell .chinese-scaffold-plan .bank-title small { color: #79554c !important; font-size: .72rem !important; font-weight: 800 !important; }
+
+.site-shell .chinese-scaffold-step { display: grid !important; gap: .6rem !important; padding: .78rem .85rem !important; border: 1px solid color-mix(in srgb, var(--activity-accent) 32%, white) !important; border-left: 5px solid color-mix(in srgb, var(--activity-accent) 70%, white) !important; border-radius: .34rem !important; background: #fff !important; box-shadow: none !important; }
+.site-shell .chinese-scaffold-step > header { display: flex !important; align-items: center !important; gap: .55rem !important; }
+.site-shell .chinese-scaffold-step > header > span { display: grid !important; width: 26px !important; height: 26px !important; flex: 0 0 auto !important; place-items: center !important; border-radius: 999px !important; background: var(--activity-accent) !important; color: #fff !important; font-size: .78rem !important; font-weight: 900 !important; }
+.site-shell .chinese-scaffold-step > header > div { display: grid !important; gap: .08rem !important; }
+.site-shell .chinese-scaffold-step > header b { color: var(--activity-ink) !important; font-size: 1rem !important; }
+.site-shell .chinese-scaffold-step > header small { color: #79554c !important; font-size: .78rem !important; font-weight: 700 !important; }
+.site-shell .chinese-scaffold-step > header > svg { margin-left: auto !important; color: var(--activity-accent) !important; }
+
+.site-shell .scaffold-options { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: .48rem !important; }
+.site-shell .scaffold-options button { display: block !important; width: 100% !important; min-height: 78px !important; margin: 0 !important; padding: .62rem .66rem !important; border: 1px dashed color-mix(in srgb, var(--activity-accent) 48%, white) !important; border-radius: .25rem !important; background: #fffdfc !important; color: #63342b !important; font: inherit !important; font-size: .93rem !important; font-weight: 750 !important; line-height: 1.42 !important; text-align: left !important; transition: transform 160ms var(--ease-out), border-color 160ms var(--ease-out), background 160ms var(--ease-out) !important; }
+.site-shell .scaffold-options button:hover { transform: translateY(-2px) !important; border-color: var(--activity-accent) !important; background: color-mix(in srgb, var(--activity-accent) 8%, white) !important; }
+.site-shell .scaffold-options button:active { transform: scale(.98) !important; }
+.site-shell .chinese-scaffold-step.complete { border-left-color: var(--activity-accent) !important; background: color-mix(in srgb, var(--activity-accent) 6%, white) !important; }
+.site-shell .chinese-scaffold-step.wrong { animation: scaffold-shake 420ms var(--ease-out) !important; border-color: #d55b5b !important; }
+.site-shell .chosen-writing-sentence { margin: 0 !important; padding: .7rem .78rem !important; border-radius: .22rem !important; background: color-mix(in srgb, var(--activity-accent) 10%, white) !important; color: var(--activity-ink) !important; font-size: 1rem !important; font-weight: 800 !important; line-height: 1.52 !important; }
+.site-shell .chinese-scaffold-feedback { display: flex !important; align-items: flex-start !important; gap: .65rem !important; padding: .85rem .9rem !important; border: 1px solid color-mix(in srgb, var(--activity-accent) 40%, white) !important; border-left: 6px solid var(--activity-accent) !important; border-radius: .34rem !important; background: #fff !important; color: var(--activity-ink) !important; }
+.site-shell .chinese-scaffold-feedback > svg { color: var(--activity-accent) !important; flex: 0 0 auto !important; }
+.site-shell .chinese-scaffold-feedback p { margin: .22rem 0 0 !important; font-weight: 700 !important; }
+.site-shell .chinese-scaffold-feedback .complete-actions { margin-left: auto !important; }
+
+@keyframes scaffold-shake { 0%, 100% { transform: translateX(0); } 35% { transform: translateX(-4px); } 70% { transform: translateX(4px); } }
+@media (max-width: 820px) {
+  .site-shell .chinese-scaffold-stage { gap: .72rem !important; padding: .72rem !important; }
+  .site-shell .scaffold-options { grid-template-columns: 1fr !important; }
+  .site-shell .scaffold-options button { min-height: 58px !important; font-size: .95rem !important; }
+  .site-shell .chinese-scaffold-feedback { display: grid !important; }
+  .site-shell .chinese-scaffold-feedback .complete-actions { margin-left: 0 !important; }
+}
+
+/* 英文文本與實用寫作：以藍色分步卡取代連續選句文字。 */
+.site-shell .english-template-stage { display: grid !important; gap: .9rem !important; max-inline-size: 72rem !important; margin-inline: auto !important; padding: 1rem !important; }
+.site-shell .english-template-brief { display: grid !important; gap: .32rem !important; padding: .82rem .95rem !important; border: 1px solid color-mix(in srgb, var(--activity-accent) 40%, white) !important; border-left: 6px solid var(--activity-accent) !important; border-radius: .34rem !important; background: #fff !important; }
+.site-shell .english-template-brief > span,
+.site-shell .english-template-plan .bank-title span { color: var(--activity-accent) !important; font-size: .72rem !important; font-weight: 900 !important; letter-spacing: .07em !important; }
+.site-shell .english-template-brief h2 { margin: 0 !important; color: var(--activity-ink) !important; font-size: 1.2rem !important; }
+.site-shell .english-template-brief p { margin: 0 !important; color: var(--activity-ink) !important; font-size: clamp(1rem, 2.1vw, 1.2rem) !important; font-weight: 700 !important; line-height: var(--eduquest-reading-leading) !important; }
+.site-shell .english-picture-strip { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: .55rem !important; padding: .1rem 0 !important; }
+.site-shell .english-picture-strip article { position: relative !important; display: grid !important; min-height: 112px !important; align-content: center !important; justify-items: center !important; gap: .18rem !important; padding: .6rem !important; border: 1px dashed color-mix(in srgb, var(--activity-accent) 52%, white) !important; border-radius: .32rem !important; background: color-mix(in srgb, var(--activity-accent) 5%, white) !important; text-align: center !important; }
+.site-shell .english-picture-strip article > span { position: absolute !important; top: .42rem !important; left: .45rem !important; display: grid !important; width: 22px !important; height: 22px !important; place-items: center !important; border-radius: 999px !important; background: var(--activity-accent) !important; color: #fff !important; font-size: .68rem !important; font-weight: 900 !important; }
+.site-shell .english-picture-strip article > b { font-size: 2rem !important; line-height: 1 !important; }
+.site-shell .english-picture-strip article > small { color: var(--activity-ink) !important; font-size: .78rem !important; font-weight: 800 !important; line-height: 1.3 !important; }
+.site-shell .english-evidence-card { display: grid !important; gap: .3rem !important; padding: .78rem .9rem !important; border: 1px solid color-mix(in srgb, var(--activity-accent) 45%, white) !important; border-left: 6px solid color-mix(in srgb, var(--activity-accent) 78%, #5b5bd6) !important; border-radius: .34rem !important; background: linear-gradient(135deg, color-mix(in srgb, var(--activity-accent) 8%, white), #fff) !important; }
+.site-shell .english-evidence-card > span { color: var(--activity-accent) !important; font-size: .72rem !important; font-weight: 900 !important; letter-spacing: .07em !important; }
+.site-shell .english-evidence-card > b { margin-top: .2rem !important; color: #5b5bd6 !important; font-size: .75rem !important; letter-spacing: .05em !important; }
+.site-shell .english-evidence-card > p { margin: 0 !important; color: var(--activity-ink) !important; font-size: clamp(.95rem, 1.9vw, 1.08rem) !important; font-weight: 750 !important; line-height: 1.55 !important; }
+.site-shell .english-template-plan { display: grid !important; gap: .7rem !important; }
+.site-shell .english-template-plan .bank-title { display: flex !important; justify-content: space-between !important; align-items: baseline !important; margin: 0 !important; padding: 0 .1rem .42rem !important; border-bottom: 1px solid color-mix(in srgb, var(--activity-accent) 42%, white) !important; }
+.site-shell .english-template-plan .bank-title small { color: #527189 !important; font-size: .72rem !important; font-weight: 800 !important; }
+.site-shell .english-template-step { display: grid !important; gap: .6rem !important; padding: .78rem .85rem !important; border: 1px solid color-mix(in srgb, var(--activity-accent) 32%, white) !important; border-left: 5px solid color-mix(in srgb, var(--activity-accent) 70%, white) !important; border-radius: .34rem !important; background: #fff !important; }
+.site-shell .english-template-step > header { display: flex !important; align-items: center !important; gap: .55rem !important; }
+.site-shell .english-template-step > header > span { display: grid !important; width: 26px !important; height: 26px !important; flex: 0 0 auto !important; place-items: center !important; border-radius: 999px !important; background: var(--activity-accent) !important; color: #fff !important; font-size: .78rem !important; font-weight: 900 !important; }
+.site-shell .english-template-step > header > div { display: grid !important; gap: .08rem !important; }
+.site-shell .english-template-step > header b { color: var(--activity-ink) !important; font-size: 1rem !important; }
+.site-shell .english-template-step > header small { color: #527189 !important; font-size: .78rem !important; font-weight: 700 !important; }
+.site-shell .english-template-step > header > svg { margin-left: auto !important; color: var(--activity-accent) !important; }
+.site-shell .english-template-options { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: .48rem !important; }
+.site-shell .english-template-options button { display: block !important; width: 100% !important; min-height: 82px !important; margin: 0 !important; padding: .62rem .66rem !important; border: 1px dashed color-mix(in srgb, var(--activity-accent) 48%, white) !important; border-radius: .25rem !important; background: #fbfdff !important; color: var(--activity-ink) !important; font: inherit !important; font-size: .93rem !important; font-weight: 750 !important; line-height: 1.42 !important; text-align: left !important; transition: transform 160ms var(--ease-out), border-color 160ms var(--ease-out), background 160ms var(--ease-out) !important; }
+.site-shell .english-template-options button:hover { transform: translateY(-2px) !important; border-color: var(--activity-accent) !important; background: color-mix(in srgb, var(--activity-accent) 8%, white) !important; }
+.site-shell .english-template-options button:active { transform: scale(.98) !important; }
+.site-shell .english-template-step.complete { border-left-color: var(--activity-accent) !important; background: color-mix(in srgb, var(--activity-accent) 6%, white) !important; }
+.site-shell .english-template-step.wrong { animation: scaffold-shake 420ms var(--ease-out) !important; border-color: #d55b5b !important; }
+.site-shell .chosen-template-line { margin: 0 !important; padding: .7rem .78rem !important; border-radius: .22rem !important; background: color-mix(in srgb, var(--activity-accent) 10%, white) !important; color: var(--activity-ink) !important; font-size: 1rem !important; font-weight: 800 !important; line-height: 1.52 !important; }
+.site-shell .english-template-feedback { display: flex !important; align-items: flex-start !important; gap: .65rem !important; padding: .85rem .9rem !important; border: 1px solid color-mix(in srgb, var(--activity-accent) 40%, white) !important; border-left: 6px solid var(--activity-accent) !important; border-radius: .34rem !important; background: #fff !important; color: var(--activity-ink) !important; }
+.site-shell .english-template-feedback > svg { color: var(--activity-accent) !important; flex: 0 0 auto !important; }
+.site-shell .english-template-feedback p { margin: .22rem 0 0 !important; font-weight: 700 !important; }
+.site-shell .english-template-feedback .complete-actions { margin-left: auto !important; }
+@media (max-width: 820px) {
+  .site-shell .english-template-stage { gap: .72rem !important; padding: .72rem !important; }
+  .site-shell .english-picture-strip { gap: .38rem !important; }
+  .site-shell .english-picture-strip article { min-height: 102px !important; padding: .48rem .3rem !important; }
+  .site-shell .english-picture-strip article > small { font-size: .7rem !important; }
+  .site-shell .english-evidence-card { padding: .68rem .72rem !important; }
+  .site-shell .english-template-options { grid-template-columns: 1fr !important; }
+  .site-shell .english-template-options button { min-height: 58px !important; font-size: .95rem !important; }
+  .site-shell .english-template-feedback { display: grid !important; }
+  .site-shell .english-template-feedback .complete-actions { margin-left: 0 !important; }
+}

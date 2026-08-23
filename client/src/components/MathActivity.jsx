@@ -7,16 +7,17 @@ import ExamTimer from './ExamTimer';
 import HighMathWorkedSteps from './HighMathWorkedSteps';
 import HintSatchel from './HintSatchel';
 import UnitResultSummary from './UnitResultSummary';
+import { playModelSound } from '../lib/feedbackAudio';
 import '../mathLearning.css';
+import '../mathChoiceModels.css';
 
 const objectLabels = { apple: '蘋果', pencil: '筆', book: '書本', biscuit: '餅乾', orange: '橙', flower: '花朵', chair: '椅子', sticker: '貼紙', pupil: '學生', ball: '球', sweet: '糖果', bead: '珠', flag: '旗', dot: '物件' };
 const shuffle = (items) => { const shuffled = [...items]; for (let index = shuffled.length - 1; index > 0; index -= 1) { const swapIndex = Math.floor(Math.random() * (index + 1)); [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]]; } return shuffled; };
 const gradeLabel = (grade) => ({ P1: '小一', P2: '小二', P3: '小三', P4: '小四', P5: '小五', P6: '小六' }[grade] || grade);
 const tips = { 'math-number-line': '先看每一格代表多少，再由起點向右數到目標數字。', 'math-ten-frame': '先逐格數清楚；湊十時，空格數量就是還需要的數量。', 'math-choice': '先看圖中的數量或分組，再用算式或心算檢查答案。', 'math-measurement': '先看清楚刻度和指針，再決定要量度的數值或時間。' };
-
 function MathFrame({ unit, questionLabel }) {
   const grade = unit.id.split('-')[0];
-  return <><header className="activity-workbench-frame math-activity-frame"><span className="activity-file-tab">{grade}<br />MATH</span><div className="activity-brand-lockup"><span className="activity-brand-mark"><i></i><i></i><i></i><Sparkles size={18} /></span><div><b>Edu<span>Quest</span></b><small>小學課堂展示版</small></div></div><div className="activity-course-file"><span>{gradeLabel(grade)}數學</span><b>{unit.title}</b>{questionLabel ? <small>{questionLabel}</small> : null}</div>{questionLabel && <ExamTimer />}</header>{questionLabel && <HintSatchel title="數學解題錦囊" hint={tips[unit.interaction]} />}</>;
+  return <><header className="activity-workbench-frame math-activity-frame"><span className="activity-file-tab">{grade}<br />MATH</span><div className="activity-brand-lockup"><span className="activity-brand-mark"><i></i><i></i><i></i><Sparkles size={18} /></span><div><b>Edu<span>Quest</span></b><small>數學課堂檔案</small></div></div><div className="activity-course-file"><span>{gradeLabel(grade)}數學 · 操作工作紙</span><b>{unit.title}</b>{questionLabel ? <small className="math-file-status">{questionLabel}　·　看模型 → 作答</small> : null}<i className="math-file-stamp">✦ EDUQUEST · MATH FILE</i></div>{questionLabel && <ExamTimer />}</header>{questionLabel && <HintSatchel title={unit.hintTitle || '數學解題錦囊'} hint={unit.hint || tips[unit.interaction]} steps={unit.hintSteps || []} />}</>;
 }
 
 function NumberLine({ line, selected, onSelect, disabled }) {
@@ -35,18 +36,132 @@ function GroupPicture({ visual, share = false }) { const total = visual.groups *
 function FractionPicture({ visual }) { return <section className="math-picture-card fraction-picture" aria-label={`${visual.label} 的分數條`}><div className="math-visual-head"><span>分數條圖解</span><small>已塗 {visual.filled} 份／共 {visual.total} 份</small></div><div className="fraction-strip" style={{ gridTemplateColumns: `repeat(${visual.total}, minmax(0, 1fr))` }}>{Array.from({ length: visual.total }, (_, index) => <i key={index} className={index < visual.filled ? 'filled' : ''}></i>)}</div><p>彩色部分表示 <b>{visual.label}</b>。</p></section>; }
 function MeasurementPicture({ visual }) { if (visual.type === 'ruler') { const start = visual.startValue || 0; return <section className="math-picture-card measure-picture"><div className="math-visual-head"><span>刻度尺圖解</span><small>1 格 = 1 cm</small></div><div className="ruler-graphic"><i style={{ left: `${(start / visual.max) * 100}%`, width: `${((visual.value - start) / visual.max) * 100}%` }}></i>{Array.from({ length: visual.max / 5 + 1 }, (_, index) => <b key={index} style={{ left: `${(index * 5 / visual.max) * 100}%` }}>{index * 5}</b>)}</div><p>{visual.startValue ? `由 ${visual.startValue} cm 量至 ${visual.value} cm。` : `物件由 0 cm 量至 ${visual.value} cm。`}</p></section>; } if (visual.type === 'cup') return <section className="math-picture-card measure-picture"><div className="math-visual-head"><span>量杯圖解</span><small>容量刻度</small></div><div className="cup-graphic"><i style={{ height: `${(visual.value / visual.max) * 100}%` }}></i><b>{visual.value} mL</b>{visual.startValue && <small>原有 {visual.startValue} mL</small>}</div><p>液面顯示 {visual.value} mL。</p></section>; if (visual.type === 'clock') { const minuteAngle = visual.minute * 6; const hourAngle = ((visual.hour % 12) * 30) + (visual.minute * .5); return <section className="math-picture-card measure-picture"><div className="math-visual-head"><span>時鐘圖解</span><small>{visual.endHour !== undefined ? '比較開始與結束時間' : '讀出指針位置'}</small></div><div className="clock-set"><div className="clock-graphic"><i className="hour-hand" style={{ transform: `rotate(${hourAngle}deg)` }}></i><i className="minute-hand" style={{ transform: `rotate(${minuteAngle}deg)` }}></i><b>12</b><b>3</b><b>6</b><b>9</b></div>{visual.endHour !== undefined && <span className="clock-end">→ {String(visual.endHour).padStart(2, '0')}:{String(visual.endMinute).padStart(2, '0')}</span>}</div><p>開始時間：{String(visual.hour).padStart(2, '0')}:{String(visual.minute).padStart(2, '0')}。</p></section>; } return null; }
 function MathPicture({ visual }) { if (!visual) return null; if (visual.type === 'coins') return <CoinPicture coins={visual.coins} />; if (visual.type === 'groups') return <GroupPicture visual={visual} />; if (visual.type === 'share') return <GroupPicture visual={visual} share />; if (visual.type === 'fraction') return <FractionPicture visual={visual} />; if (['ruler', 'cup', 'clock'].includes(visual.type)) return <MeasurementPicture visual={visual} />; return null; }
+const getPairGroupingCount = (question) => {
+  const countMatch = question.prompt.match(/有\s*(\d+)\s*(?:個|粒|張|支|本|隻|枝|塊|顆)/u);
+  return countMatch && /兩(?:個|粒)一組/u.test(question.prompt) ? Number(countMatch[1]) : null;
+};
+const emptyPairGroups = (count) => Array.from({ length: Math.ceil(count / 2) }, () => []);
+const getP1AdditionParts = (unit, question) => {
+  if (unit.id === 'P1-MATH-A03') {
+    const match = question.prompt.match(/^(\d+)\s*\+\s*(\d+)\s*=/u);
+    if (!match) return null;
+    const left = Number(match[1]); const right = Number(match[2]);
+    return left + right <= 18 ? { mode: 'combine', left, right, total: left + right } : null;
+  }
+  if (unit.id === 'P1-MATH-A04') {
+    const match = question.prompt.match(/^(\d+)\s*[−-]\s*(\d+)\s*=/u) || question.prompt.match(/有\s*(\d+)\s*個[^，。]*，(?:吃了|借出了|剪掉|走了)\s*(\d+)\s*個/u);
+    if (!match) return null;
+    const initial = Number(match[1]); const remove = Number(match[2]);
+    return initial <= 18 && remove > 0 && initial > remove ? { mode: 'take-away', initial, remove, result: initial - remove } : null;
+  }
+  return null;
+};
+const getP1CoinValues = (unit, question) => unit.id === 'P1-MATH-A05' && question.visual?.type === 'coins' ? question.visual.coins : null;
+
+function DragCollectionModel({ title, instruction, sourceLabel, targetLabel, tokens, kind, disabled, onCompletionChange }) {
+  const [placed, setPlaced] = useState([]);
+  const complete = placed.length === tokens.length;
+  const place = (index) => {
+    if (disabled || placed.includes(index)) return;
+    const next = [...placed, index];
+    setPlaced(next);
+    onCompletionChange(next.length === tokens.length);
+    playModelSound(next.length === tokens.length ? 'complete' : 'place');
+  };
+  const remove = (index) => {
+    if (disabled) return;
+    setPlaced((current) => current.filter((item) => item !== index));
+    onCompletionChange(false);
+    playModelSound('reset');
+  };
+  const reset = () => { if (!disabled && placed.length) { setPlaced([]); onCompletionChange(false); playModelSound('reset'); } };
+  const available = tokens.map((token, index) => ({ token, index })).filter(({ index }) => !placed.includes(index));
+  return <section className={`math-choice-model drag-collection-model ${complete ? 'complete' : ''}`} aria-label={title}><header><span>✦ EduQuest 數學模型</span><small>{complete ? '操作完成・可以選答案' : instruction}</small></header><div className="collection-drag-interaction"><section className="collection-token-pool" aria-label={sourceLabel}><span>{sourceLabel}</span><div>{available.map(({ token, index }) => <button type="button" key={index} draggable={!disabled} disabled={disabled} onDragStart={(event) => event.dataTransfer.setData('collection-token', String(index))} onClick={() => place(index)} className={`collection-token ${kind}`} aria-label={`${token}，點選加入${targetLabel}`}>{kind === 'counter' ? <i>●</i> : <b>{token}</b>}</button>) || <small>全部材料已放入托盤</small>}</div></section><section className={`collection-drop-zone ${complete ? 'full' : ''}`} aria-label={targetLabel} onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); const index = Number(event.dataTransfer.getData('collection-token')); if (Number.isInteger(index)) place(index); }}><span>{targetLabel}</span><div>{placed.map((index) => <button type="button" key={index} disabled={disabled} onClick={() => remove(index)} className={`collection-token ${kind}`} aria-label={`${tokens[index]}，點選移回${sourceLabel}`}>{kind === 'counter' ? <i>●</i> : <b>{tokens[index]}</b>}</button>)}{Array.from({ length: Math.max(0, tokens.length - placed.length) }, (_, index) => <em key={`slot-${index}`}>＋</em>)}</div><small>{complete ? '已放齊所有材料' : `已放入 ${placed.length}／${tokens.length} 個材料`}</small></section></div><div className="math-model-note"><b>操作提示：</b><span>{complete ? `已把材料放入${targetLabel}，現在可核對答案。` : `把${sourceLabel}拖曳到${targetLabel}；平板可直接點選材料。`}</span><button type="button" className="reset-grouping" disabled={disabled || !placed.length} onClick={reset}>重設操作</button></div></section>;
+}
+
+function AdditionCollectionModel({ parts, disabled, onCompletionChange }) {
+  if (parts.mode === 'take-away') return <SubtractionRemovalModel parts={parts} disabled={disabled} onCompletionChange={onCompletionChange} />;
+  return <DragCollectionModel title="加法合併操作模型" instruction={`${parts.left} 個和 ${parts.right} 個合起來`} sourceLabel={`${parts.left} ＋ ${parts.right} 個數量點`} targetLabel="合起來的數量托盤" tokens={Array.from({ length: parts.total }, () => '數量點')} kind="counter" disabled={disabled} onCompletionChange={onCompletionChange} />;
+}
+
+function SubtractionRemovalModel({ parts, disabled, onCompletionChange }) {
+  const [removed, setRemoved] = useState([]);
+  const complete = removed.length === parts.remove;
+  const move = (index) => {
+    if (disabled || removed.includes(index) || removed.length >= parts.remove) return;
+    const next = [...removed, index]; setRemoved(next); onCompletionChange(next.length === parts.remove); playModelSound(next.length === parts.remove ? 'complete' : 'place');
+  };
+  const restore = (index) => { if (disabled) return; setRemoved((current) => current.filter((item) => item !== index)); onCompletionChange(false); playModelSound('reset'); };
+  const reset = () => { if (!disabled && removed.length) { setRemoved([]); onCompletionChange(false); playModelSound('reset'); } };
+  const remaining = Array.from({ length: parts.initial }, (_, index) => index).filter((index) => !removed.includes(index));
+  return <section className={`math-choice-model subtraction-removal-model ${complete ? 'complete' : ''}`} aria-label="移走物件減法操作模型"><header><span>✦ EduQuest 數學模型</span><small>{complete ? '已移走指定數量・可以選答案' : `由 ${parts.initial} 個物件移走 ${parts.remove} 個`}</small></header><div className="collection-drag-interaction"><section className="collection-token-pool" aria-label="原有物件"><span>原有 {parts.initial} 個物件</span><div>{remaining.map((index) => <button type="button" key={index} draggable={!disabled} disabled={disabled || complete} onDragStart={(event) => event.dataTransfer.setData('removal-token', String(index))} onClick={() => move(index)} className="collection-token counter" aria-label={`第 ${index + 1} 個物件，點選移走`}><i>●</i></button>)}</div><small>留在原處：{remaining.length} 個</small></section><section className={`collection-drop-zone removal-drop-zone ${complete ? 'full' : ''}`} aria-label="移走托盤" onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); const index = Number(event.dataTransfer.getData('removal-token')); if (Number.isInteger(index)) move(index); }}><span>移走托盤</span><div>{removed.map((index) => <button type="button" key={index} disabled={disabled} onClick={() => restore(index)} className="collection-token counter removed-token" aria-label={`第 ${index + 1} 個物件，點選放回原處`}><i>●</i></button>)}{Array.from({ length: Math.max(0, parts.remove - removed.length) }, (_, index) => <em key={`slot-${index}`}>－</em>)}</div><small>{complete ? `已移走 ${parts.remove} 個，剩下 ${parts.result} 個` : `已移走 ${removed.length}／${parts.remove} 個`}</small></section></div><div className="math-model-note"><b>操作提示：</b><span>{complete ? `由 ${parts.initial} 個移走 ${parts.remove} 個，現在剩下 ${parts.result} 個。` : `把 ${parts.remove} 個物件拖入移走托盤；平板可直接點選物件。`}</span><button type="button" className="reset-grouping" disabled={disabled || !removed.length} onClick={reset}>重設操作</button></div></section>;
+}
+
+function CoinCollectionModel({ coins, disabled, onCompletionChange }) {
+  return <DragCollectionModel title="港幣硬幣合計操作模型" instruction="把硬幣放進付款托盤，再合計面值" sourceLabel="桌上的港幣硬幣" targetLabel="付款托盤" tokens={coins.map((value) => `$${value}`)} kind="coin" disabled={disabled} onCompletionChange={onCompletionChange} />;
+}
+
+function ChoiceMathModel({ question, groups, onGroupsChange, onGroupingFeedback, disabled }) {
+  const count = getPairGroupingCount(question);
+  const isPairing = Boolean(count);
+  const isParity = /單數|雙數/u.test(question.prompt);
+  if (isPairing) {
+    const safeGroups = groups.length === Math.ceil(count / 2) ? groups : emptyPairGroups(count);
+    const placed = new Set(safeGroups.flat());
+    const pool = Array.from({ length: count }, (_, index) => index).filter((token) => !placed.has(token));
+    const complete = pool.length === 0;
+    const moveToken = (token, targetGroup) => {
+      const next = safeGroups.map((group) => group.filter((item) => item !== token));
+      if (targetGroup !== null) {
+        if (next[targetGroup].length >= 2) { onGroupingFeedback?.('retry'); return; }
+        next[targetGroup] = [...next[targetGroup], token];
+      }
+      onGroupsChange(next);
+      if (targetGroup !== null) {
+        const placedCount = next.flat().length;
+        onGroupingFeedback?.(next[targetGroup].length === 2 ? (placedCount === count ? 'complete' : 'pair') : 'needs-more');
+      }
+    };
+    const placeByClick = (token) => {
+      const targetGroup = safeGroups.findIndex((group) => group.length < 2);
+      if (targetGroup >= 0) moveToken(token, targetGroup);
+    };
+    return <section className={`math-choice-model grouping-model ${complete ? 'complete' : ''}`} aria-label={`${count} 個物件的兩個一組模型`}><header><span>✦ EduQuest 數學模型</span><small>{complete ? '已完成分組・可以選答案' : '拖曳物件到方格；也可點一下物件'}</small></header><div className="grouping-interaction"><section className="group-token-pool" aria-label="待分組物件"><span>待分組物件</span><div>{pool.map((token) => <button type="button" key={token} draggable={!disabled} disabled={disabled} onDragStart={(event) => event.dataTransfer.setData('group-token', String(token))} onClick={() => placeByClick(token)} aria-label={`第 ${token + 1} 個物件，點選加入下一組`}><i>●</i></button>) || <small>全部物件已放入方格</small>}</div></section><section className="group-drop-zones" aria-label="兩個一組的分組方格">{safeGroups.map((group, index) => <div key={index} className={`pair-drop-zone ${group.length === 2 ? 'full' : ''} ${group.length === 1 ? 'one-left' : ''}`} onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); const token = Number(event.dataTransfer.getData('group-token')); if (Number.isInteger(token)) moveToken(token, index); }}><span>第 {index + 1} 組</span><div>{group.map((token) => <button type="button" key={token} disabled={disabled} onClick={() => moveToken(token, null)} aria-label={`第 ${token + 1} 個物件，點選移回待分組區`}><i>●</i></button>)}{Array.from({ length: Math.max(0, 2 - group.length) }, (_, slot) => <em key={`slot-${slot}`}>＋</em>)}</div><small>{group.length === 2 ? '已成一組' : group.length === 1 ? '還差 1 個' : '放入 2 個物件'}</small></div>)}</section></div><div className="math-model-note"><b>{complete ? '分組完成：' : '分組任務：'}</b><span>{complete ? '每個物件已放入方格，現在可比較「剛好分完」或「餘下 1 個」。' : `先把 ${count} 個物件分成每組 2 個；每一格最多放 2 個。`}</span><button type="button" className="reset-grouping" disabled={disabled || pool.length === count} onClick={() => { onGroupsChange(emptyPairGroups(count)); onGroupingFeedback?.('reset'); }}>重設分組</button></div></section>;
+  }
+  if (isParity) return <section className="math-choice-model parity-model" aria-label="單數與雙數配對模型"><header><span>✦ EduQuest 數學模型</span><small>兩個一組的配對規則</small></header><div className="parity-pairs"><div>{[1, 2, 3, 4].map((item) => <i key={item}>●</i>)}</div><b>✓ 剛好配對</b><div>{[1, 2, 3, 4, 5].map((item) => <i key={item}>●</i>)}</div><b>● 最後剩 1 個</b></div><div className="math-model-note"><b>配對提示：</b><span>沒有剩下是雙數；最後剩 1 個是單數。</span></div></section>;
+  const calculation = question.prompt.match(/(\d+)\s*([＋+−-])\s*(\d+)/u);
+  return <section className="math-choice-model calculation-model" aria-label="數學計算工作面"><header><span>✦ EduQuest 數學模型</span><small>先在工作紙上整理線索</small></header>{calculation ? <div className="visible-calculation-frame" aria-label="可見算式格"><span>{calculation[1]}</span><b>{calculation[2]}</b><span>{calculation[3]}</span><i>=</i><em>？</em></div> : null}<div className="calculation-lines"><span>已知數量</span><i></i><span>我的算式或心算</span><i></i><span>答案單位</span><i></i></div><div className="math-model-note"><b>看題目：</b><span>圈出重要數字，再用算式或心算選擇答案。</span></div></section>;
+}
+function MathWorkingStrip({ interaction, question }) {
+  if (interaction === 'math-life-application') return <LifeApplicationModel question={question} />;
+  const material = interaction === 'math-measurement' ? '讀刻度或時間' : interaction === 'math-choice' ? '圈出已知數量' : '整理數字關係';
+  const calculation = question?.prompt?.match(/(\d+)\s*([＋+−-])\s*(\d+)/u);
+  return <section className="math-working-strip" aria-label="數學解題工作格"><header><span>數學解題工作格</span><small>先看數字，再選答案</small></header>{calculation ? <div className="visible-calculation-frame" aria-label="算式操作格"><span>{calculation[1]}</span><b>{calculation[2]}</b><span>{calculation[3]}</span><i>=</i><em>？</em></div> : null}<ol><li><b>1</b><span>{material}</span></li><li><b>2</b><span>寫出或心算步驟</span></li><li><b>3</b><span>核對答案單位</span></li></ol></section>;
+}
+
+function LifeApplicationModel({ question }) {
+  const model = question.lifeModel || { known: ['圈出題目中的數字', '確認答案所需單位'], steps: ['先求中間量', '再代入下一步算式', '最後核對答案'], check: '把答案代回生活情境，檢查數值大小與單位。' };
+  return <section className="life-application-model" aria-label="生活應用解題模型"><header><span><Sparkles size={17} /> EduQuest 解題模型</span><small>看見關係，再選答案</small></header><div className="life-model-known"><b>已知量</b><div>{model.known.map((item) => <span key={item}>{item}</span>)}</div></div><div className="life-model-route" aria-label="解題算式路徑">{model.steps.map((step, index) => <div key={step}><b>{index + 1}</b><span>{step}</span>{index < model.steps.length - 1 ? <i>→</i> : null}</div>)}</div><footer><b>✦ 核對</b><span>{model.check}</span></footer></section>;
+}
 
 export default function MathActivity({ unit: incomingUnit, onBack, onComplete }) {
   const unit = { ...incomingUnit, examMode: incomingUnit.examMode || ['P4', 'P5', 'P6'].includes(incomingUnit.id?.split('-')[0]) };
-  const [questions, setQuestions] = useState(() => shuffle(unit.questions)); const [questionIndex, setQuestionIndex] = useState(0); const [selected, setSelected] = useState(null); const [feedback, setFeedback] = useState(null); const [shuffleRound, setShuffleRound] = useState(0); const [frameFill, setFrameFill] = useState(new Set()); const [showSummary, setShowSummary] = useState(false); const [attempts, setAttempts] = useState(0); const [correctCount, setCorrectCount] = useState(0);
+  const [questions, setQuestions] = useState(() => shuffle(unit.questions)); const [questionIndex, setQuestionIndex] = useState(0); const [selected, setSelected] = useState(null); const [feedback, setFeedback] = useState(null); const [shuffleRound, setShuffleRound] = useState(0); const [frameFill, setFrameFill] = useState(new Set()); const [modelGroups, setModelGroups] = useState([]); const [modelComplete, setModelComplete] = useState(false); const [showSummary, setShowSummary] = useState(false); const [attempts, setAttempts] = useState(0); const [correctCount, setCorrectCount] = useState(0);
   const question = questions[questionIndex]; const choices = useMemo(() => question.choices ? shuffle(question.choices) : [], [question, shuffleRound]);
-  const retry = () => { setSelected(null); setFeedback(null); setShuffleRound((round) => round + 1); setFrameFill(new Set()); };
+  const retry = () => { setSelected(null); setFeedback(null); setShuffleRound((round) => round + 1); setFrameFill(new Set()); setModelGroups([]); setModelComplete(false); };
   const answer = (choice) => { if (feedback) return; const correct = choice === question.answer; setSelected(choice); setAttempts((count) => count + 1); if (correct) setCorrectCount((count) => count + 1); setFeedback({ correct }); };
   const toggleFrame = (index) => setFrameFill((current) => { const next = new Set(current); if (next.has(index)) next.delete(index); else next.add(index); return next; });
   const next = () => { if (questionIndex >= questions.length - 1) { pauseExamTimer(); onComplete?.(unit, questions.map((item) => item.id)); setShowSummary(true); return; } setQuestionIndex((index) => index + 1); retry(); };
-  const replay = () => { setQuestions(shuffle(unit.questions)); setQuestionIndex(0); setSelected(null); setFeedback(null); setShuffleRound(0); setFrameFill(new Set()); setShowSummary(false); setAttempts(0); setCorrectCount(0); };
+  const replay = () => { setQuestions(shuffle(unit.questions)); setQuestionIndex(0); setSelected(null); setFeedback(null); setShuffleRound(0); setFrameFill(new Set()); setModelGroups([]); setModelComplete(false); setShowSummary(false); setAttempts(0); setCorrectCount(0); };
   if (showSummary) return <main className="site-shell math-activity-page"><MathFrame unit={unit} /><UnitResultSummary unit={unit} total={questions.length} correct={correctCount} attempts={attempts} onBack={onBack} onReplay={replay} title="數學任務完成" description="本單元已完成。教師可利用答對題數、正確率和已計時間，安排重溫或下一個數與代數任務。" noun="題" backLabel="返回數學目錄" /></main>;
   const isFrameAdd = unit.interaction === 'math-ten-frame' && !question.frame.removed;
-  const visualType = unit.interaction === 'math-number-line' ? '數線互動' : unit.interaction === 'math-ten-frame' ? '十格框互動' : question.visual ? '看圖解題' : '數學練習';
-  return <main className="site-shell math-activity-page"><MathFrame unit={unit} questionLabel={`第 ${questionIndex + 1}／${questions.length} 題`} /><nav className="math-activity-controls"><button onClick={onBack} className="match-back">返回數學目錄</button><div className="match-progress" aria-label={`進度 ${questionIndex + 1} / ${questions.length}`}><i style={{ width: `${((questionIndex + 1) / questions.length) * 100}%` }} /></div></nav><section className="math-activity-stage"><div className="math-heading"><span><Sparkles size={16} /> {visualType}</span><h1>{question.prompt}</h1><p>老師提示：{tips[unit.interaction]}</p></div><section className={`math-worksheet ${question.visual || isFrameAdd || unit.interaction === 'math-number-line' ? 'has-material' : 'answer-only'}`}>{unit.interaction === 'math-number-line' ? <NumberLine line={question.line} selected={selected} disabled={Boolean(feedback)} onSelect={answer} /> : unit.interaction === 'math-ten-frame' ? <TenFrame frame={question.frame} selectedFill={frameFill} onToggle={toggleFrame} disabled={Boolean(feedback)} /> : question.visual ? <MathPicture visual={question.visual} /> : null}{isFrameAdd && !feedback ? <button className="math-frame-submit" onClick={() => answer(frameFill.size)}>以十格框作答 <ChevronRight size={17} /></button> : null}{(!isFrameAdd || feedback) && unit.interaction !== 'math-number-line' && choices.length ? <section className="math-answer-zone"><div className="bank-title"><span>選擇答案</span><small>每次開始會重新排列</small></div><div className="math-option-grid">{choices.map((choice, index) => <button key={String(choice)} disabled={Boolean(feedback)} onClick={() => answer(choice)} className={selected === choice ? feedback?.correct ? 'selected-correct' : 'selected-wrong' : ''}><span>{String.fromCharCode(65 + index)}</span><b>{choice}</b></button>)}</div></section> : null}</section>{feedback && <section className={`math-feedback ${feedback.correct ? 'correct' : 'incorrect'}`} role="status"><div>{feedback.correct ? <Check size={22} /> : <X size={22} />}</div><section><b>{feedback.correct ? '答對了！' : '這次還未選中正確答案。'}</b><p>{feedback.correct ? question.explanation : <>正確答案是 <strong>{question.answer}</strong>。{question.explanation}</>}</p>{unit.examMode ? <HighMathWorkedSteps unit={unit} question={question} /> : null}<div className="complete-actions">{feedback.correct ? <button onClick={next}>{questionIndex === questions.length - 1 ? '查看結算' : '下一題'} <ChevronRight size={17} /></button> : <button onClick={retry}><RotateCcw size={16} /> 依提示再試</button>}<button onClick={onBack}><ArrowLeft size={16} /> 返回數學目錄</button></div></section></section>}</section></main>;
+  const groupingCount = getPairGroupingCount(question);
+  const activeGroups = groupingCount && modelGroups.length === Math.ceil(groupingCount / 2) ? modelGroups : groupingCount ? emptyPairGroups(groupingCount) : [];
+  const groupingComplete = !groupingCount || activeGroups.flat().length === groupingCount;
+  const additionParts = getP1AdditionParts(unit, question);
+  const coinValues = getP1CoinValues(unit, question);
+  const requiresManipulative = Boolean(additionParts || coinValues);
+  const answerLocked = (groupingCount && !groupingComplete) || (requiresManipulative && !modelComplete);
+  const visualType = additionParts?.mode === 'take-away' ? '移走減法' : additionParts ? '拖曳加法' : coinValues ? '硬幣合計操作' : unit.interaction === 'math-number-line' ? '數線互動' : unit.interaction === 'math-ten-frame' ? '十格框互動' : question.visual ? '看圖解題' : '數學練習';
+  return <main className="site-shell math-activity-page"><MathFrame unit={unit} questionLabel={`第 ${questionIndex + 1}／${questions.length}`} /><nav className="math-activity-controls"><button onClick={onBack} className="match-back">返回數學目錄</button><div className="math-progress-readout"><b>第 {questionIndex + 1} 題</b><small>共 {questions.length} 題</small></div><div className="match-progress" aria-label={`進度 ${questionIndex + 1} / ${questions.length}`}><i style={{ width: `${((questionIndex + 1) / questions.length) * 100}%` }} /></div></nav><section className="math-activity-stage"><div className="math-heading"><span><Sparkles size={16} /> {visualType}</span><h1>{question.prompt}</h1><p>老師提示：{tips[unit.interaction]}</p></div><section className={`math-worksheet ${question.visual || isFrameAdd || unit.interaction === 'math-number-line' || unit.interaction === 'math-choice' ? 'has-material' : 'answer-only'}`}>{unit.interaction === 'math-number-line' ? <NumberLine line={question.line} selected={selected} disabled={Boolean(feedback)} onSelect={answer} /> : unit.interaction === 'math-ten-frame' ? <TenFrame frame={question.frame} selectedFill={frameFill} onToggle={toggleFrame} disabled={Boolean(feedback)} /> : additionParts ? <AdditionCollectionModel key={`${question.id}-${shuffleRound}`} parts={additionParts} disabled={Boolean(feedback)} onCompletionChange={setModelComplete} /> : coinValues ? <CoinCollectionModel key={`${question.id}-${shuffleRound}`} coins={coinValues} disabled={Boolean(feedback)} onCompletionChange={setModelComplete} /> : question.visual ? <MathPicture visual={question.visual} /> : unit.interaction === 'math-choice' ? <ChoiceMathModel question={question} groups={activeGroups} onGroupsChange={setModelGroups} onGroupingFeedback={playModelSound} disabled={Boolean(feedback)} /> : <MathWorkingStrip interaction={unit.interaction} question={question} />}{isFrameAdd && !feedback ? <button className="math-frame-submit" onClick={() => answer(frameFill.size)}>以十格框作答 <ChevronRight size={17} /></button> : null}{answerLocked && !feedback ? <div className="math-answer-locked"><span>✦</span> {groupingCount ? '先完成兩個一組的分組，再開啟答案紙條。' : '先完成操作模型，再開啟答案紙條。'}</div> : null}{(!isFrameAdd || feedback) && unit.interaction !== 'math-number-line' && choices.length && !answerLocked ? <section className="math-answer-zone"><div className="bank-title"><span>選擇答案</span><small>每次開始會重新排列</small></div><div className="math-option-grid">{choices.map((choice, index) => <button key={String(choice)} disabled={Boolean(feedback)} onClick={() => answer(choice)} className={selected === choice ? feedback?.correct ? 'selected-correct' : 'selected-wrong' : ''}><span>{String.fromCharCode(65 + index)}</span><b>{choice}</b></button>)}</div></section> : null}</section>{feedback && <section className={`math-feedback ${feedback.correct ? 'correct' : 'incorrect'}`} role="status"><div>{feedback.correct ? <Check size={22} /> : <X size={22} />}</div><section><b>{feedback.correct ? '答對了！' : '這次還未選中正確答案。'}</b><p>{feedback.correct ? question.explanation : <>正確答案是 <strong>{question.answer}</strong>。{question.explanation}</>}</p>{unit.examMode ? <HighMathWorkedSteps unit={unit} question={question} /> : null}<div className="complete-actions">{feedback.correct ? <button onClick={next}>{questionIndex === questions.length - 1 ? '查看結算' : '下一題'} <ChevronRight size={17} /></button> : <button onClick={retry}><RotateCcw size={16} /> 依提示再試</button>}<button onClick={onBack}><ArrowLeft size={16} /> 返回數學目錄</button></div></section></section>}</section></main>;
 }
