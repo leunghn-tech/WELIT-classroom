@@ -1307,18 +1307,72 @@ html[data-eduquest-animation='off'] .eliminate-choice-satchel button:not(:disabl
   content: none !important;
 }
 
-/* 教師可按課堂需要隱藏高小解題模型、步驟及核對；互動材料與答案保持可用。 */
+/* 教師可按課堂需要收起高小解題模型、步驟及核對；互動材料與答案保持可用。 */
+.math-activity-page .math-heading > p,
+.math-activity-page .life-application-model,
+.math-activity-page .math-working-strip,
+.math-activity-page .worked-steps {
+  overflow: hidden;
+  max-height: 1200px;
+  opacity: 1;
+  transform: translateY(0);
+  transform-origin: top center;
+  transition: max-height 280ms cubic-bezier(.23, 1, .32, 1), opacity 180ms cubic-bezier(.23, 1, .32, 1), transform 220ms cubic-bezier(.23, 1, .32, 1), margin 280ms cubic-bezier(.23, 1, .32, 1), padding 280ms cubic-bezier(.23, 1, .32, 1), border-width 220ms cubic-bezier(.23, 1, .32, 1);
+  will-change: max-height, opacity, transform;
+}
+
+.math-activity-page .math-heading > p {
+  max-height: 5rem;
+}
+
+.math-activity-page .math-worksheet.answer-only {
+  transition: padding-top 280ms cubic-bezier(.23, 1, .32, 1);
+}
+
+.math-activity-page .math-worksheet.answer-only::before,
+.math-activity-page .math-worksheet.answer-only::after {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 160ms cubic-bezier(.23, 1, .32, 1), transform 220ms cubic-bezier(.23, 1, .32, 1);
+}
+
 html[data-math-worked-hints='off'] .math-activity-page .math-heading > p,
 html[data-math-worked-hints='off'] .math-activity-page .life-application-model,
 html[data-math-worked-hints='off'] .math-activity-page .math-working-strip,
-html[data-math-worked-hints='off'] .math-activity-page .worked-steps,
-html[data-math-worked-hints='off'] .math-activity-page .math-worksheet.answer-only::before,
-html[data-math-worked-hints='off'] .math-activity-page .math-worksheet.answer-only::after {
-  display: none !important;
+html[data-math-worked-hints='off'] .math-activity-page .worked-steps {
+  max-height: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border-top-width: 0 !important;
+  border-bottom-width: 0 !important;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
 }
 
 html[data-math-worked-hints='off'] .math-activity-page .math-worksheet.answer-only {
   padding-top: 1.2rem !important;
+}
+
+html[data-math-worked-hints='off'] .math-activity-page .math-worksheet.answer-only::before,
+html[data-math-worked-hints='off'] .math-activity-page .math-worksheet.answer-only::after {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .math-activity-page .math-heading > p,
+  .math-activity-page .life-application-model,
+  .math-activity-page .math-working-strip,
+  .math-activity-page .worked-steps,
+  .math-activity-page .math-worksheet.answer-only,
+  .math-activity-page .math-worksheet.answer-only::before,
+  .math-activity-page .math-worksheet.answer-only::after {
+    transition: none !important;
+  }
 }
 
 /* 使用高優先序覆蓋舊有中文／數學學科色提示規則，所有提示卡均與英文工具卡一致。 */
