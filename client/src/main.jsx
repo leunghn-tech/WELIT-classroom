@@ -5,6 +5,8 @@ import './welitQuest.css';
 import './p1Difficulty.css';
 import './teacherClassroomToolkit.css';
 import './classroomExtensions.css';
+import './publicationRefinements.css';
+import './publicationBattleRefinements.css';
 
 createRoot(document.getElementById('root')).render(<App />);
 
