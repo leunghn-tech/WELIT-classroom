@@ -1,5 +1,5 @@
 import { ArrowLeft, BarChart3, Check, ChevronRight, Dice5, RotateCcw, Sparkles, Trophy } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const SUBJECTS = ['中文', '英文', '數學'];
 const GRADES = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
@@ -19,6 +19,7 @@ export default function QuickExitTicket({ questionBanks, onBack }) {
   const [votes, setVotes] = useState({});
   const [revealed, setRevealed] = useState(false);
   const [showDistribution, setShowDistribution] = useState(false);
+  useEffect(() => { const resetExitTicket = () => { setQuestions([]); setIndex(0); setVotes({}); setRevealed(false); setShowDistribution(false); }; window.addEventListener('welitquest-exit-records-cleared', resetExitTicket); return () => window.removeEventListener('welitquest-exit-records-cleared', resetExitTicket); }, []);
   const subjectClass = subject === '中文' ? 'exit-chinese' : subject === '英文' ? 'exit-english' : 'exit-math';
   const draw = (amount = count) => {
     if (!selectedUnit) return;

@@ -1,5 +1,5 @@
 /* 教師設定面板：以本機儲存記錄音效、音量、動畫、提示、投影字級及低小全班戰鬥偏好。 */
-import { ClipboardList, Dice5, Gauge, Lightbulb, ListFilter, ListMinus, MonitorUp, Settings2, Sparkles, Swords, Type, Volume2, VolumeX, X } from 'lucide-react';
+import { ClipboardList, Dice5, Gauge, Lightbulb, ListFilter, ListMinus, MonitorUp, RotateCcw, Settings2, Sparkles, Swords, Type, Volume2, VolumeX, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { playSoundPreview } from '../lib/feedbackAudio';
 import '../battleSettings.css';
@@ -35,6 +35,7 @@ export default function TeacherFeedbackSettings({ onOpenQuestionManager, onOpenC
     if (['baseDamage', 'skillBonusDamage', 'ultimateBonusDamage'].includes(key)) battle[key] = Math.min(Math.max(5, value), 60);
     save({ ...settings, battlePreset: 'custom', battle });
   };
+  const clearExitRecords = () => { const keys = Object.keys(window.sessionStorage).filter((key) => key.startsWith('welitquest-exit-drawn:')); if (!keys.length) { window.dispatchEvent(new CustomEvent('welitquest-exit-records-cleared')); window.alert('目前沒有出口題紀錄需要清除。'); return; } if (!window.confirm(`只清除 ${keys.length} 組出口題抽題紀錄和目前票數？\n\n課堂清單、完成狀態及教師設定會保留。`)) return; keys.forEach((key) => window.sessionStorage.removeItem(key)); window.dispatchEvent(new CustomEvent('welitquest-exit-records-cleared')); window.alert('已清除出口題紀錄；其他課堂狀態已保留。'); };
 
   return <div className="teacher-settings">
     <button className="teacher-settings-trigger" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label="開啟教師回饋設定"><Settings2 size={17} /> 教師設定</button>
@@ -56,6 +57,7 @@ export default function TeacherFeedbackSettings({ onOpenQuestionManager, onOpenC
       <section className="projection-size-control reading-layout-control"><div><span><Type size={18} /> 閱讀行距</span><small>只套用長篇閱讀材料</small></div><div className="projection-size-options" role="group" aria-label="閱讀行距">{READING_LINE_HEIGHTS.map((option) => <button key={option.value} onClick={() => updateReading('readingLineHeight', option.value)} className={settings.readingLineHeight === option.value ? 'active' : ''} aria-pressed={settings.readingLineHeight === option.value}>{option.label}</button>)}</div></section>
       <section className="projection-size-control reading-layout-control"><div><span><Type size={18} /> 閱讀欄寬</span><small>手機會自動維持滿寬閱讀</small></div><div className="projection-size-options" role="group" aria-label="閱讀欄寬">{READING_COLUMN_WIDTHS.map((option) => <button key={option.value} onClick={() => updateReading('readingColumnWidth', option.value)} className={settings.readingColumnWidth === option.value ? 'active' : ''} aria-pressed={settings.readingColumnWidth === option.value}>{option.label}</button>)}</div></section>
       <button className={`settings-toggle ${settings.minimalProjection ? 'on' : ''}`} onClick={() => update('minimalProjection')}><span><MonitorUp size={18} /> 簡潔投影模式</span><i>{settings.minimalProjection ? '開啟' : '關閉'}</i></button><small className="eliminate-choice-setting-note">保留課題、題目、材料、答案及進度；隱藏輔助標籤與非必要提示。</small>
+      <button className="question-manager-launch exit-record-reset" onClick={clearExitRecords}><span><RotateCcw size={18} /> 只清除出口題紀錄</span><small>清除抽題次序與目前票數；保留本課清單、完成狀態及教師設定</small></button>
       {onOpenQuickExit && <button className="question-manager-launch" onClick={() => { setOpen(false); onOpenQuickExit(); }}><span><Dice5 size={18} /> 快速出口題</span><small>抽 1 題／3 題，記錄舉手票並查看答案分布</small></button>}
       {onOpenClassroomToolkit && <button className="question-manager-launch" onClick={() => { setOpen(false); onOpenClassroomToolkit(); }}><span><ClipboardList size={18} /> 教師課堂工具包</span><small>編排本課清單、啟動下一項及下載摘要</small></button>}
       {onOpenQuestionManager && <button className="question-manager-launch" onClick={() => { setOpen(false); onOpenQuestionManager(); }}><span><ListFilter size={18} /> 題庫篩選與排序</span><small>按主題、難度尋找講解題目</small></button>}

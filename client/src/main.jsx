@@ -8,6 +8,7 @@ import './classroomExtensions.css';
 import './publicationRefinements.css';
 import './publicationBattleRefinements.css';
 import './oneTimeSession.css';
+import './clearProtection.css';
 
 createRoot(document.getElementById('root')).render(<App />);
 
