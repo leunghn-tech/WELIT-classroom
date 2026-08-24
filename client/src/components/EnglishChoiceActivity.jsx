@@ -2,6 +2,8 @@ import { ArrowLeft, Check, ChevronRight, RotateCcw, Sparkles, Trophy, X } from '
 import { useMemo, useState } from 'react';
 import { pauseExamTimer } from '../lib/examTimerStore';
 import HintSatchel from './HintSatchel';
+import EnglishSentenceListenButton from './EnglishSentenceListenButton';
+import SentenceWithBlank from './SentenceWithBlank';
 
 const shuffle = (items) => {
   const shuffled = [...items];
@@ -62,7 +64,7 @@ function ActivityFrame({ unit, taskLabel }) {
 function MaterialCard({ question, interaction, label }) {
   const isLetter = interaction === 'english-letter-choice';
   const isVocabulary = interaction === 'english-vocabulary-choice';
-  return <section className={`english-material-card ${isLetter ? 'letter' : ''}`}><div className="english-material-head"><span>{label.material}</span><small>{isVocabulary ? '先看圖意，再選英文答案' : 'Read and choose'}</small></div>{isLetter && <div className="english-letter-cue">{question.letter}</div>}{isVocabulary && <div className="english-word-cue"><span>{question.symbol}</span><small>中文提示</small><b>{question.clueChinese}</b></div>}{!isLetter && !isVocabulary && <><div className="english-scene-cue">{question.symbol}</div>{question.scene && <small className="english-scene-copy">{question.scene}</small>}<p>{question.sentence}</p></>}</section>;
+  return <section className={`english-material-card ${isLetter ? 'letter' : ''}`}><div className="english-material-head"><span>{label.material}</span><small>{isVocabulary ? '先看圖意，再選英文答案' : 'Read and choose'}</small></div>{isLetter && <div className="english-letter-cue">{question.letter}</div>}{isVocabulary && <div className="english-word-cue"><span>{question.symbol}</span><small>中文提示</small><b>{question.clueChinese}</b></div>}{!isLetter && !isVocabulary && <><div className="english-scene-cue">{question.symbol}</div>{question.scene && <small className="english-scene-copy">{question.scene}</small>}<p><SentenceWithBlank text={question.sentence} /></p><EnglishSentenceListenButton sentence={question.sentence} label="聽句子" /></>}</section>;
 }
 
 export default function EnglishChoiceActivity({ unit, onBack, onComplete }) {

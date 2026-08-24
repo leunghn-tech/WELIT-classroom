@@ -10,6 +10,7 @@ import './publicationBattleRefinements.css';
 import './oneTimeSession.css';
 import './clearProtection.css';
 import './quickExitSentence.css';
+import './lessonSupport.css';
 
 createRoot(document.getElementById('root')).render(<App />);
 
