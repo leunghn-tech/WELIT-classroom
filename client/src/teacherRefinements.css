@@ -920,7 +920,6 @@ html[data-eduquest-animation='off'] .eliminate-choice-satchel button:not(:disabl
   position: relative;
 }
 
-.home-page .home-hero-workbench::before,
 .home-page .home-hero-workbench::after {
   position: absolute;
   z-index: 0;
@@ -929,13 +928,6 @@ html[data-eduquest-animation='off'] .eliminate-choice-satchel button:not(:disabl
   border-color: #ef765c;
   content: '';
   pointer-events: none;
-}
-
-.home-page .home-hero-workbench::before {
-  top: .2rem;
-  left: -1.15rem;
-  border-top: 2px solid;
-  border-left: 2px solid;
 }
 
 .home-page .home-hero-workbench::after {
