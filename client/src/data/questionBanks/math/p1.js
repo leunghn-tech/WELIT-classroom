@@ -104,6 +104,6 @@ const p1MathBank = {
 export const p1TransitionUnits = p1MathBank.units.filter((unit) => ['P1-MATH-A06', 'P1-MATH-A07', 'P1-MATH-A08', 'P1-MATH-A09'].includes(unit.id));
 // 日曆與四方向放至小二，讓小一集中於數感、20 以內加減、硬幣、整／半點及基本圖形。
 export const p1DeferredUnits = p1MathBank.units.filter((unit) => ['P1-MATH-M03', 'P1-MATH-S03'].includes(unit.id));
-p1MathBank.units = p1MathBank.units.filter((unit) => !p1TransitionUnits.includes(unit) && !p1DeferredUnits.includes(unit));
+p1MathBank.units = p1MathBank.units.filter((unit) => unit.id !== 'P1-MATH-A01' && !p1TransitionUnits.includes(unit) && !p1DeferredUnits.includes(unit));
 
 export default p1MathBank;
