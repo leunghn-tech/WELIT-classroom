@@ -1307,6 +1307,20 @@ html[data-eduquest-animation='off'] .eliminate-choice-satchel button:not(:disabl
   content: none !important;
 }
 
+/* 教師可按課堂需要隱藏高小解題模型、步驟及核對；互動材料與答案保持可用。 */
+html[data-math-worked-hints='off'] .math-activity-page .math-heading > p,
+html[data-math-worked-hints='off'] .math-activity-page .life-application-model,
+html[data-math-worked-hints='off'] .math-activity-page .math-working-strip,
+html[data-math-worked-hints='off'] .math-activity-page .worked-steps,
+html[data-math-worked-hints='off'] .math-activity-page .math-worksheet.answer-only::before,
+html[data-math-worked-hints='off'] .math-activity-page .math-worksheet.answer-only::after {
+  display: none !important;
+}
+
+html[data-math-worked-hints='off'] .math-activity-page .math-worksheet.answer-only {
+  padding-top: 1.2rem !important;
+}
+
 /* 使用高優先序覆蓋舊有中文／數學學科色提示規則，所有提示卡均與英文工具卡一致。 */
 .site-shell .eliminate-choice-satchel button > span {
   display: block !important;

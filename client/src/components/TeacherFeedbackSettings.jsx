@@ -1,6 +1,6 @@
 /* 教師設定面板：以本機儲存記錄音效、音量、動畫、提示、投影字級及低小全班戰鬥偏好。 */
 import { Gauge, Lightbulb, ListFilter, ListMinus, MonitorUp, Settings2, Sparkles, Swords, Type, Volume2, VolumeX, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { playSoundPreview } from '../lib/feedbackAudio';
 import '../battleSettings.css';
 
@@ -13,13 +13,14 @@ const BATTLE_PRESETS = [
 const SIZES = [{ value: 'standard', label: '標準' }, { value: 'large', label: '放大' }, { value: 'xlarge', label: '特大' }];
 const READING_LINE_HEIGHTS = [{ value: 'compact', label: '緊密' }, { value: 'comfortable', label: '舒適' }, { value: 'spacious', label: '寬鬆' }];
 const READING_COLUMN_WIDTHS = [{ value: 'narrow', label: '窄欄' }, { value: 'standard', label: '標準' }, { value: 'wide', label: '寬欄' }];
-const DEFAULTS = { sound: true, soundVolume: 80, animation: true, hintSatchel: false, eliminateTwoOptions: true, firstWordHint: false, projectionSize: 'standard', minimalProjection: false, readingLineHeight: 'comfortable', readingColumnWidth: 'standard', battlePreset: 'standard', battle: BATTLE_DEFAULTS };
+const DEFAULTS = { sound: true, soundVolume: 80, animation: true, hintSatchel: false, eliminateTwoOptions: true, firstWordHint: false, showMathWorkedHints: true, projectionSize: 'standard', minimalProjection: false, readingLineHeight: 'comfortable', readingColumnWidth: 'standard', battlePreset: 'standard', battle: BATTLE_DEFAULTS };
 const readSettings = () => { try { const stored = JSON.parse(window.localStorage.getItem('eduquest-feedback-settings') || '{}'); const eliminateTwoOptions = stored.eliminateTwoOptionsConfigured === true ? stored.eliminateTwoOptions === true : true; return { ...DEFAULTS, ...stored, eliminateTwoOptions, battle: { ...BATTLE_DEFAULTS, ...(stored.battle || {}) } }; } catch { return DEFAULTS; } };
 const saveSettings = (next) => { window.localStorage.setItem('eduquest-feedback-settings', JSON.stringify(next)); window.dispatchEvent(new CustomEvent('eduquest-feedback-settings', { detail: next })); };
 
 export default function TeacherFeedbackSettings({ onOpenQuestionManager }) {
   const [open, setOpen] = useState(false);
   const [settings, setSettings] = useState(readSettings);
+  useEffect(() => { document.documentElement.dataset.mathWorkedHints = settings.showMathWorkedHints ? 'on' : 'off'; }, [settings.showMathWorkedHints]);
   const save = (next) => { setSettings(next); saveSettings(next); };
   const update = (key) => save({ ...settings, [key]: !settings[key], ...(key === 'eliminateTwoOptions' ? { eliminateTwoOptionsConfigured: true } : {}) });
   const updateSoundVolume = (rawValue) => save({ ...settings, soundVolume: Math.min(100, Math.max(10, Number(rawValue) || 10)) });
@@ -50,6 +51,7 @@ export default function TeacherFeedbackSettings({ onOpenQuestionManager }) {
       <button className={`settings-toggle ${settings.hintSatchel ? 'on' : ''}`} onClick={() => update('hintSatchel')}><span><Lightbulb size={18} /> 提示錦囊</span><i>{settings.hintSatchel ? '開啟' : '關閉'}</i></button>
       <button className={`settings-toggle ${settings.eliminateTwoOptions ? 'on' : ''}`} onClick={() => update('eliminateTwoOptions')}><span><ListMinus size={18} /> 刪錯選項錦囊</span><i>{settings.eliminateTwoOptions ? '開啟' : '關閉'}</i></button><small className="eliminate-choice-setting-note">新題目預設可用；教師可隨時關閉。</small>
       <button className={`settings-toggle ${settings.firstWordHint ? 'on' : ''}`} onClick={() => update('firstWordHint')}><span><Lightbulb size={18} /> 提示首詞</span><i>{settings.firstWordHint ? '開啟' : '關閉'}</i></button>
+      <button className={`settings-toggle ${settings.showMathWorkedHints ? 'on' : ''}`} onClick={() => update('showMathWorkedHints')}><span><Lightbulb size={18} /> 顯示解題提示</span><i>{settings.showMathWorkedHints ? '開啟' : '關閉'}</i></button><small className="eliminate-choice-setting-note">控制數學的解題模型、列式步驟及核對提示；不會隱藏必要操作材料。</small>
       <section className="projection-size-control"><div><span><Type size={18} /> 投影字體大小</span><small>調整課堂展示字級</small></div><div className="projection-size-options" role="group" aria-label="投影字體大小">{SIZES.map((size) => <button key={size.value} onClick={() => updateProjection(size.value)} className={settings.projectionSize === size.value ? 'active' : ''} aria-pressed={settings.projectionSize === size.value}>{size.label}</button>)}</div></section>
       <section className="projection-size-control reading-layout-control"><div><span><Type size={18} /> 閱讀行距</span><small>只套用長篇閱讀材料</small></div><div className="projection-size-options" role="group" aria-label="閱讀行距">{READING_LINE_HEIGHTS.map((option) => <button key={option.value} onClick={() => updateReading('readingLineHeight', option.value)} className={settings.readingLineHeight === option.value ? 'active' : ''} aria-pressed={settings.readingLineHeight === option.value}>{option.label}</button>)}</div></section>
       <section className="projection-size-control reading-layout-control"><div><span><Type size={18} /> 閱讀欄寬</span><small>手機會自動維持滿寬閱讀</small></div><div className="projection-size-options" role="group" aria-label="閱讀欄寬">{READING_COLUMN_WIDTHS.map((option) => <button key={option.value} onClick={() => updateReading('readingColumnWidth', option.value)} className={settings.readingColumnWidth === option.value ? 'active' : ''} aria-pressed={settings.readingColumnWidth === option.value}>{option.label}</button>)}</div></section>
