@@ -1,5 +1,6 @@
-import { ArrowDown, ArrowLeft, ArrowUp, CheckCircle2, ClipboardList, Download, Play, Plus, Sparkles, Trash2 } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowUp, CheckCircle2, ClipboardList, Dice5, Download, Play, Plus, Sparkles, Trash2 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
+import OfflineStatus from './OfflineStatus';
 
 const SUBJECTS = ['中文', '英文', '數學'];
 const GRADES = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
@@ -26,9 +27,9 @@ function downloadSummary(session) {
   URL.revokeObjectURL(url);
 }
 
-export function TeacherActivityControls({ session, activeUnit, onBack, onOpenToolkit, onNextPlanned }) {
+export function TeacherActivityControls({ session, activeUnit, onBack, onOpenToolkit, onOpenQuickExit, onNextPlanned }) {
   const nextItem = session.items.find((item) => !session.completedKeys.includes(item.key) && item.unitId !== activeUnit.id);
-  return <aside className="teacher-activity-controls" aria-label="教師課堂主控列"><span><Sparkles size={15} /> 教師控制</span><b>{session.title || '未命名課堂'}</b><button onClick={onOpenToolkit}><ClipboardList size={16} /> 本課清單</button><button onClick={onBack}><ArrowLeft size={16} /> 返回目錄</button><button className="teacher-next-lesson" onClick={onNextPlanned} disabled={!nextItem}><Play size={16} fill="currentColor" /> {nextItem ? '下一項' : '已完成清單'}</button></aside>;
+  return <aside className="teacher-activity-controls" aria-label="教師課堂主控列"><span><Sparkles size={15} /> 教師控制</span><b>{session.title || '未命名課堂'}</b><OfflineStatus /><button onClick={onOpenQuickExit}><Dice5 size={16} /> 出口題</button><button onClick={onOpenToolkit}><ClipboardList size={16} /> 本課清單</button><button onClick={onBack}><ArrowLeft size={16} /> 返回目錄</button><button className="teacher-next-lesson" onClick={onNextPlanned} disabled={!nextItem}><Play size={16} fill="currentColor" /> {nextItem ? '下一項' : '已完成清單'}</button></aside>;
 }
 
 export default function TeacherClassroomToolkit({ questionBanks, session: initialSession, onSessionChange, onBack, onStartUnit }) {
