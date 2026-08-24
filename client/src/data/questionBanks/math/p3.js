@@ -65,6 +65,22 @@ const p3MathBank = {
   ],
 };
 
+const p3Difficulties = {
+  'P3-MATH-A01': { level: 1, label: '入門', note: '在數線上以千和百為單位定位五位數。' },
+  'P3-MATH-A02': { level: 2, label: '鞏固', note: '以分配策略完成一位數乘兩／三位數。' },
+  'P3-MATH-A03': { level: 2, label: '鞏固', note: '把平均分、分組和商餘數連結至除法。' },
+  'P3-MATH-A04': { level: 3, label: '挑戰', note: '按運算次序完成多步算式。', prerequisite: '熟練乘法表及基本加、減、乘、除運算；先記住「先乘除，後加減」。' },
+  'P3-MATH-A05': { level: 2, label: '鞏固', note: '把平均分概念連結分子、分母及同分母比較。' },
+  'P3-MATH-M01': { level: 2, label: '鞏固', note: '比較 km、m、cm、mm，並作簡單換算。' },
+  'P3-MATH-M02': { level: 3, label: '挑戰', note: '以 24 小時制及跨整點時間計算處理生活情境。', prerequisite: '能讀出時和分，並以 5 分鐘為單位數數；了解 60 分鐘等於 1 小時。' },
+  'P3-MATH-M03': { level: 2, label: '鞏固', note: '讀取量杯並在 L 與 mL 間轉換。' },
+  'P3-MATH-S01': { level: 1, label: '入門', note: '由直角辨認平行與垂直線的基本關係。' },
+  'P3-MATH-S02': { level: 2, label: '鞏固', note: '依平行邊與邊長比較特殊四邊形。' },
+  'P3-MATH-S03': { level: 1, label: '入門', note: '以東、南、西、北延伸至四個斜向方向。' },
+  'P3-MATH-D01': { level: 2, label: '鞏固', note: '依圖例把棒形格數轉成數量並比較資料。' },
+};
+p3MathBank.units.forEach((unit) => { if (p3Difficulties[unit.id]) unit.difficulty = p3Difficulties[unit.id]; });
+
 // 八個方向在小四與對稱一併進入較抽象的空間概念；小三保留平行、垂直與特殊四邊形。
 export const p3TransitionUnits = p3MathBank.units.filter((unit) => unit.id === 'P3-MATH-S03');
 p3MathBank.units = p3MathBank.units.filter((unit) => !p3TransitionUnits.includes(unit));

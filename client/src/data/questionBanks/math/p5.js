@@ -60,6 +60,25 @@ const p5DecimalDivisionUnits = p6TransitionUnits.map((unit) => {
 });
 p5MathBank.units.push(...p5DecimalDivisionUnits);
 
+const p5Difficulties = {
+  'P5-MATH-A01': { level: 3, label: '挑戰', note: '通分後處理異分母分數和帶分數加減。', prerequisite: '熟悉同分母分數加減、因數與倍數；能找出簡單分母的公倍數。' },
+  'P5-MATH-A02': { level: 3, label: '挑戰', note: '完成分數乘法並約成最簡分數。', prerequisite: '能辨認分子和分母，熟悉整數乘法及約分的基本方法。' },
+  'P5-MATH-A03': { level: 3, label: '挑戰', note: '把分數除法轉為乘倒數並完成約分。', prerequisite: '已掌握分數乘法與最簡分數；知道倒數兩數相乘等於 1。' },
+  'P5-MATH-A04': { level: 2, label: '鞏固', note: '按小數點對齊進行加減與位值比較。' },
+  'P5-MATH-A05': { level: 2, label: '鞏固', note: '處理小數乘法及小數點位置。' },
+  'P5-MATH-A06': { level: 3, label: '挑戰', note: '把小數除法連結至乘法與生活應用。', prerequisite: '能進行小數加減和小數乘整數，並熟悉基本除法及乘法驗算。' },
+  'P5-MATH-A07': { level: 2, label: '鞏固', note: '以字母表示未知數並列簡單算式。' },
+  'P5-MATH-M01': { level: 3, label: '挑戰', note: '比較三種圖形面積公式並從已知量反推。', prerequisite: '熟悉長方形面積與乘除法；能辨認底和高，並知道三角形面積是同底同高平行四邊形的一半。' },
+  'P5-MATH-M02': { level: 2, label: '鞏固', note: '以立方單位建立體積概念。' },
+  'P5-MATH-M03': { level: 3, label: '挑戰', note: '以長、闊、高計算或反推立體體積。', prerequisite: '了解體積以立方單位表示，並熟練三個數相乘及基本除法。' },
+  'P5-MATH-S01': { level: 1, label: '入門', note: '以風向圖運用八個方向與相對方向。' },
+  'P5-MATH-S02': { level: 2, label: '鞏固', note: '辨認立方體與長方體的頂、稜和面。' },
+  'P5-MATH-S03': { level: 2, label: '鞏固', note: '以摺合概念判斷軸對稱及對稱軸數量。' },
+  'P5-MATH-D01': { level: 1, label: '入門', note: '讀取折線圖的數值、增減與趨勢。' },
+  'P5-MATH-D02': { level: 2, label: '鞏固', note: '比較雙欄資料並計算合計和相差。' },
+};
+p5MathBank.units.forEach((unit) => { if (p5Difficulties[unit.id]) unit.difficulty = p5Difficulties[unit.id]; });
+
 // 小四先建立小數、八方向與軸對稱；小五專注異分母分數、乘除小數、面積、體積、代數及複合棒形圖。
 export const p5TransitionUnits = p5MathBank.units.filter((unit) => ['P5-MATH-A04', 'P5-MATH-S03'].includes(unit.id));
 p5MathBank.units = p5MathBank.units.filter((unit) => !['P5-MATH-A04', 'P5-MATH-S01', 'P5-MATH-S03', 'P5-MATH-D01'].includes(unit.id));

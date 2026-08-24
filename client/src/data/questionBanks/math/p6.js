@@ -56,6 +56,24 @@ const p6MathBank = {
   ],
 };
 
+const p6Difficulties = {
+  'P6-MATH-A01': { level: 3, label: '挑戰', note: '以同乘方法處理小數除以小數。', prerequisite: '能進行小數乘除整數，並理解同時把被除數和除數乘相同數，商不變。' },
+  'P6-MATH-A02': { level: 3, label: '挑戰', note: '在同一算式中轉換分數和小數並依次運算。', prerequisite: '熟練分數和小數四則運算，能把常見分數轉成小數並按運算次序計算。' },
+  'P6-MATH-A03': { level: 3, label: '挑戰', note: '處理百分比變化、折扣與原量反推。', prerequisite: '能把百分數轉成小數或分數，熟悉小數乘除及「部分量＝總量×百分比」。' },
+  'P6-MATH-A04': { level: 3, label: '挑戰', note: '以反運算與移項解一元一次方程。', prerequisite: '能以符號表示未知數，熟練四則運算，並知道等式兩邊要作相同運算。' },
+  'P6-MATH-A05': { level: 3, label: '挑戰', note: '化簡比並以比例尺、份數處理生活問題。', prerequisite: '熟練約分與乘除法，能統一單位，並理解比可表示兩個量的相對關係。' },
+  'P6-MATH-M01': { level: 3, label: '挑戰', note: '以 π、半徑或直徑計算圓周與合成圖形周界。', prerequisite: '分清半徑與直徑，熟練小數乘法，並知道直徑是半徑的 2 倍。' },
+  'P6-MATH-M02': { level: 3, label: '挑戰', note: '以 πr² 計算圓和半圓的面積。', prerequisite: '能由直徑求半徑，熟練平方和小數乘法，並掌握長方形面積概念。' },
+  'P6-MATH-M03': { level: 3, label: '挑戰', note: '以距離、時間、速度三者關係處理轉換和平均速度。', prerequisite: '熟悉乘除法及小數，能把分鐘轉為小時，並分清距離、時間和速度的單位。' },
+  'P6-MATH-S01': { level: 2, label: '鞏固', note: '按倍數比較相似圖形的長度、面積和體積變化。' },
+  'P6-MATH-S02': { level: 2, label: '鞏固', note: '以底面、側面、頂點和稜辨認角柱與角錐。' },
+  'P6-MATH-S03': { level: 3, label: '挑戰', note: '以排水法和複合立體處理不規則物件體積。', prerequisite: '了解長方體體積與 L、mL、cm³ 的關係，熟練加減和三個數相乘。' },
+  'P6-MATH-D01': { level: 2, label: '鞏固', note: '由平均數反推總和或缺失資料。' },
+  'P6-MATH-D02': { level: 3, label: '挑戰', note: '把百分比與圓心角互相轉換並分析圓形圖。', prerequisite: '熟悉百分數、小數與分數互換，知道全圓是 360°，並能按比例計算部分量。' },
+  'P6-MATH-C01': { level: 3, label: '挑戰', note: '整合百分比、速率、圓面積、平均數、方程與分數容量。', prerequisite: '先掌握百分比、圓面積、速度、平均數、方程及分數／小數運算，並能按題目分步列式。' },
+};
+p6MathBank.units.forEach((unit) => { if (p6Difficulties[unit.id]) unit.difficulty = p6Difficulties[unit.id]; });
+
 // 小數除法先在小五完成，讓小六集中百分數、方程、圓形、速率、體積與數據綜合應用。
 export const p6TransitionUnits = p6MathBank.units.filter((unit) => unit.id === 'P6-MATH-A01');
 p6MathBank.units = p6MathBank.units.filter((unit) => !['P6-MATH-A01', 'P6-MATH-A05', 'P6-MATH-S01', 'P6-MATH-S02'].includes(unit.id));

@@ -66,4 +66,21 @@ if (p4DecimalUnit) {
 p4MathBank.units = p4MathBank.units.filter((unit) => !['P4-MATH-S01', 'P4-MATH-S02', 'P4-MATH-S03'].includes(unit.id));
 p4MathBank.units.push(...p4TransitionUnits);
 
+const p4Difficulties = {
+  'P4-MATH-A01': { level: 3, label: '挑戰', note: '運用分配策略完成兩位數乘法及多步生活題。', prerequisite: '熟練九九乘法表，並能把兩／三位數按位值拆開相乘後合併。' },
+  'P4-MATH-A02': { level: 3, label: '挑戰', note: '以兩位數除三／四位數，處理商與餘數。', prerequisite: '熟練九九乘法表及一位數除法；能用乘法核對除法答案和餘數。' },
+  'P4-MATH-A03': { level: 2, label: '鞏固', note: '在括號與四則運算次序下完成多步計算。' },
+  'P4-MATH-A04': { level: 2, label: '鞏固', note: '辨認因數、倍數、質數和合數。' },
+  'P4-MATH-A05': { level: 3, label: '挑戰', note: '從因數與倍數找出 HCF、LCM，並應用於分組與循環題。', prerequisite: '能列出常見數的因數和倍數，並分清「共同因數」與「共同倍數」。' },
+  'P4-MATH-A06': { level: 2, label: '鞏固', note: '轉換分數形式並完成同分母加減。' },
+  'P4-MATH-A07': { level: 2, label: '鞏固', note: '按小數點對齊進行兩位小數內的加減與比較。' },
+  'P4-MATH-M01': { level: 2, label: '鞏固', note: '由圖形外圍邊長計算周界。' },
+  'P4-MATH-M02': { level: 1, label: '入門', note: '以方格建立平方單位和面積概念。' },
+  'P4-MATH-M03': { level: 2, label: '鞏固', note: '運用長方形和正方形的面積公式。' },
+  'P4-MATH-S01': { level: 1, label: '入門', note: '在地圖中辨認八個基本與斜向方向。' },
+  'P4-MATH-S02': { level: 2, label: '鞏固', note: '以摺合概念辨認軸對稱圖形及對稱軸。' },
+  'P4-MATH-D01': { level: 2, label: '鞏固', note: '依較大圖例讀取棒形圖並比較資料。' },
+};
+p4MathBank.units.forEach((unit) => { if (p4Difficulties[unit.id]) unit.difficulty = p4Difficulties[unit.id]; });
+
 export default p4MathBank;

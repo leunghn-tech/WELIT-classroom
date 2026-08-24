@@ -11,9 +11,10 @@ const LABELS = { P1: '小一', P2: '小二', P3: '小三', P4: '小四', P5: '�
 
 function Brand() { return <div className="brand" aria-label="WelitQuest"><span className="brand-mark"><i></i><i></i><i></i><Sparkles size={24} /></span><span><b>Welit<span>Quest</span></b><small>小學課堂展示版</small></span></div>; }
 
-function DifficultyMeter({ difficulty }) {
+function DifficultyMeter({ difficulty, unitId }) {
   if (!difficulty) return null;
-  return <span className={`unit-difficulty unit-difficulty-level-${difficulty.level}`} aria-label={`難度：${difficulty.label}，${difficulty.level} 級（共三級）`} title={difficulty.note}><i aria-hidden="true">{[1, 2, 3].map((step) => <u className={step <= difficulty.level ? 'filled' : ''} key={step} />)}</i><em>難度 {difficulty.label}</em></span>;
+  const prerequisiteId = difficulty.prerequisite ? `prerequisite-${unitId}` : undefined;
+  return <span className={`unit-difficulty unit-difficulty-level-${difficulty.level}`} aria-label={`難度：${difficulty.label}，${difficulty.level} 級（共三級）`} title={difficulty.note}><i aria-hidden="true">{[1, 2, 3].map((step) => <u className={step <= difficulty.level ? 'filled' : ''} key={step} />)}</i><em>難度 {difficulty.label}</em>{difficulty.prerequisite ? <><b className="unit-prerequisite-mark" aria-hidden="true">i</b><span id={prerequisiteId} className="unit-prerequisite-tooltip" role="tooltip"><strong>建議先備知識</strong><span>{difficulty.prerequisite}</span></span></> : null}</span>;
 }
 
 function UnitCard({ unit, completedUnits, classroomMode, examMode, onStart, featured = false }) {
@@ -21,7 +22,8 @@ function UnitCard({ unit, completedUnits, classroomMode, examMode, onStart, feat
   const completed = Math.min(Array.isArray(progress) ? progress.length : progress || 0, unit.questions.length);
   const percent = Math.round((completed / unit.questions.length) * 100);
   const interactionLabel = unit.interaction === 'math-number-line' ? '數線互動' : unit.interaction === 'math-ten-frame' ? '十格框互動' : unit.interaction === 'math-equal-groups' ? '等量分組' : unit.interaction === 'math-sharing' ? '平均分配' : unit.interaction === 'math-sharing-remainder' ? '有餘數分配' : unit.interaction === 'math-life-application' ? '生活情境・分步提示' : '應用練習';
-  return <button className={`math-unit-card ${featured ? 'life-application-card' : ''}`} onClick={() => onStart(unit)}><div><span>{featured ? '小六整合題組' : classroomMode === 'team-battle' ? '全班合力題組' : examMode ? '呈分試題組' : interactionLabel}</span><DifficultyMeter difficulty={unit.difficulty} /><b>{unit.questions.length} 題</b></div><h3>{unit.title}</h3><p>{unit.objective}</p><footer><small>{completed ? `${completed} 題已完成` : featured ? '開啟分步解題' : classroomMode === 'team-battle' ? '全班合力開戰' : '開始練習'} </small><i><b style={{ width: `${percent}%` }} /></i><ChevronRight size={17} /></footer></button>;
+  const prerequisiteId = unit.difficulty?.prerequisite ? `prerequisite-${unit.id}` : undefined;
+  return <button className={`math-unit-card ${featured ? 'life-application-card' : ''}`} onClick={() => onStart(unit)} aria-describedby={prerequisiteId}><div><span>{featured ? '小六整合題組' : classroomMode === 'team-battle' ? '全班合力題組' : examMode ? '呈分試題組' : interactionLabel}</span><DifficultyMeter difficulty={unit.difficulty} unitId={unit.id} /><b>{unit.questions.length} 題</b></div><h3>{unit.title}</h3><p>{unit.objective}</p><footer><small>{completed ? `${completed} 題已完成` : featured ? '開啟分步解題' : classroomMode === 'team-battle' ? '全班合力開戰' : '開始練習'} </small><i><b style={{ width: `${percent}%` }} /></i><ChevronRight size={17} /></footer></button>;
 }
 
 export default function MathCatalog({ initialGrade = 'P1', onBack, onHome, completedUnits, onStartUnit }) {
