@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import chineseCatalog from '../data/chineseCatalog';
 import { getChineseQuestionBank } from '../data/questionBanks/chinese';
 import { getChinesePracticeLink } from '../data/catalogPracticeLinks';
+import DifficultyMeter from './DifficultyMeter';
 
 const GRADES = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
 const GRADE_LABELS = ['一', '二', '三', '四', '五', '六'];
@@ -10,7 +11,7 @@ const canBattle = (unit) => unit.questions.some((question) => (Array.isArray(que
 function Brand() { return <div className="brand" aria-label="WelitQuest"><span className="brand-mark"><i></i><i></i><i></i><Sparkles size={24} /></span><span><b>Welit<span>Quest</span></b><small>小學課堂展示版</small></span></div>; }
 function TopicCard({ unit, grade, catalog, completedUnits, onStart, activityMode }) {
   const progress = completedUnits[unit.id]; const completed = Math.min(Array.isArray(progress) ? progress.length : progress || 0, unit.questions.length); const [strand, index] = getChinesePracticeLink(grade, unit.id) || [unit.area === '寫作' ? 'writing' : 'reading', 0]; const topic = catalog[strand]?.[index] || unit.title; const objective = unit.questions[0]?.learningObjective || '掌握本課題的中文學習重點。'; const Icon = strand === 'writing' ? PenLine : BookOpen; const battleReady = canBattle(unit); const launchBattle = activityMode === 'team-battle' && battleReady;
-  return <button className={`subject-topic-card chinese-topic-card ${strand} ${launchBattle ? 'battle-ready-card' : ''}`} onClick={() => onStart(unit, launchBattle ? 'team-battle' : 'worksheet')}><div className="subject-topic-meta"><span>{launchBattle ? <><Swords size={14} /> 全班合力題組</> : <><Icon size={14} /> {strand === 'writing' ? '寫作課題' : '閱讀課題'}</>}</span><b>{unit.questions.length} 題</b></div><h3>{topic}</h3><p>{unit.title}・{objective}</p><small>{launchBattle ? '全班合力開戰' : completed ? `${completed} 題已完成` : activityMode === 'team-battle' ? '這題需個別操作' : '開始練習'} <ChevronRight size={15} /></small></button>;
+  return <button className={`subject-topic-card chinese-topic-card ${strand} ${launchBattle ? 'battle-ready-card' : ''}`} onClick={() => onStart(unit, launchBattle ? 'team-battle' : 'worksheet')}><div className="subject-topic-meta"><span>{launchBattle ? <><Swords size={14} /> 全班合力題組</> : <><Icon size={14} /> {strand === 'writing' ? '寫作課題' : '閱讀課題'}</>}</span><DifficultyMeter difficulty={unit.difficulty} unitId={unit.id} /><b>{unit.questions.length} 題</b></div><h3>{topic}</h3><p>{unit.title}・{objective}</p><small>{launchBattle ? '全班合力開戰' : completed ? `${completed} 題已完成` : activityMode === 'team-battle' ? '這題需個別操作' : '開始練習'} <ChevronRight size={15} /></small></button>;
 }
 export default function UnifiedChineseCatalog({ initialGrade = 'P1', onBack, onHome, completedUnits, onStartUnit }) {
   const [grade, setGrade] = useState(initialGrade); const [activityMode, setActivityMode] = useState('worksheet'); useEffect(() => { setGrade(initialGrade); }, [initialGrade]); const catalog = chineseCatalog[grade]; const bank = getChineseQuestionBank(grade); const questionCount = bank.units.reduce((total, unit) => total + unit.questions.length, 0); const lowPrimary = ['P1', 'P2', 'P3'].includes(grade);

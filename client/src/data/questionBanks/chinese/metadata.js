@@ -65,6 +65,13 @@ function resolveDifficulty(profile, index, total) {
   return ratio <= 0.2 ? '應用' : ratio <= 0.65 ? '進階' : '挑戰';
 }
 
+const unitDifficultyByProfile = {
+  foundation: { level: 1, label: '入門', note: '以辨認、配對與單一步驟應用建立語文基礎。' },
+  practice: { level: 2, label: '鞏固', note: '把已學字詞、句式或篇章線索運用於不同語境。' },
+  reasoning: { level: 3, label: '挑戰', note: '需要整理多項線索、推論意思或重組篇章結構。' },
+  advanced: { level: 3, label: '挑戰', note: '綜合運用閱讀、寫作或修辭策略，完成較複雜任務。' },
+};
+
 export function annotateChineseQuestionBank(bank) {
   return {
     ...bank,
@@ -72,6 +79,7 @@ export function annotateChineseQuestionBank(bank) {
       const metadata = chineseQuestionUnitMetadata[unit.id];
       return {
         ...unit,
+        difficulty: unitDifficultyByProfile[metadata?.profile || 'foundation'],
         questions: unit.questions.map((question, index) => ({
           ...question,
           difficulty: resolveDifficulty(metadata?.profile || 'foundation', index, unit.questions.length),

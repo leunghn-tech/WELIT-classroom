@@ -2,6 +2,7 @@
 import { ArrowLeft, Calculator, ChevronRight, LayoutDashboard, Sparkles, Swords } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { getMathQuestionBank } from '../data/questionBanks/math';
+import DifficultyMeter from './DifficultyMeter';
 import ExamTimer from './ExamTimer';
 import '../mathLearning.css';
 
@@ -10,12 +11,6 @@ const LOW_GRADES = ['P1', 'P2', 'P3'];
 const LABELS = { P1: '小一', P2: '小二', P3: '小三', P4: '小四', P5: '小五', P6: '小六' };
 
 function Brand() { return <div className="brand" aria-label="WelitQuest"><span className="brand-mark"><i></i><i></i><i></i><Sparkles size={24} /></span><span><b>Welit<span>Quest</span></b><small>小學課堂展示版</small></span></div>; }
-
-function DifficultyMeter({ difficulty, unitId }) {
-  if (!difficulty) return null;
-  const prerequisiteId = difficulty.prerequisite ? `prerequisite-${unitId}` : undefined;
-  return <span className={`unit-difficulty unit-difficulty-level-${difficulty.level}`} aria-label={`難度：${difficulty.label}，${difficulty.level} 級（共三級）`} title={difficulty.note}><i aria-hidden="true">{[1, 2, 3].map((step) => <u className={step <= difficulty.level ? 'filled' : ''} key={step} />)}</i><em>難度 {difficulty.label}</em>{difficulty.prerequisite ? <><b className="unit-prerequisite-mark" aria-hidden="true">i</b><span id={prerequisiteId} className="unit-prerequisite-tooltip" role="tooltip"><strong>建議先備知識</strong><span>{difficulty.prerequisite}</span></span></> : null}</span>;
-}
 
 function UnitCard({ unit, completedUnits, classroomMode, examMode, onStart, featured = false }) {
   const progress = completedUnits[unit.id];
