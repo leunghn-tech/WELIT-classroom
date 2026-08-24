@@ -41,7 +41,7 @@ export default function TeacherClassroomToolkit({ questionBanks, session: initia
   const bank = questionBanks[subject]?.[grade];
   const availableUnits = useMemo(() => bank?.units || [], [bank]);
   const updateSession = (next) => { setSession(next); window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(next)); onSessionChange?.(next); };
-  const endSession = () => { if (!session.items.length || window.confirm('結束本課並清除本次課堂清單、完成狀態和抽題紀錄？')) { const next = defaultSession(); setSession(next); window.sessionStorage.removeItem(STORAGE_KEY); onEndSession?.(next); setNotice('本課暫存已清除；下次開啟會是新的課堂。'); } };
+  const endSession = () => { if (!session.items.length) { setNotice('本課尚未加入單元，沒有資料需要清除。'); return; } const firstConfirm = window.confirm(`即將結束「${session.title || '未命名課堂'}」。\n\n這會清除本次 ${session.items.length} 個單元、${completed} 個完成標記，以及快速出口題抽題與票數紀錄。\n\n按「取消」可保留目前資料。`); if (!firstConfirm) { setNotice('已保留本課資料。'); return; } const finalConfirm = window.confirm('最後確認：按「確定」後，本課資料會立即清除，無法復原。'); if (!finalConfirm) { setNotice('已取消清除，本課資料仍然保留。'); return; } const next = defaultSession(); setSession(next); window.sessionStorage.removeItem(STORAGE_KEY); onEndSession?.(next); setNotice('本課暫存已清除；下次開啟會是新的課堂。'); };
   const addUnit = (unit) => {
     const key = unitKey(subject, unit);
     if (session.items.some((item) => item.key === key)) { setNotice('這個單元已加入本課清單。'); return; }
