@@ -1297,6 +1297,16 @@ html[data-eduquest-animation='off'] .eliminate-choice-satchel button:not(:disabl
 .english-choice-page .english-material-card.letter::before { content: '✦ WELITQUEST · TRACE & READ' !important; }
 .tale-reading-page .tale-story-sheet::before { content: '✦ WELITQUEST · 閱讀標記' !important; }
 
+/* 數學目錄只保留學習線，不在標題下重複顯示刻度尺。 */
+.math-catalog-page .math-directory-heading {
+  padding-bottom: .8rem !important;
+}
+
+.math-catalog-page .math-directory-heading::after {
+  display: none !important;
+  content: none !important;
+}
+
 /* 使用高優先序覆蓋舊有中文／數學學科色提示規則，所有提示卡均與英文工具卡一致。 */
 .site-shell .eliminate-choice-satchel button > span {
   display: block !important;
