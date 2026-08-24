@@ -135,8 +135,13 @@ export default function App() {
   const [activeUnit, setActiveUnit] = useState(previewUnit ? { ...previewUnit, activityMode: params.get('mode') === 'team-battle' ? 'team-battle' : previewUnit.activityMode } : null);
   const [questionManagerReturnScreen, setQuestionManagerReturnScreen] = useState('home');
   const [classroomToolkitReturnScreen, setClassroomToolkitReturnScreen] = useState('home');
-  const [classroomSession, setClassroomSession] = useState(() => { try { const saved = JSON.parse(window.localStorage.getItem('welitquest-classroom-session') || 'null'); return saved && Array.isArray(saved.items) ? saved : { title: '', createdAt: new Date().toISOString(), items: [], completedKeys: [] }; } catch { return { title: '', createdAt: new Date().toISOString(), items: [], completedKeys: [] }; } });
-  const [completedUnits, setCompletedUnits] = useState(() => { try { return JSON.parse(window.localStorage.getItem('eduquest-unit-progress') || '{}'); } catch { return {}; } });
+  const [classroomSession, setClassroomSession] = useState(() => { try { const saved = JSON.parse(window.sessionStorage.getItem('welitquest-classroom-session-once') || 'null'); return saved && Array.isArray(saved.items) ? saved : { title: '', createdAt: new Date().toISOString(), items: [], completedKeys: [] }; } catch { return { title: '', createdAt: new Date().toISOString(), items: [], completedKeys: [] }; } });
+  const [completedUnits, setCompletedUnits] = useState(() => { try { return JSON.parse(window.sessionStorage.getItem('welitquest-unit-progress-once') || '{}'); } catch { return {}; } });
+  useEffect(() => {
+    window.localStorage.removeItem('welitquest-classroom-session');
+    window.localStorage.removeItem('eduquest-unit-progress');
+    Object.keys(window.localStorage).filter((key) => key.startsWith('welitquest-exit-drawn:')).forEach((key) => window.localStorage.removeItem(key));
+  }, []);
   useEffect(() => {
     const applyMotionPreference = (value) => { try { const settings = value || JSON.parse(window.localStorage.getItem('eduquest-feedback-settings') || '{}'); document.documentElement.dataset.eduquestAnimation = settings.animation === false ? 'off' : 'on'; document.documentElement.dataset.eduquestProjection = settings.projectionSize || 'standard'; document.documentElement.dataset.eduquestMinimalProjection = settings.minimalProjection === true ? 'on' : 'off'; document.documentElement.dataset.eduquestReadingLineHeight = settings.readingLineHeight || 'comfortable'; document.documentElement.dataset.eduquestReadingColumnWidth = settings.readingColumnWidth || 'standard'; } catch { document.documentElement.dataset.eduquestAnimation = 'on'; document.documentElement.dataset.eduquestProjection = 'standard'; document.documentElement.dataset.eduquestMinimalProjection = 'off'; document.documentElement.dataset.eduquestReadingLineHeight = 'comfortable'; document.documentElement.dataset.eduquestReadingColumnWidth = 'standard'; } };
     applyMotionPreference();
@@ -268,7 +273,8 @@ export default function App() {
   const openQuestionManager = (returnScreen = screen) => { setQuestionManagerReturnScreen(returnScreen); setScreen('question-manager'); };
   const openClassroomToolkit = (returnScreen = screen) => { setClassroomToolkitReturnScreen(returnScreen); setScreen('classroom-toolkit'); };
   const openQuickExit = () => setScreen('quick-exit');
-  const updateClassroomSession = (next) => { setClassroomSession(next); window.localStorage.setItem('welitquest-classroom-session', JSON.stringify(next)); };
+  const updateClassroomSession = (next) => { setClassroomSession(next); window.sessionStorage.setItem('welitquest-classroom-session-once', JSON.stringify(next)); };
+  const endClassroomSession = (next = { title: '', createdAt: new Date().toISOString(), items: [], completedKeys: [] }) => { setClassroomSession(next); setCompletedUnits({}); window.sessionStorage.removeItem('welitquest-classroom-session-once'); window.sessionStorage.removeItem('welitquest-unit-progress-once'); Object.keys(window.sessionStorage).filter((key) => key.startsWith('welitquest-exit-drawn:')).forEach((key) => window.sessionStorage.removeItem(key)); };
   const startClassroomUnit = (unit, subject, grade) => { setCatalogGrade(grade); setCatalogSubject(subject); setActiveUnit({ ...unit, activityMode: 'worksheet' }); setScreen('activity'); };
   const startNextClassroomUnit = (currentUnit) => {
     const nextItem = classroomSession.items.find((item) => !classroomSession.completedKeys.includes(item.key) && item.unitId !== currentUnit.id);
@@ -277,10 +283,10 @@ export default function App() {
     if (nextUnit) startClassroomUnit(nextUnit, nextItem.subject, nextItem.grade);
   };
   const markUnitCompleted = (unit, questionIds = unit.questions.map((question) => question.id)) => {
-    setCompletedUnits((current) => { const previous = Array.isArray(current[unit.id]) ? current[unit.id] : current[unit.id] >= unit.questions.length ? unit.questions.map((question) => question.id) : []; const next = { ...current, [unit.id]: [...new Set([...previous, ...questionIds])] }; window.localStorage.setItem('eduquest-unit-progress', JSON.stringify(next)); return next; });
+    setCompletedUnits((current) => { const previous = Array.isArray(current[unit.id]) ? current[unit.id] : current[unit.id] >= unit.questions.length ? unit.questions.map((question) => question.id) : []; const next = { ...current, [unit.id]: [...new Set([...previous, ...questionIds])] }; window.sessionStorage.setItem('welitquest-unit-progress-once', JSON.stringify(next)); return next; });
     const subject = unit.id.includes('-EN-') ? '英文' : unit.id.includes('-CN-') ? '中文' : '數學';
     const key = `${subject}:${unit.id}`;
-    setClassroomSession((current) => { if (!current.items.some((item) => item.key === key) || current.completedKeys.includes(key)) return current; const next = { ...current, completedKeys: [...current.completedKeys, key] }; window.localStorage.setItem('welitquest-classroom-session', JSON.stringify(next)); return next; });
+    setClassroomSession((current) => { if (!current.items.some((item) => item.key === key) || current.completedKeys.includes(key)) return current; const next = { ...current, completedKeys: [...current.completedKeys, key] }; window.sessionStorage.setItem('welitquest-classroom-session-once', JSON.stringify(next)); return next; });
   };
   if (screen === 'activity' && activeUnit) {
     const [unitGrade, unitSubjectCode] = activeUnit.id?.split('-') || [];
@@ -316,7 +322,7 @@ export default function App() {
     return withTeacherControls(<WordMatchActivity unit={activeUnit} onBack={backToCatalog} onComplete={markUnitCompleted} />);
   }
   if (screen === 'question-manager') return <QuestionProfilePanel questionBanks={{ 中文: chineseQuestionBanks, 英文: englishQuestionBanks, 數學: mathQuestionBanks }} onBack={() => setScreen(questionManagerReturnScreen)} />;
-  if (screen === 'classroom-toolkit') return <TeacherClassroomToolkit questionBanks={{ 中文: chineseQuestionBanks, 英文: englishQuestionBanks, 數學: mathQuestionBanks }} session={classroomSession} onSessionChange={updateClassroomSession} onBack={() => setScreen(classroomToolkitReturnScreen)} onStartUnit={startClassroomUnit} />;
+  if (screen === 'classroom-toolkit') return <TeacherClassroomToolkit questionBanks={{ 中文: chineseQuestionBanks, 英文: englishQuestionBanks, 數學: mathQuestionBanks }} session={classroomSession} onSessionChange={updateClassroomSession} onEndSession={endClassroomSession} onBack={() => setScreen(classroomToolkitReturnScreen)} onStartUnit={startClassroomUnit} />;
   if (screen === 'quick-exit') return <QuickExitTicket questionBanks={{ 中文: chineseQuestionBanks, 英文: englishQuestionBanks, 數學: mathQuestionBanks }} onBack={() => setScreen('courses')} />;
   if (screen === 'catalog') return <>{catalogSubject === '英文' ? <EnglishCatalog initialGrade={catalogGrade} onBack={() => setScreen('courses')} onHome={() => setScreen('home')} completedUnits={completedUnits} onStartUnit={(unit, activityMode = 'worksheet') => { setActiveUnit({ ...unit, activityMode }); setScreen('activity'); }} /> : catalogSubject === '數學' ? <MathCatalog initialGrade={catalogGrade} onBack={() => setScreen('courses')} onHome={() => setScreen('home')} completedUnits={completedUnits} onStartUnit={(unit, activityMode = 'worksheet') => { setActiveUnit({ ...unit, activityMode }); setScreen('activity'); }} /> : <UnifiedChineseCatalog initialGrade={catalogGrade} onBack={() => setScreen('courses')} onHome={() => setScreen('home')} completedUnits={completedUnits} onStartUnit={(unit, activityMode = 'worksheet') => { setActiveUnit({ ...unit, activityMode }); setScreen('activity'); }} />}<TeacherSettingsDock onOpenQuestionManager={() => openQuestionManager('catalog')} onOpenClassroomToolkit={() => openClassroomToolkit('catalog')} onOpenQuickExit={openQuickExit} /></>;
   if (screen === 'courses') return <Courses onBack={() => setScreen('home')} onOpen={openDemo} onCatalog={openCatalog} onOpenQuestionManager={() => openQuestionManager('courses')} onOpenClassroomToolkit={() => openClassroomToolkit('courses')} onOpenQuickExit={openQuickExit} />;

@@ -5,7 +5,7 @@ const SUBJECTS = ['中文', '英文', '數學'];
 const GRADES = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
 const shuffle = (items) => { const next = [...items]; for (let index = next.length - 1; index > 0; index -= 1) { const target = Math.floor(Math.random() * (index + 1)); [next[index], next[target]] = [next[target], next[index]]; } return next; };
 const isChoiceUnit = (unit) => unit.questions.some((question) => Array.isArray(question.choices) && question.choices.length >= 2 && question.answer !== undefined);
-const getDrawn = (key) => { try { return JSON.parse(window.localStorage.getItem(key) || '[]'); } catch { return []; } };
+const getDrawn = (key) => { try { return JSON.parse(window.sessionStorage.getItem(key) || '[]'); } catch { return []; } };
 
 export default function QuickExitTicket({ questionBanks, onBack }) {
   const [subject, setSubject] = useState('中文');
@@ -28,7 +28,7 @@ export default function QuickExitTicket({ questionBanks, onBack }) {
     let pool = eligible.filter((question) => !drawn.includes(question.id));
     if (pool.length < amount) { drawn = []; pool = eligible; }
     const picked = shuffle(pool).slice(0, Math.min(amount, pool.length));
-    window.localStorage.setItem(key, JSON.stringify([...drawn, ...picked.map((question) => question.id)]));
+    window.sessionStorage.setItem(key, JSON.stringify([...drawn, ...picked.map((question) => question.id)]));
     setQuestions(picked); setIndex(0); setVotes({}); setRevealed(false); setShowDistribution(false);
   };
   const question = questions[index];
