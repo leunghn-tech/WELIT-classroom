@@ -41,7 +41,7 @@ function getPlan(unit) {
   const title = unit.title;
   if (title.includes('分數')) return { tag: '分數條', key: '分數', note: '先以相同大小的整體表示分數；做加減時，先把每一份化成同樣大小。', formula: '分母相同才可直接合併分子；答案再約成最簡。', diagram: 'fraction' };
   if (title.includes('小數')) return { tag: '位值表', key: '小數點與位值', note: '把個位、十分位、百分位對齊；小數點必須在同一直線。', formula: '先按整數方法計算，最後依位值放回小數點。', diagram: 'formula' };
-  if (title.includes('百分比') || title.includes('圓形圖')) return { tag: '百分格', key: '整體的 100 份', note: '把整體想成 100 份；先找每 1% 或每一份代表多少。', formula: '部分量 = 整體 × 百分率；需要反推時，使用部分量 ÷ 百分率。', diagram: 'percent' };
+  if (title.includes('百分比')) return { tag: '百分格', key: '整體的 100 份', note: '把整體想成 100 份；先找每 1% 或每一份代表多少。', formula: '部分量 = 整體 × 百分率；需要反推時，使用部分量 ÷ 百分率。', diagram: 'percent' };
   if (title.includes('方程') || title.includes('代數')) return { tag: '平衡式', key: '未知數與已知量', note: '把等號兩邊看成平衡；先找與 x 相連的運算。', formula: '對等號兩邊同時做相反運算，再代回原式檢查。', diagram: 'equation' };
   if (title.includes('比例') || title.includes('放大') || title.includes('縮小')) return { tag: '比例條', key: '對應部分與比例尺', note: '先把相同單位的量排在一起，找出每一份代表多少。', formula: '每一部分 = 總量 ÷ 總份數；再乘所需份數。', diagram: 'ratio' };
   if (title.includes('行程') || title.includes('速度')) return { tag: '行程三角', key: '距離、速度、時間', note: '先辨認題目給了哪兩個量，並統一時間與距離單位。', formula: '距離 = 速度 × 時間；速度 = 距離 ÷ 時間；時間 = 距離 ÷ 速度。', diagram: 'motion' };
