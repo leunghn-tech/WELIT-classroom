@@ -92,71 +92,7 @@ const p2EnglishBank = {
         { id: 'P2-EN-G04-Q10', prompt: '選出最合適的英文答案。', symbol: '🌙', sentence: 'I ___ see in the dark.', choices: ['can’t', 'can', 'am', 'do'], answer: 'can’t', explanation: '在黑暗中不能看見，所以用 can’t。' },
       ],
     },
-    {
-      id: 'P2-EN-W01',
-      area: '看圖寫作',
-      title: '看圖故事段落',
-      objective: '按三幅連環圖選出開頭、經過和結尾，寫出有次序的簡單故事段落。',
-      interaction: 'english-writing-template',
-      templateMode: 'english-picture-story-template',
-      questions: [
-        {
-          id: 'P2-EN-W01-Q01', title: 'A Puppy in the Rain', brief: 'Look at the three pictures and build a short story about helping a puppy.', prompt: 'Build a simple picture-story paragraph in the correct order.',
-          pictureStrip: [{ emoji: '☔', label: 'Mia walks home.' }, { emoji: '🐶', label: 'She sees a puppy.' }, { emoji: '🏠', label: 'The puppy is safe.' }],
-          steps: [
-            { id: 'beginning', label: 'Picture 1: Beginning', focus: 'Say who is there and where the story starts.', answer: 'One rainy day, Mia is walking home with her umbrella.', options: ['One rainy day, Mia is walking home with her umbrella.', 'Mia does not want a story.', 'The ending comes before the beginning.'] },
-            { id: 'middle', label: 'Picture 2: What happens?', focus: 'Use the picture to tell the important action.', answer: 'She sees a small puppy under a bench and calls her mum.', options: ['She sees a small puppy under a bench and calls her mum.', 'The puppy is not in the picture.', 'Mia stops telling the story.'] },
-            { id: 'ending', label: 'Picture 3: Ending', focus: 'Tell readers what happens at the end.', answer: 'They take the puppy home, and it is warm and safe.', options: ['They take the puppy home, and it is warm and safe.', 'The story has no ending.', 'Nobody helps the puppy.'] },
-          ], explanation: 'A clear picture story starts with the setting, tells the important action, then gives an ending.'
-        },
-        {
-          id: 'P2-EN-W01-Q02', title: 'The Lost Balloon', brief: 'Look at the three pictures and tell how Sam gets his balloon back.', prompt: 'Build a simple picture-story paragraph in the correct order.',
-          pictureStrip: [{ emoji: '🎈', label: 'Sam has a balloon.' }, { emoji: '🌳', label: 'It is in a tree.' }, { emoji: '🧑‍🚒', label: 'A helper returns it.' }],
-          steps: [
-            { id: 'beginning', label: 'Picture 1: Beginning', focus: 'Introduce the person and the special object.', answer: 'Sam has a red balloon at the park.', options: ['Sam has a red balloon at the park.', 'Sam has no picture to see.', 'The ending is the first sentence.'] },
-            { id: 'middle', label: 'Picture 2: What happens?', focus: 'Tell readers about the problem in the next picture.', answer: 'Then the balloon flies into a tall tree.', options: ['Then the balloon flies into a tall tree.', 'The balloon is never important.', 'Sam writes about a different day.'] },
-            { id: 'ending', label: 'Picture 3: Ending', focus: 'Show how the problem is solved.', answer: 'A kind firefighter gets it down, and Sam smiles.', options: ['A kind firefighter gets it down, and Sam smiles.', 'Nobody can solve the problem.', 'The story stops without an ending.'] },
-          ], explanation: 'Use the pictures in order: start with the balloon, show the problem, then tell how Sam gets help.'
-        },
-        {
-          id: 'P2-EN-W01-Q03', title: 'Watering the Garden', brief: 'Look at the three pictures and tell how two friends care for the class garden.', prompt: 'Build a simple picture-story paragraph in the correct order.',
-          pictureStrip: [{ emoji: '🌱', label: 'The plants look dry.' }, { emoji: '🚿', label: 'The friends water them.' }, { emoji: '🌼', label: 'The plants look happy.' }],
-          steps: [
-            { id: 'beginning', label: 'Picture 1: Beginning', focus: 'Describe what the children notice first.', answer: 'Ben and Eva see that the garden plants look dry.', options: ['Ben and Eva see that the garden plants look dry.', 'The plants are not part of the story.', 'The garden is the final sentence.'] },
-            { id: 'middle', label: 'Picture 2: What happens?', focus: 'Use an action to show how they help.', answer: 'They fill a watering can and water the plants together.', options: ['They fill a watering can and water the plants together.', 'They do not do anything at all.', 'The story is only about a chair.'] },
-            { id: 'ending', label: 'Picture 3: Ending', focus: 'End with the result and a feeling.', answer: 'Soon the flowers look fresh, and the friends feel proud.', options: ['Soon the flowers look fresh, and the friends feel proud.', 'There is no result in the story.', 'The garden disappears from the story.'] },
-          ], explanation: 'The middle picture gives the action. The last picture can show the result and how the characters feel.'
-        },
-        {
-          id: 'P2-EN-W01-Q04', title: 'A Picnic Helper', brief: 'Look at the three pictures and tell how Leo helps during a class picnic.', prompt: 'Build a simple picture-story paragraph in the correct order.',
-          pictureStrip: [{ emoji: '🧺', label: 'The picnic basket is heavy.' }, { emoji: '🤝', label: 'Leo carries it.' }, { emoji: '🍎', label: 'The class enjoys lunch.' }],
-          steps: [
-            { id: 'beginning', label: 'Picture 1: Beginning', focus: 'State the place and the small problem.', answer: 'At the park, Ms Lee has a heavy picnic basket.', options: ['At the park, Ms Lee has a heavy picnic basket.', 'The class is not at a picnic.', 'The story starts with the ending.'] },
-            { id: 'middle', label: 'Picture 2: What happens?', focus: 'Tell readers who helps and what the person does.', answer: 'Leo carries the basket to the picnic table for her.', options: ['Leo carries the basket to the picnic table for her.', 'Leo hides from the picnic.', 'The basket is not used in the story.'] },
-            { id: 'ending', label: 'Picture 3: Ending', focus: 'Finish with the result of the helpful action.', answer: 'The class can eat lunch together, and Ms Lee says thank you.', options: ['The class can eat lunch together, and Ms Lee says thank you.', 'The story has no result.', 'Nobody notices Leo’s help.'] },
-          ], explanation: 'A helpful-story paragraph can show a problem, a kind action and a happy result.'
-        },
-        {
-          id: 'P2-EN-W01-Q05', title: 'The Library Book', brief: 'Look at the three pictures and tell how Amy chooses and shares a library book.', prompt: 'Build a simple picture-story paragraph in the correct order.',
-          pictureStrip: [{ emoji: '📚', label: 'Amy visits the library.' }, { emoji: '📖', label: 'She finds a book.' }, { emoji: '👭', label: 'She reads with a friend.' }],
-          steps: [
-            { id: 'beginning', label: 'Picture 1: Beginning', focus: 'Say where the character goes.', answer: 'After school, Amy goes to the library with her friend.', options: ['After school, Amy goes to the library with her friend.', 'Amy does not go anywhere.', 'The library is not in the story.'] },
-            { id: 'middle', label: 'Picture 2: What happens?', focus: 'Tell what the character finds or does next.', answer: 'She finds a funny animal book and opens it carefully.', options: ['She finds a funny animal book and opens it carefully.', 'She forgets every part of the story.', 'The book has no place in the picture.'] },
-            { id: 'ending', label: 'Picture 3: Ending', focus: 'End with a shared activity or feeling.', answer: 'Amy reads the book with her friend, and they laugh together.', options: ['Amy reads the book with her friend, and they laugh together.', 'The story cannot have an ending.', 'Nobody reads the book.'] },
-          ], explanation: 'The pictures help you keep the story in order: place, action, then ending.'
-        },
-        {
-          id: 'P2-EN-W01-Q06', title: 'A Birthday Card', brief: 'Look at the three pictures and tell how Kim makes a card for her dad.', prompt: 'Build a simple picture-story paragraph in the correct order.',
-          pictureStrip: [{ emoji: '✂️', label: 'Kim has paper and crayons.' }, { emoji: '💌', label: 'She makes a card.' }, { emoji: '🎂', label: 'Dad opens it.' }],
-          steps: [
-            { id: 'beginning', label: 'Picture 1: Beginning', focus: 'Introduce the materials and the idea.', answer: 'Kim has paper and crayons for her dad’s birthday.', options: ['Kim has paper and crayons for her dad’s birthday.', 'Kim has no idea for a card.', 'The card is the ending only.'] },
-            { id: 'middle', label: 'Picture 2: What happens?', focus: 'Tell what the character makes.', answer: 'She draws a big cake and writes, “Happy Birthday, Dad!”', options: ['She draws a big cake and writes, “Happy Birthday, Dad!”', 'She does not make a card.', 'The picture has no message.'] },
-            { id: 'ending', label: 'Picture 3: Ending', focus: 'Finish with the receiver’s reaction.', answer: 'Dad opens the card and gives Kim a big hug.', options: ['Dad opens the card and gives Kim a big hug.', 'Dad never sees the card.', 'The story ends before Dad is happy.'] },
-          ], explanation: 'A good ending shows what happens after the main action and can include a character’s feeling.'
-        },
-      ],
-    },
-  ].sort((left, right) => ['P2-EN-P01', 'P2-EN-G01', 'P2-EN-G05', 'P2-EN-G02', 'P2-EN-G03', 'P2-EN-G04', 'P2-EN-W01'].indexOf(left.id) - ['P2-EN-P01', 'P2-EN-G01', 'P2-EN-G05', 'P2-EN-G02', 'P2-EN-G03', 'P2-EN-G04', 'P2-EN-W01'].indexOf(right.id)),
+  ].sort((left, right) => ['P2-EN-P01', 'P2-EN-G01', 'P2-EN-G05', 'P2-EN-G02', 'P2-EN-G03', 'P2-EN-G04'].indexOf(left.id) - ['P2-EN-P01', 'P2-EN-G01', 'P2-EN-G05', 'P2-EN-G02', 'P2-EN-G03', 'P2-EN-G04'].indexOf(right.id)),
 };
 
 export default p2EnglishBank;
