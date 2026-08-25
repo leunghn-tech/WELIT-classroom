@@ -1,6 +1,6 @@
 {
-  "name": "WelitQuest 小學課堂工作檯",
-  "short_name": "WelitQuest",
+  "name": "WELIT classroom 小學課堂工作檯",
+  "short_name": "WELIT classroom",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f7fbff",

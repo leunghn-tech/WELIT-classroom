@@ -55,7 +55,7 @@ const SUBJECT_COVERS = {
 };
 
 function Brand() {
-  return <div className="brand" aria-label="WelitQuest"><span className="brand-mark"><i></i><i></i><i></i><Sparkles size={24} /></span><span><b>Welit<span>Quest</span></b><small>小學課堂展示版</small></span></div>;
+  return <div className="brand" aria-label="WELIT classroom"><span className="brand-mark"><i></i><i></i><i></i><Sparkles size={24} /></span><span><b>WELIT <span>classroom</span></b><small>小學課堂展示版</small></span></div>;
 }
 
 function Header({ onHome, action, onOpenQuestionManager, onOpenClassroomToolkit, onOpenQuickExit }) {

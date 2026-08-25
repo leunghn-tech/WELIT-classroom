@@ -10,7 +10,7 @@ const GRADES = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
 const LOW_GRADES = ['P1', 'P2', 'P3'];
 const LABELS = { P1: '小一', P2: '小二', P3: '小三', P4: '小四', P5: '小五', P6: '小六' };
 
-function Brand() { return <div className="brand" aria-label="WelitQuest"><span className="brand-mark"><i></i><i></i><i></i><Sparkles size={24} /></span><span><b>Welit<span>Quest</span></b><small>小學課堂展示版</small></span></div>; }
+function Brand() { return <div className="brand" aria-label="WELIT classroom"><span className="brand-mark"><i></i><i></i><i></i><Sparkles size={24} /></span><span><b>WELIT <span>classroom</span></b><small>小學課堂展示版</small></span></div>; }
 
 function UnitCard({ unit, completedUnits, classroomMode, examMode, onStart, featured = false }) {
   const progress = completedUnits[unit.id];
