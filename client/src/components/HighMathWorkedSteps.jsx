@@ -1,5 +1,6 @@
 // EduQuest「彩色課程工作檯」：高小解題提示以草綠模型、短句步驟與可投影字級輔助理解，不重複題幹。
 import { ArrowRight, CheckCircle2, Lightbulb, ScanSearch } from 'lucide-react';
+import FormalMathText from './FormalMathText';
 
 const getFirstFraction = (text = '') => {
   const found = text.match(/(\d+)\s*\/\s*(\d+)/);
@@ -64,5 +65,5 @@ function StrategyModel({ plan, question }) {
 
 export default function HighMathWorkedSteps({ unit, question }) {
   const plan = getPlan(unit);
-  return <section className="worked-steps" aria-label="圖像化解題步驟"><header><span><Lightbulb size={17} /> 圖像化解題步驟</span><small>{plan.tag}</small></header><p className="worked-step-intro">跟著綠色路徑，一步一步把答案想清楚。</p><div className="worked-step-grid"><article className="worked-step-card step-1"><b><i>1</i><ScanSearch size={18} /> 看甚麼？</b><p><strong>{plan.key}</strong>{plan.note}</p></article><article className="worked-model worked-step-card step-2"><b><i>2</i> 用模型想一想</b><StrategyModel plan={plan} question={question} /></article><article className="worked-step-card step-3"><b><i>3</i><CheckCircle2 size={18} /> 列式與檢查</b><p>{plan.formula}</p><em>{question.explanation}</em></article></div></section>;
+  return <section className="worked-steps" aria-label="圖像化解題步驟"><header><span><Lightbulb size={17} /> 圖像化解題步驟</span><small>{plan.tag}</small></header><p className="worked-step-intro">跟著綠色路徑，一步一步把答案想清楚。</p><div className="worked-step-grid"><article className="worked-step-card step-1"><b><i>1</i><ScanSearch size={18} /> 看甚麼？</b><p><strong>{plan.key}</strong><FormalMathText text={plan.note} /></p></article><article className="worked-model worked-step-card step-2"><b><i>2</i> 用模型想一想</b><StrategyModel plan={plan} question={question} /></article><article className="worked-step-card step-3"><b><i>3</i><CheckCircle2 size={18} /> 列式與檢查</b><p><FormalMathText text={plan.formula} /></p><em><FormalMathText text={question.explanation} /></em></article></div></section>;
 }
