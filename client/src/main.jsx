@@ -11,6 +11,7 @@ import './oneTimeSession.css';
 import './clearProtection.css';
 import './quickExitSentence.css';
 import './lessonSupport.css';
+import './finalWorksheetTypography.css';
 
 createRoot(document.getElementById('root')).render(<App />);
 
