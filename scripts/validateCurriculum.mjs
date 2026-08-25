@@ -268,11 +268,11 @@ validateEnglishReadingUnit(p6EnglishBank, 'P6', 'P6-EN-R01', '證據式閱讀挑
 
 const mathRequiredUnitIds = {
   P1: ['P1-MATH-A02', 'P1-MATH-A03', 'P1-MATH-A04', 'P1-MATH-A05', 'P1-MATH-M01', 'P1-MATH-M02', 'P1-MATH-S01', 'P1-MATH-S02'],
-  P2: ['P2-MATH-A01', 'P2-MATH-A02', 'P2-MATH-A04', 'P2-MATH-A05', 'P2-MATH-A06', 'P2-MATH-A07', 'P2-MATH-M01', 'P2-MATH-M02', 'P2-MATH-M03', 'P2-MATH-S01', 'P2-MATH-S03', 'P2-MATH-D01'],
-  P3: ['P3-MATH-A01', 'P3-MATH-A02', 'P3-MATH-A03', 'P3-MATH-A04', 'P3-MATH-A05', 'P3-MATH-M01', 'P3-MATH-M02', 'P3-MATH-M03', 'P3-MATH-S01', 'P3-MATH-S02', 'P3-MATH-D01'],
-  P4: ['P4-MATH-A01', 'P4-MATH-A02', 'P4-MATH-A03', 'P4-MATH-A04', 'P4-MATH-A05', 'P4-MATH-A06', 'P4-MATH-A07', 'P4-MATH-M01', 'P4-MATH-M02', 'P4-MATH-M03', 'P4-MATH-S01', 'P4-MATH-S02', 'P4-MATH-D01'],
-  P5: ['P5-MATH-A01', 'P5-MATH-A02', 'P5-MATH-A03', 'P5-MATH-A05', 'P5-MATH-A06', 'P5-MATH-A07', 'P5-MATH-M01', 'P5-MATH-M02', 'P5-MATH-M03', 'P5-MATH-S02', 'P5-MATH-D02'],
-  P6: ['P6-MATH-A02', 'P6-MATH-A03', 'P6-MATH-A04', 'P6-MATH-M01', 'P6-MATH-M02', 'P6-MATH-M03', 'P6-MATH-S03', 'P6-MATH-D01', 'P6-MATH-D02', 'P6-MATH-C01'],
+  P2: ['P2-MATH-A01', 'P2-MATH-A02', 'P2-MATH-A04', 'P2-MATH-A05', 'P2-MATH-A06', 'P2-MATH-A07', 'P2-MATH-M01', 'P2-MATH-M02', 'P2-MATH-M03', 'P2-MATH-S03'],
+  P3: ['P3-MATH-A02', 'P3-MATH-A03', 'P3-MATH-A04', 'P3-MATH-A05', 'P3-MATH-M01', 'P3-MATH-M02', 'P3-MATH-M03', 'P3-MATH-S01'],
+  P4: ['P4-MATH-A01', 'P4-MATH-A02', 'P4-MATH-A03', 'P4-MATH-A04', 'P4-MATH-A05', 'P4-MATH-A06', 'P4-MATH-A07', 'P4-MATH-M01', 'P4-MATH-M02', 'P4-MATH-M03', 'P4-MATH-S01'],
+  P5: ['P5-MATH-A01', 'P5-MATH-A02', 'P5-MATH-A03', 'P5-MATH-A05', 'P5-MATH-A06', 'P5-MATH-A07', 'P5-MATH-M02', 'P5-MATH-M03'],
+  P6: ['P6-MATH-A02', 'P6-MATH-A03', 'P6-MATH-A04', 'P6-MATH-M01', 'P6-MATH-M02', 'P6-MATH-S03', 'P6-MATH-D01', 'P6-MATH-C01'],
 };
 for (const [grade, unitIds] of Object.entries(mathRequiredUnitIds)) {
   const bank = mathQuestionBanks[grade];
@@ -309,6 +309,12 @@ for (const [grade, unitIds] of Object.entries(mathRequiredUnitIds)) {
       } else if (!Array.isArray(question.choices) || question.choices.length !== 4 || !question.choices.includes(question.answer) || new Set(question.choices).size !== 4) errors.push(`${question.id} 必須有四個不重複選項，且包含正確答案。`);
     }
   }
+}
+
+const removedMathUnitIds = ['P2-MATH-S01', 'P2-MATH-D01', 'P3-MATH-A01', 'P3-MATH-S02', 'P3-MATH-D01', 'P4-MATH-S02', 'P4-MATH-D01', 'P5-MATH-M01', 'P5-MATH-S02', 'P5-MATH-D02', 'P6-MATH-M03', 'P6-MATH-D02'];
+for (const unitId of removedMathUnitIds) {
+  const grade = unitId.split('-')[0];
+  if (mathQuestionBanks[grade]?.units.some((unit) => unit.id === unitId)) errors.push(`${unitId} 已被指定刪除，不應再出現在數學目錄。`);
 }
 
 const englishBanks = { P1: p1EnglishBank, P2: p2EnglishBank, P3: p3EnglishBank, P4: p4EnglishBank, P5: p5EnglishBank, P6: p6EnglishBank };

@@ -76,6 +76,6 @@ p6MathBank.units.forEach((unit) => { if (p6Difficulties[unit.id]) unit.difficult
 
 // 小數除法先在小五完成，讓小六集中百分數、方程、圓形、速率、體積與數據綜合應用。
 export const p6TransitionUnits = p6MathBank.units.filter((unit) => unit.id === 'P6-MATH-A01');
-p6MathBank.units = p6MathBank.units.filter((unit) => !['P6-MATH-A01', 'P6-MATH-A05', 'P6-MATH-S01', 'P6-MATH-S02'].includes(unit.id));
+p6MathBank.units = p6MathBank.units.filter((unit) => !['P6-MATH-A01', 'P6-MATH-A05', 'P6-MATH-S01', 'P6-MATH-S02', 'P6-MATH-M03', 'P6-MATH-D02'].includes(unit.id));
 
 export default p6MathBank;

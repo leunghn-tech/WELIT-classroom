@@ -69,4 +69,6 @@ const p2MathBank = {
   ],
 };
 
+p2MathBank.units = p2MathBank.units.filter((unit) => !['P2-MATH-S01', 'P2-MATH-D01'].includes(unit.id));
+
 export default p2MathBank;

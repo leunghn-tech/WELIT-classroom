@@ -81,6 +81,6 @@ p5MathBank.units.forEach((unit) => { if (p5Difficulties[unit.id]) unit.difficult
 
 // 小四先建立小數、八方向與軸對稱；小五專注異分母分數、乘除小數、面積、體積、代數及複合棒形圖。
 export const p5TransitionUnits = p5MathBank.units.filter((unit) => ['P5-MATH-A04', 'P5-MATH-S03'].includes(unit.id));
-p5MathBank.units = p5MathBank.units.filter((unit) => !['P5-MATH-A04', 'P5-MATH-S01', 'P5-MATH-S03', 'P5-MATH-D01'].includes(unit.id));
+p5MathBank.units = p5MathBank.units.filter((unit) => !['P5-MATH-A04', 'P5-MATH-S01', 'P5-MATH-S03', 'P5-MATH-D01', 'P5-MATH-M01', 'P5-MATH-S02', 'P5-MATH-D02'].includes(unit.id));
 
 export default p5MathBank;

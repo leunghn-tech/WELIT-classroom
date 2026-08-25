@@ -84,5 +84,6 @@ p3MathBank.units.forEach((unit) => { if (p3Difficulties[unit.id]) unit.difficult
 // 八個方向在小四與對稱一併進入較抽象的空間概念；小三保留平行、垂直與特殊四邊形。
 export const p3TransitionUnits = p3MathBank.units.filter((unit) => unit.id === 'P3-MATH-S03');
 p3MathBank.units = p3MathBank.units.filter((unit) => !p3TransitionUnits.includes(unit));
+p3MathBank.units = p3MathBank.units.filter((unit) => !['P3-MATH-A01', 'P3-MATH-S02', 'P3-MATH-D01'].includes(unit.id));
 
 export default p3MathBank;

@@ -48,8 +48,8 @@ const p4MathBank = {
   ],
 };
 
-const p4TransitionUnits = [...p3TransitionUnits, ...p5TransitionUnits].map((unit) => {
-  const ids = { 'P3-MATH-S03': 'P4-MATH-S01', 'P5-MATH-S03': 'P4-MATH-S02', 'P5-MATH-A04': 'P4-MATH-A07' };
+const p4TransitionUnits = [...p3TransitionUnits, ...p5TransitionUnits].filter((unit) => ['P3-MATH-S03', 'P5-MATH-A04'].includes(unit.id)).map((unit) => {
+  const ids = { 'P3-MATH-S03': 'P4-MATH-S01', 'P5-MATH-A04': 'P4-MATH-A07' };
   const id = ids[unit.id];
   return { ...unit, id, questions: unit.questions.map((question, questionIndex) => ({ ...question, id: `${id}-Q${String(questionIndex + 1).padStart(2, '0')}` })) };
 });
@@ -62,8 +62,8 @@ if (p4DecimalUnit) {
     return question;
   });
 }
-// 小四建立八方向、軸對稱與小數加減；三角形分類、圓形認識和高階四邊形性質不列為本年級必修。
-p4MathBank.units = p4MathBank.units.filter((unit) => !['P4-MATH-S01', 'P4-MATH-S02', 'P4-MATH-S03'].includes(unit.id));
+// 小四保留八方向與小數加減；三角形分類、圓形認識、高階四邊形及軸對稱不列為本年級課題。
+p4MathBank.units = p4MathBank.units.filter((unit) => !['P4-MATH-S01', 'P4-MATH-S02', 'P4-MATH-S03', 'P4-MATH-D01'].includes(unit.id));
 p4MathBank.units.push(...p4TransitionUnits);
 
 const p4Difficulties = {
