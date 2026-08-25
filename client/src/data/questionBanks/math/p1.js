@@ -106,4 +106,15 @@ export const p1TransitionUnits = p1MathBank.units.filter((unit) => ['P1-MATH-A06
 export const p1DeferredUnits = p1MathBank.units.filter((unit) => ['P1-MATH-M03', 'P1-MATH-S03'].includes(unit.id));
 p1MathBank.units = p1MathBank.units.filter((unit) => unit.id !== 'P1-MATH-A01' && !p1TransitionUnits.includes(unit) && !p1DeferredUnits.includes(unit));
 
+const shapeIllustrationQuestions = {
+  'P1-MATH-S01-Q01': { prompt: '看圖：這個圓滾滾的足球最像哪一種立體圖形？', visual: { type: 'shape-illustration', shape: 'sphere', object: '足球', label: '球體' }, explanation: '足球圓滾滾，沒有平平的面，最像球體。' },
+  'P1-MATH-S01-Q02': { prompt: '看圖：這個尖頂的雪糕筒最像哪一種立體圖形？', visual: { type: 'shape-illustration', shape: 'cone', object: '雪糕筒', label: '錐體' }, explanation: '雪糕筒底部圓、頂端尖，最像錐體。' },
+  'P1-MATH-S01-Q03': { prompt: '看圖：這個汽水罐最像哪一種立體圖形？', visual: { type: 'shape-illustration', shape: 'cylinder', object: '汽水罐', label: '柱體' }, explanation: '汽水罐上下面是圓形，側面直直的，最像柱體。' },
+  'P1-MATH-S02-Q01': { prompt: '看圖：黃色的三邊圖形叫甚麼名字？', visual: { type: 'shape-illustration', shape: 'triangle', label: '三角形' }, explanation: '這個圖形有 3 條直邊和 3 個角，是三角形。' },
+  'P1-MATH-S02-Q02': { prompt: '看圖：藍色的圓圓圖形叫甚麼名字？', visual: { type: 'shape-illustration', shape: 'circle', label: '圓形' }, explanation: '這個圖形圓圓的，沒有角，是圓形。' },
+  'P1-MATH-S02-Q03': { prompt: '看圖：這張便條紙的外形最像哪一種圖形？', visual: { type: 'shape-illustration', shape: 'square', object: '正方形便條紙', label: '正方形' }, explanation: '正方形有 4 條一樣長的邊。' },
+  'P1-MATH-S02-Q04': { prompt: '看圖：這本課本封面的外形最像哪一種圖形？', visual: { type: 'shape-illustration', shape: 'rectangle', object: '課本封面', label: '長方形' }, explanation: '課本封面有兩長兩短的四條邊，最像長方形。' },
+};
+p1MathBank.units = p1MathBank.units.map((unit) => ['P1-MATH-S01', 'P1-MATH-S02'].includes(unit.id) ? { ...unit, questions: unit.questions.map((question) => shapeIllustrationQuestions[question.id] ? { ...question, ...shapeIllustrationQuestions[question.id] } : question) } : unit);
+
 export default p1MathBank;
