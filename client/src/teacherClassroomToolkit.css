@@ -53,3 +53,56 @@
     justify-content: center;
   }
 }
+
+/* 手機版教師工具：平日收合成單一開關，需要時才展開完整課堂控制。 */
+.teacher-controls-toggle { display: none; }
+.teacher-activity-controls-panel { display: flex; align-items: center; gap: .38rem; }
+
+@media (max-width: 820px) {
+  .teacher-activity-controls {
+    align-items: stretch;
+    flex-direction: column;
+    width: auto;
+    max-width: calc(100vw - 1rem);
+    overflow: visible;
+  }
+
+  .teacher-controls-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .38rem;
+    min-height: 2.2rem;
+    padding: .32rem .58rem;
+    border: 1px solid #2d72e4;
+    color: #1d5cbc;
+    background: #fff;
+    font: 900 .72rem var(--display);
+  }
+
+  .teacher-controls-toggle > span { font-size: 1.15rem; line-height: 1; }
+  .teacher-activity-controls-panel { display: none; align-items: center; flex-wrap: wrap; gap: .32rem; }
+  .teacher-activity-controls.is-expanded .teacher-activity-controls-panel { display: flex; }
+  .teacher-activity-controls-panel > span { display: inline-flex; align-items: center; gap: .25rem; color: #2c6ed6; font-size: .62rem; font-weight: 900; }
+  .teacher-activity-controls-panel > b { display: none; }
+  .teacher-activity-controls-panel button { min-height: 2.25rem; white-space: nowrap; }
+  .teacher-activity-controls.is-collapsed { padding: .28rem; }
+  .teacher-activity-controls.is-collapsed .teacher-controls-toggle { min-width: 6.9rem; }
+  .teacher-activity-controls.is-expanded { padding: .38rem; }
+
+  html[data-teacher-controls-mobile="collapsed"] main.site-shell:is(.choice-worksheet-page, .word-match-page, .radical-sort-page, .punctuation-drop-page, .story-structure-page, .sentence-expand-page, .p2-writing-page, .format-sort-page, .p3-study-page, .tale-reading-page, .paragraph-mark-page, .english-choice-page, .english-reading-page, .english-sentence-page, .english-sentence-rewrite-page, .english-verb-memory-page, .math-activity-page) {
+    padding-bottom: calc(4.7rem + env(safe-area-inset-bottom, 0px)) !important;
+    scroll-padding-bottom: calc(4.7rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 480px) {
+  .teacher-activity-controls.is-expanded .teacher-activity-controls-panel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(18rem, calc(100vw - 1.5rem)); }
+  .teacher-activity-controls-panel > span, .teacher-activity-controls-panel > .offline-status { grid-column: 1 / -1; }
+  .teacher-activity-controls-panel .teacher-next-lesson { grid-column: 1 / -1; }
+
+  html[data-teacher-controls-mobile="collapsed"] main.site-shell:is(.choice-worksheet-page, .word-match-page, .radical-sort-page, .punctuation-drop-page, .story-structure-page, .sentence-expand-page, .p2-writing-page, .format-sort-page, .p3-study-page, .tale-reading-page, .paragraph-mark-page, .english-choice-page, .english-reading-page, .english-sentence-page, .english-sentence-rewrite-page, .english-verb-memory-page, .math-activity-page) {
+    padding-bottom: calc(4.7rem + env(safe-area-inset-bottom, 0px)) !important;
+    scroll-padding-bottom: calc(4.7rem + env(safe-area-inset-bottom, 0px));
+  }
+}
