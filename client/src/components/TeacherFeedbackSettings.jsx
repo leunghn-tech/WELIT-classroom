@@ -1,5 +1,5 @@
 /* 教師設定面板：以本機儲存記錄音效、音量、動畫、提示、投影字級及低小全班戰鬥偏好。 */
-import { ClipboardList, Dice5, Gauge, Lightbulb, ListFilter, ListMinus, MonitorUp, RotateCcw, Settings2, Sparkles, Swords, Type, Volume2, VolumeX, X } from 'lucide-react';
+import { ClipboardList, Dice5, Gauge, Lightbulb, ListFilter, MonitorUp, RotateCcw, Settings2, Sparkles, Swords, Type, Volume2, VolumeX, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { playSoundPreview } from '../lib/feedbackAudio';
 import '../battleSettings.css';
@@ -13,8 +13,8 @@ const BATTLE_PRESETS = [
 const SIZES = [{ value: 'standard', label: '標準' }, { value: 'large', label: '放大' }, { value: 'xlarge', label: '特大' }];
 const READING_LINE_HEIGHTS = [{ value: 'compact', label: '緊密' }, { value: 'comfortable', label: '舒適' }, { value: 'spacious', label: '寬鬆' }];
 const READING_COLUMN_WIDTHS = [{ value: 'narrow', label: '窄欄' }, { value: 'standard', label: '標準' }, { value: 'wide', label: '寬欄' }];
-const DEFAULTS = { sound: true, soundVolume: 80, animation: true, hintSatchel: false, eliminateTwoOptions: true, firstWordHint: false, showMathWorkedHints: false, projectionSize: 'standard', minimalProjection: false, readingLineHeight: 'comfortable', readingColumnWidth: 'standard', battlePreset: 'standard', battle: BATTLE_DEFAULTS };
-const readSettings = () => { try { const stored = JSON.parse(window.localStorage.getItem('eduquest-feedback-settings') || '{}'); const eliminateTwoOptions = stored.eliminateTwoOptionsConfigured === true ? stored.eliminateTwoOptions === true : true; const showMathWorkedHints = stored.mathHintsConfigured === true ? stored.showMathWorkedHints === true : false; return { ...DEFAULTS, ...stored, eliminateTwoOptions, showMathWorkedHints, battle: { ...BATTLE_DEFAULTS, ...(stored.battle || {}) } }; } catch { return DEFAULTS; } };
+const DEFAULTS = { sound: true, soundVolume: 80, animation: true, hintSatchel: false, firstWordHint: false, showMathWorkedHints: false, projectionSize: 'standard', minimalProjection: false, readingLineHeight: 'comfortable', readingColumnWidth: 'standard', battlePreset: 'standard', battle: BATTLE_DEFAULTS };
+const readSettings = () => { try { const stored = JSON.parse(window.localStorage.getItem('eduquest-feedback-settings') || '{}'); const { eliminateTwoOptions: _eliminateTwoOptions, eliminateTwoOptionsConfigured: _eliminateTwoOptionsConfigured, ...safeStored } = stored; const showMathWorkedHints = safeStored.mathHintsConfigured === true ? safeStored.showMathWorkedHints === true : false; return { ...DEFAULTS, ...safeStored, showMathWorkedHints, battle: { ...BATTLE_DEFAULTS, ...(safeStored.battle || {}) } }; } catch { return DEFAULTS; } };
 const saveSettings = (next) => { window.localStorage.setItem('eduquest-feedback-settings', JSON.stringify(next)); window.dispatchEvent(new CustomEvent('eduquest-feedback-settings', { detail: next })); };
 
 export default function TeacherFeedbackSettings({ onOpenQuestionManager, onOpenClassroomToolkit, onOpenQuickExit }) {
@@ -22,7 +22,7 @@ export default function TeacherFeedbackSettings({ onOpenQuestionManager, onOpenC
   const [settings, setSettings] = useState(readSettings);
   useEffect(() => { document.documentElement.dataset.mathWorkedHints = settings.showMathWorkedHints ? 'on' : 'off'; }, [settings.showMathWorkedHints]);
   const save = (next) => { setSettings(next); saveSettings(next); };
-  const update = (key) => save({ ...settings, [key]: !settings[key], ...(key === 'eliminateTwoOptions' ? { eliminateTwoOptionsConfigured: true } : {}), ...(key === 'showMathWorkedHints' ? { mathHintsConfigured: true } : {}) });
+  const update = (key) => save({ ...settings, [key]: !settings[key], ...(key === 'showMathWorkedHints' ? { mathHintsConfigured: true } : {}) });
   const updateSoundVolume = (rawValue) => save({ ...settings, soundVolume: Math.min(100, Math.max(10, Number(rawValue) || 10)) });
   const updateProjection = (projectionSize) => save({ ...settings, projectionSize });
   const updateReading = (key, value) => save({ ...settings, [key]: value });
@@ -50,7 +50,6 @@ export default function TeacherFeedbackSettings({ onOpenQuestionManager, onOpenC
       <button className={`settings-toggle sound-preview ${settings.sound ? 'on' : ''}`} onClick={playSoundPreview} disabled={!settings.sound} aria-label="以目前音量試聽音效"><span><Volume2 size={18} /> 音效試聽</span><i>{settings.sound ? '播放' : '請先開啟'}</i></button>
       <button className={`settings-toggle ${settings.animation ? 'on' : ''}`} onClick={() => update('animation')}><span><Sparkles size={18} /> 動畫</span><i>{settings.animation ? '開啟' : '關閉'}</i></button>
       <button className={`settings-toggle ${settings.hintSatchel ? 'on' : ''}`} onClick={() => update('hintSatchel')}><span><Lightbulb size={18} /> 提示錦囊</span><i>{settings.hintSatchel ? '開啟' : '關閉'}</i></button>
-      <button className={`settings-toggle ${settings.eliminateTwoOptions ? 'on' : ''}`} onClick={() => update('eliminateTwoOptions')}><span><ListMinus size={18} /> 刪錯選項錦囊</span><i>{settings.eliminateTwoOptions ? '開啟' : '關閉'}</i></button><small className="eliminate-choice-setting-note">新題目預設可用；教師可隨時關閉。</small>
       <button className={`settings-toggle ${settings.firstWordHint ? 'on' : ''}`} onClick={() => update('firstWordHint')}><span><Lightbulb size={18} /> 提示首詞</span><i>{settings.firstWordHint ? '開啟' : '關閉'}</i></button>
       <button className={`settings-toggle ${settings.showMathWorkedHints ? 'on' : ''}`} onClick={() => update('showMathWorkedHints')}><span><Lightbulb size={18} /> 顯示數學提示</span><i>{settings.showMathWorkedHints ? '開啟' : '關閉'}</i></button><small className="eliminate-choice-setting-note">預設關閉；老師按此開啟後才顯示已知資料、解題模型與步驟提示。數線、十格框、圖像及必須操作的材料會保留。</small>
       <section className="projection-size-control"><div><span><Type size={18} /> 投影字體大小</span><small>調整課堂展示字級</small></div><div className="projection-size-options" role="group" aria-label="投影字體大小">{SIZES.map((size) => <button key={size.value} onClick={() => updateProjection(size.value)} className={settings.projectionSize === size.value ? 'active' : ''} aria-pressed={settings.projectionSize === size.value}>{size.label}</button>)}</div></section>

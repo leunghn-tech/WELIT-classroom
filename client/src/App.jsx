@@ -222,62 +222,13 @@ export default function App() {
     return () => { window.cancelAnimationFrame(initialRender); observer.disconnect(); };
   }, [screen, activeUnit]);
   useEffect(() => {
-    if (screen !== 'activity' || !activeUnit) return undefined;
-    const choicesQuestions = activeUnit.questions?.length ? activeUnit.questions : activeUnit.passageSets?.flatMap((set) => set.questions) || activeUnit.stories?.flatMap((story) => story.questions) || [];
-    const normaliseChoice = (value) => String(value ?? '').replace(/\s+/gu, '').replace(/^[$]/u, '');
-    const questionSignals = (question) => [question.prompt, question.sentence, question.context, question.text, question.source, question.title, question.target, question.profile, question.document].filter((value) => typeof value === 'string' && value.trim().length > 1);
-    const findQuestion = () => {
-      const pageText = document.querySelector('main.site-shell')?.textContent || '';
-      return choicesQuestions.map((question) => ({ question, score: questionSignals(question).filter((signal) => pageText.includes(signal)).reduce((total, signal) => total + Math.min(signal.length, 40), 0) })).sort((left, right) => right.score - left.score)[0]?.question;
-    };
-    const restoreChoices = () => document.querySelectorAll('.eliminated-choice, .eliminating-choice').forEach((option) => { option.classList.remove('eliminated-choice', 'eliminating-choice'); option.disabled = false; option.removeAttribute('aria-hidden'); option.removeAttribute('aria-disabled'); });
-    const removeSatchels = () => document.querySelectorAll('.eliminate-choice-satchel').forEach((satchel) => satchel.remove());
-    const settingsEnabled = () => { try { const stored = JSON.parse(window.localStorage.getItem('eduquest-feedback-settings') || '{}'); return stored.eliminateTwoOptionsConfigured === true ? stored.eliminateTwoOptions === true : true; } catch { return true; } };
-    const installSatchel = () => {
-      if (!settingsEnabled()) { restoreChoices(); removeSatchels(); return; }
-      const question = findQuestion();
-      const correctAnswer = question?.answer ?? question?.radical;
-      if (!question?.choices?.length || correctAnswer === undefined) return;
-      document.querySelectorAll('.english-option-grid, .math-option-grid, .team-battle-options, .worksheet-options > div:last-child, .writing-choice-bank > div:last-child, .p3-choice-bank > div:last-child, .tale-choice-bank > div:last-child, .radical-choice-grid, .punctuation-choice-grid').forEach((grid) => {
-        const options = [...grid.querySelectorAll(':scope > button')];
-        const questionKey = question.id || question.prompt;
-        if (grid.dataset.satchelQuestionKey !== questionKey) {
-          options.forEach((option) => { option.classList.remove('eliminated-choice', 'eliminating-choice'); option.disabled = false; option.removeAttribute('aria-hidden'); option.removeAttribute('aria-disabled'); });
-          grid.parentElement?.querySelector('.eliminate-choice-satchel')?.remove();
-          grid.dataset.satchelQuestionKey = questionKey;
-        }
-        const existingSatchel = grid.parentElement?.querySelector('.eliminate-choice-satchel');
-        if (existingSatchel?.dataset.used === 'true' && !options.some((option) => option.classList.contains('eliminated-choice') || option.classList.contains('eliminating-choice'))) existingSatchel.remove();
-        if (options.length !== 4 || grid.parentElement?.querySelector('.eliminate-choice-satchel')) return;
-        const satchel = document.createElement('aside');
-        satchel.className = 'eliminate-choice-satchel';
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.innerHTML = '<b>幫我排除兩個錯誤選項</b>';
-        button.setAttribute('aria-label', '刪去兩個錯誤選項，只保留正確答案和一個干擾選項');
-        button.addEventListener('click', () => {
-          const protectedAnswer = grid.dataset.correctChoice || correctAnswer;
-          const wrongOptions = options.filter((option) => normaliseChoice(option.dataset.choiceValue || option.querySelector('b')?.textContent || option.textContent) !== normaliseChoice(protectedAnswer));
-          for (let index = wrongOptions.length - 1; index > 0; index -= 1) { const swapIndex = Math.floor(Math.random() * (index + 1)); [wrongOptions[index], wrongOptions[swapIndex]] = [wrongOptions[swapIndex], wrongOptions[index]]; }
-          const reducedMotion = document.documentElement.dataset.eduquestAnimation === 'off' || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          satchel.classList.add('satchel-activating');
-          wrongOptions.slice(0, 2).forEach((option) => { option.classList.add('eliminating-choice'); option.disabled = true; option.setAttribute('aria-disabled', 'true'); });
-          window.setTimeout(() => wrongOptions.slice(0, 2).forEach((option) => { option.classList.remove('eliminating-choice'); option.classList.add('eliminated-choice'); option.setAttribute('aria-hidden', 'true'); }), reducedMotion ? 0 : 620);
-          window.setTimeout(() => satchel.classList.remove('satchel-activating'), reducedMotion ? 0 : 620);
-          satchel.dataset.used = 'true';
-          button.disabled = true;
-          button.innerHTML = '<b>已協助排除兩個選項</b>';
-        });
-        satchel.append(button);
-        grid.parentElement?.insertBefore(satchel, grid);
-      });
-    };
-    const observer = new MutationObserver(installSatchel);
-    const onSettingsChange = installSatchel;
-    observer.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['disabled', 'class'] });
-    window.addEventListener('eduquest-feedback-settings', onSettingsChange);
-    const initialRender = window.requestAnimationFrame(installSatchel);
-    return () => { window.cancelAnimationFrame(initialRender); observer.disconnect(); window.removeEventListener('eduquest-feedback-settings', onSettingsChange); removeSatchels(); };
+    document.querySelectorAll('.eliminate-choice-satchel').forEach((satchel) => satchel.remove());
+    document.querySelectorAll('.eliminated-choice, .eliminating-choice').forEach((option) => {
+      option.classList.remove('eliminated-choice', 'eliminating-choice');
+      option.disabled = false;
+      option.removeAttribute('aria-hidden');
+      option.removeAttribute('aria-disabled');
+    });
   }, [screen, activeUnit]);
   const openDemo = (selectedTopic) => { setTopic(selectedTopic); setScreen('demo'); };
   const openCatalog = (grade = 'P1', subject = '中文') => { setCatalogGrade(grade); setCatalogSubject(subject); setScreen('catalog'); };
