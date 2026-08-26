@@ -246,7 +246,7 @@ export default function App() {
         button.innerHTML = '<b>幫我排除兩個錯誤選項</b>';
         button.setAttribute('aria-label', '刪去兩個錯誤選項，只保留正確答案和一個干擾選項');
         button.addEventListener('click', () => {
-          const wrongOptions = options.filter((option) => normaliseChoice(option.querySelector('b')?.textContent || option.textContent) !== normaliseChoice(correctAnswer));
+          const wrongOptions = options.filter((option) => normaliseChoice(option.dataset.choiceValue || option.querySelector('b')?.textContent || option.textContent) !== normaliseChoice(correctAnswer));
           for (let index = wrongOptions.length - 1; index > 0; index -= 1) { const swapIndex = Math.floor(Math.random() * (index + 1)); [wrongOptions[index], wrongOptions[swapIndex]] = [wrongOptions[swapIndex], wrongOptions[index]]; }
           const reducedMotion = document.documentElement.dataset.eduquestAnimation === 'off' || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           satchel.classList.add('satchel-activating');

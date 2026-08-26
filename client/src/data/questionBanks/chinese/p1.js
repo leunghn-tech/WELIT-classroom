@@ -35,11 +35,11 @@ export default {
         {
           id: 'P1-CN-R01-Q04', prompt: '把校園字詞和圖意配對。',
           matches: [
-            { id: 'gate', word: '校門', symbol: '🏫', meaning: '進入學校的門口' },
+          { id: 'school', word: '學校', symbol: '🏫', meaning: '學生上課和學習的地方' },
             { id: 'teacher', word: '老師', symbol: '🧑‍🏫', meaning: '在課室教導學生的人' },
             { id: 'classmate', word: '同學', symbol: '🧒', meaning: '和我一起上課的學生' },
           ],
-          explanation: '校門在學校入口；老師教導學生；同學一起上課。',
+          explanation: '學校是學生上課和學習的地方；老師教導學生；同學一起上課。',
         },
         {
           id: 'P1-CN-R01-Q05', prompt: '把出行和休憩的字詞配對。',
@@ -78,12 +78,12 @@ export default {
         { id: 'P1-CN-R03-Q01', prompt: '把正確標點拖到句子空格。', before: '今天天氣很好', after: '', answer: '。', choices: ['。', '？', '！'], explanation: '這是一句陳述句，句末用句號。' },
         { id: 'P1-CN-R03-Q02', prompt: '把正確標點拖到句子空格。', before: '你今天快樂嗎', after: '', answer: '？', choices: ['！', '？', '。'], explanation: '這是一句問句，句末用問號。' },
         { id: 'P1-CN-R03-Q03', prompt: '把正確標點拖到句子空格。', before: '小心車輛', after: '', answer: '！', choices: ['。', '！', '？'], explanation: '這是一句提醒，語氣較強，句末用感嘆號。' },
-        { id: 'P1-CN-R03-Q04', prompt: '把正確標點拖到句子空格。', before: '花兒真美', after: '', answer: '！', choices: ['？', '。', '！'], explanation: '這是在讚美花兒，帶有強烈感受，句末用感嘆號。' },
+        { id: 'P1-CN-R03-Q04', prompt: '把正確標點拖到句子空格。', before: '花兒真美啊', after: '', answer: '！', choices: ['？', '。', '！'], explanation: '「真美啊」是在讚美花兒，帶有強烈感受，句末用感嘆號。' },
         { id: 'P1-CN-R03-Q05', prompt: '把正確標點拖到句子空格。', before: '星期日你會去公園嗎', after: '', answer: '？', choices: ['。', '？', '！'], explanation: '這是在詢問別人，句末用問號。' },
         { id: 'P1-CN-R03-Q06', prompt: '把正確標點拖到句子空格。', before: '請把書放在桌上', after: '', answer: '。', choices: ['！', '。', '？'], explanation: '這是一句平靜的請求，句末用句號。' },
         { id: 'P1-CN-R03-Q07', prompt: '把正確標點拖到句子空格。', before: '誰和你一起上學', after: '', answer: '？', choices: ['！', '。', '？'], explanation: '這是在詢問「誰」，句末用問號。' },
         { id: 'P1-CN-R03-Q08', prompt: '把正確標點拖到句子空格。', before: '爸爸今天煮了湯', after: '', answer: '。', choices: ['？', '。', '！'], explanation: '這是在平靜地說一件事，句末用句號。' },
-        { id: 'P1-CN-R03-Q09', prompt: '把正確標點拖到句子空格。', before: '太好了我們贏了', after: '', answer: '！', choices: ['。', '？', '！'], explanation: '這是在表達高興和興奮，句末用感嘆號。' },
+        { id: 'P1-CN-R03-Q09', prompt: '把正確標點拖到句子空格。', before: '太好了，我們贏了', after: '', answer: '！', choices: ['。', '？', '！'], explanation: '這是在表達高興和興奮，句末用感嘆號。' },
         { id: 'P1-CN-R03-Q10', prompt: '把正確標點拖到句子空格。', before: '你喜歡這本圖畫書嗎', after: '', answer: '？', choices: ['！', '？', '。'], explanation: '這是一句問句，句末用問號。' },
       ],
     },

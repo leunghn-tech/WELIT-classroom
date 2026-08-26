@@ -59,8 +59,8 @@ const p5Difficulties = {
 };
 p5MathBank.units.forEach((unit) => { if (p5Difficulties[unit.id]) unit.difficulty = p5Difficulties[unit.id]; });
 
-// 小四先建立小數與八方向；小五專注異分母分數、乘除小數、體積與代數。
+// 小四先建立小數與八方向；小五專注異分母分數、乘除小數與代數，不列入立體幾何一／體積。
 export const p5TransitionUnits = p5MathBank.units.filter((unit) => ['P5-MATH-A04', 'P5-MATH-S03'].includes(unit.id));
-p5MathBank.units = p5MathBank.units.filter((unit) => !['P5-MATH-A04', 'P5-MATH-S01', 'P5-MATH-S03', 'P5-MATH-D01', 'P5-MATH-M01', 'P5-MATH-S02', 'P5-MATH-D02'].includes(unit.id));
+p5MathBank.units = p5MathBank.units.filter((unit) => !['P5-MATH-A04', 'P5-MATH-S01', 'P5-MATH-S03', 'P5-MATH-D01', 'P5-MATH-M01', 'P5-MATH-M03', 'P5-MATH-S02', 'P5-MATH-D02'].includes(unit.id));
 
 export default p5MathBank;
