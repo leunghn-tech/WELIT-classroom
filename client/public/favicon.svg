@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="WELIT classroom">
+  <rect width="64" height="64" rx="14" fill="#2458D9"/>
+  <path d="M13 19.5c7.1-2.6 13.2-1.2 19 4.2 5.8-5.4 11.9-6.8 19-4.2v24.8c-7.1-2.6-13.2-1.2-19 4.2-5.8-5.4-11.9-6.8-19-4.2V19.5Z" fill="#fff"/>
+  <path d="M32 24v20" stroke="#2458D9" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M46.5 8.5 48.2 14l5.3 1.6-5.3 1.7-1.7 5.2-1.7-5.2-5.3-1.7 5.3-1.6 1.7-5.5Z" fill="#F6C946"/>
+</svg>

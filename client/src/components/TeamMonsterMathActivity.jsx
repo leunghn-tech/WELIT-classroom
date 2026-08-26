@@ -1,4 +1,4 @@
-// EduQuest「彩色課程工作檯」：低小合作模式將既有題庫轉化為「商量作答 → 合力攻擊 → 重試／下一題」的課堂投影活動，並讀取教師自訂戰鬥設定。
+// WELIT classroom「彩色課程工作檯」：低小合作模式將既有題庫轉化為「商量作答 → 合力攻擊 → 重試／下一題」的課堂投影活動，並讀取教師自訂戰鬥設定。
 import { ArrowLeft, Check, ChevronRight, RotateCcw, Sparkles, Swords, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { pauseExamTimer } from '../lib/examTimerStore';

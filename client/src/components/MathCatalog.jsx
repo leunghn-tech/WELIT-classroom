@@ -1,4 +1,4 @@
-// EduQuest「彩色課程工作檯」：數學目錄採草綠學習線；小一至小三可由教師選擇一般互動或全班合作打怪獸模式。
+// WELIT classroom「彩色課程工作檯」：數學目錄採草綠學習線；小一至小三可由教師選擇一般互動或全班合作打怪獸模式。
 import { ArrowLeft, Calculator, ChevronRight, LayoutDashboard, Sparkles, Swords } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { getMathQuestionBank } from '../data/questionBanks/math';

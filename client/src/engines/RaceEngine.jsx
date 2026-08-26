@@ -1,4 +1,4 @@
-/* EduQuest 選擇競速：筆順方格、拆字配對、關聯詞填空、文言標記與情境材料共用即時回饋流程。 */
+/* WELIT classroom 選擇競速：筆順方格、拆字配對、關聯詞填空、文言標記與情境材料共用即時回饋流程。 */
 import { useEffect, useState } from 'react';
 import { CarFront, Flag, Zap } from 'lucide-react';
 

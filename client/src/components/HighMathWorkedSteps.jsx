@@ -1,4 +1,4 @@
-// EduQuest「彩色課程工作檯」：高小解題提示以草綠模型、短句步驟與可投影字級輔助理解，不重複題幹。
+// WELIT classroom「彩色課程工作檯」：高小解題提示以草綠模型、短句步驟與可投影字級輔助理解，不重複題幹。
 import { ArrowRight, CheckCircle2, Lightbulb, ScanSearch } from 'lucide-react';
 import FormalMathText from './FormalMathText';
 

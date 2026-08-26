@@ -1,5 +1,5 @@
-const CACHE_NAME = 'welitquest-classroom-v1';
-const CORE_PATHS = ['', './', './?view=classroom-toolkit', './?view=quick-exit'];
+const CACHE_NAME = 'welit-classroom-v2';
+const CORE_PATHS = ['', './', './favicon.svg', './?view=classroom-toolkit', './?view=quick-exit'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_PATHS)).then(() => self.skipWaiting()));

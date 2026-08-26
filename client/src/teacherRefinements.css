@@ -322,7 +322,7 @@ html[data-eduquest-animation='off'] .eliminate-choice-satchel button:not(:disabl
 }
 
 .english-choice-page .english-answer-zone { position: relative; padding: .95rem .95rem 1rem; border-left-width: 8px; background: repeating-linear-gradient(0deg, rgba(85,183,238,.035) 0 1px, transparent 1px 27px), #fbfeff; }
-.english-choice-page .english-answer-zone::after { position: absolute; right: .74rem; bottom: .58rem; color: #66bce4; content: '✦ EDUQUEST · ANSWER STRIP'; font: 900 .5rem var(--display); letter-spacing: .08em; }
+.english-choice-page .english-answer-zone::after { position: absolute; right: .74rem; bottom: .58rem; color: #66bce4; content: '✦ WELIT classroom · ANSWER STRIP'; font: 900 .5rem var(--display); letter-spacing: .08em; }
 .english-choice-page .english-answer-zone .eliminate-choice-satchel { margin: .5rem 0 .72rem; }
 .english-choice-page .english-option-grid { position: relative; z-index: 1; gap: .55rem; }
 .english-choice-page .english-option-grid button { min-height: 64px; border-width: 1px 1px 1px 8px !important; border-radius: 0 .22rem .22rem 0 !important; box-shadow: none !important; background: repeating-linear-gradient(0deg, rgba(85,183,238,.035) 0 1px, transparent 1px 23px), #fff !important; }
@@ -594,7 +594,7 @@ html[data-eduquest-animation='off'] .eliminate-choice-satchel button:not(:disabl
 /* 教材不是空白卡：英文以描線格閱讀字母，中文以閱讀標記定位文章線索。 */
 .english-choice-page .english-worksheet { box-shadow: inset 0 0 0 1px rgba(85,183,238,.15), inset 16px 0 0 rgba(85,183,238,.06); }
 .english-choice-page .english-material-card.letter { position: relative; min-height: 250px; border-left: 6px solid #61c0ef; background: repeating-linear-gradient(0deg, transparent 0 30px, rgba(97,192,239,.14) 30px 31px), repeating-linear-gradient(90deg, transparent 0 30px, rgba(97,192,239,.09) 30px 31px), #fbfeff; }
-.english-choice-page .english-material-card.letter::before { position: absolute; top: .7rem; right: .78rem; padding: .2rem .42rem; border: 1px solid #9bdbf5; color: #287eaf; background: #effaff; content: '✦ EDUQUEST · TRACE & READ'; font: 900 .53rem var(--display); letter-spacing: .08em; }
+.english-choice-page .english-material-card.letter::before { position: absolute; top: .7rem; right: .78rem; padding: .2rem .42rem; border: 1px solid #9bdbf5; color: #287eaf; background: #effaff; content: '✦ WELIT classroom · TRACE & READ'; font: 900 .53rem var(--display); letter-spacing: .08em; }
 .english-choice-page .english-material-card.letter::after { position: absolute; right: 1rem; bottom: 1rem; width: 5.5rem; border-bottom: 2px solid #8bd1f2; content: ''; opacity: .75; }
 .english-choice-page .english-letter-cue { position: relative; z-index: 1; display: grid; place-items: center; min-height: 145px; color: #55b7ee; text-shadow: 2px 2px 0 rgba(255,255,255,.9); }
 .english-choice-page .english-letter-cue::after { width: 78px; border-bottom: 2px dashed #7dc9ee; content: ''; }
@@ -605,7 +605,7 @@ html[data-eduquest-animation='off'] .eliminate-choice-satchel button:not(:disabl
 .p3-study-page .p3-source-card,
 .tale-reading-page .tale-story-sheet { position: relative; box-shadow: inset 12px 0 0 rgba(239,118,92,.055); }
 .tale-reading-page .tale-story-sheet { padding-top: 2.5rem !important; background-image: repeating-linear-gradient(0deg, rgba(239,118,92,.045) 0 1px, transparent 1px 28px), linear-gradient(90deg, rgba(239,118,92,.075) 0 1px, transparent 1px) !important; }
-.tale-reading-page .tale-story-sheet::before { position: absolute; top: .68rem; right: .8rem; padding: .18rem .42rem; border: 1px solid #f1ad9d; color: #b4513d; background: #fff8f5; content: '✦ EDUQUEST · 閱讀標記'; font: 900 .54rem var(--display); letter-spacing: .08em; }
+.tale-reading-page .tale-story-sheet::before { position: absolute; top: .68rem; right: .8rem; padding: .18rem .42rem; border: 1px solid #f1ad9d; color: #b4513d; background: #fff8f5; content: '✦ WELIT classroom · 閱讀標記'; font: 900 .54rem var(--display); letter-spacing: .08em; }
 .tale-reading-page .tale-story-sheet::after { position: absolute; top: 2.25rem; bottom: .8rem; left: .72rem; width: 2px; background: repeating-linear-gradient(to bottom, #ef765c 0 9px, transparent 9px 15px); content: ''; opacity: .58; }
 .tale-reading-page .tale-story-sheet > * { position: relative; z-index: 1; }
 
@@ -1272,30 +1272,30 @@ html[data-eduquest-animation='off'] .eliminate-choice-satchel button:not(:disabl
   .eliminate-choice-satchel button b { font-size: .9rem !important; }
 }
 
-/* WelitQuest 為全站唯一可見品牌；保留探索星與兩段式深藍／課程藍識別。 */
+/* WELIT classroom 為全站唯一可見品牌；保留探索星與兩段式深藍／課程藍識別。 */
 .brand b,
 .activity-brand-lockup b { font-size: 0 !important; }
 .brand b > span,
 .activity-brand-lockup b > span { display: none !important; }
-.brand b::after { content: 'WelitQuest'; color: #1d2a45; font: 800 1.28rem/1 var(--display); letter-spacing: -.07em; }
-.activity-brand-lockup b::after { content: 'WelitQuest'; color: #1d2a45; font: 800 1.02rem/1 var(--display); letter-spacing: -.055em; }
+.brand b::after { content: 'WELIT classroom'; color: #1d2a45; font: 800 1.28rem/1 var(--display); letter-spacing: -.07em; }
+.activity-brand-lockup b::after { content: 'WELIT classroom'; color: #1d2a45; font: 800 1.02rem/1 var(--display); letter-spacing: -.055em; }
 .brand b::after::first-letter,
 .activity-brand-lockup b::after::first-letter { color: inherit; }
 .home-page .hero-copy .kicker { font-size: 0 !important; }
-.home-page .hero-copy .kicker::after { content: 'WELITQUEST・課堂工作檯'; color: #ad4e3b; font: 900 .72rem var(--display); letter-spacing: .13em; }
+.home-page .hero-copy .kicker::after { content: 'WELIT classroom・課堂工作檯'; color: #ad4e3b; font: 900 .72rem var(--display); letter-spacing: .13em; }
 .home-page .hero-copy .kicker svg { font-size: initial; }
 .launch-desk-interactive .desk-heading > span { font-size: 0 !important; }
 .launch-desk-interactive .desk-heading > span i { font-size: .72rem !important; }
-.launch-desk-interactive .desk-heading > span::after { content: 'WELITQUEST・開課檔案'; color: #1e3c5c; font: 900 .71rem var(--display); letter-spacing: .08em; }
-.math-catalog-page .math-catalog-content::before { content: 'WELITQUEST・數學工作紙' !important; }
-.math-catalog-page .math-unit-card > div > span::after { content: 'WELITQUEST · MATH' !important; }
-.math-activity-page .math-worksheet::before { content: '✦ WELITQUEST · 看材料 → 動手分組 → 作答' !important; }
-.math-activity-page .math-choice-model::after { content: '✦ WELITQUEST · 操作模型' !important; }
+.launch-desk-interactive .desk-heading > span::after { content: 'WELIT classroom・開課檔案'; color: #1e3c5c; font: 900 .71rem var(--display); letter-spacing: .08em; }
+.math-catalog-page .math-catalog-content::before { content: 'WELIT classroom・數學工作紙' !important; }
+.math-catalog-page .math-unit-card > div > span::after { content: 'WELIT classroom · MATH' !important; }
+.math-activity-page .math-worksheet::before { content: '✦ WELIT classroom · 看材料 → 動手分組 → 作答' !important; }
+.math-activity-page .math-choice-model::after { content: '✦ WELIT classroom · 操作模型' !important; }
 .math-activity-page .math-activity-frame .math-file-stamp { font-size: 0 !important; }
-.math-activity-page .math-activity-frame .math-file-stamp::after { content: '✦ WELITQUEST · MATH FILE'; font: 900 .56rem var(--display); }
-.english-choice-page .english-answer-zone::after { content: '✦ WELITQUEST · ANSWER STRIP' !important; }
-.english-choice-page .english-material-card.letter::before { content: '✦ WELITQUEST · TRACE & READ' !important; }
-.tale-reading-page .tale-story-sheet::before { content: '✦ WELITQUEST · 閱讀標記' !important; }
+.math-activity-page .math-activity-frame .math-file-stamp::after { content: '✦ WELIT classroom · MATH FILE'; font: 900 .56rem var(--display); }
+.english-choice-page .english-answer-zone::after { content: '✦ WELIT classroom · ANSWER STRIP' !important; }
+.english-choice-page .english-material-card.letter::before { content: '✦ WELIT classroom · TRACE & READ' !important; }
+.tale-reading-page .tale-story-sheet::before { content: '✦ WELIT classroom · 閱讀標記' !important; }
 
 /* 數學目錄只保留學習線，不在標題下重複顯示刻度尺。 */
 .math-catalog-page .math-directory-heading {
@@ -1402,14 +1402,14 @@ html[data-math-worked-hints='off'] .math-activity-page .math-worksheet.answer-on
 .site-shell .eliminate-choice-satchel.satchel-activating::before { color: #55b7ee !important; }
 .site-shell .eliminate-choice-satchel.satchel-activating::after { border-color: rgba(85,183,238,.58) !important; }
 
-/* 活動檔頭保留現有探索星，字標則以 WelitQuest 取代舊名稱。 */
+/* 活動檔頭保留現有探索星，字標統一為 WELIT classroom。 */
 .site-shell .brand b,
 .site-shell .activity-brand-lockup b { color: transparent !important; font-size: 0 !important; }
 .site-shell .brand b > span,
 .site-shell .activity-brand-lockup b > span { display: none !important; }
-.site-shell .brand b::after { content: 'WelitQuest'; color: #1d2a45 !important; font: 800 1.28rem/1 var(--display) !important; letter-spacing: -.07em; }
-.site-shell .activity-brand-lockup b::after { content: 'WelitQuest'; color: #1d2a45 !important; font: 800 1.02rem/1 var(--display) !important; letter-spacing: -.055em; }
+.site-shell .brand b::after { content: 'WELIT classroom'; color: #1d2a45 !important; font: 800 1.28rem/1 var(--display) !important; letter-spacing: -.07em; }
+.site-shell .activity-brand-lockup b::after { content: 'WELIT classroom'; color: #1d2a45 !important; font: 800 1.02rem/1 var(--display) !important; letter-spacing: -.055em; }
 .site-shell .math-choice-model > header > span,
 .site-shell .life-application-model > header > span { font-size: 0 !important; }
-.site-shell .math-choice-model > header > span::after { content: '✦ WelitQuest 數學模型'; color: #25764f; font: 900 .74rem var(--display); }
-.site-shell .life-application-model > header > span::after { content: '✦ WelitQuest 解題模型'; color: #25764f; font: 900 .74rem var(--display); }
+.site-shell .math-choice-model > header > span::after { content: '✦ WELIT classroom 數學模型'; color: #25764f; font: 900 .74rem var(--display); }
+.site-shell .life-application-model > header > span::after { content: '✦ WELIT classroom 解題模型'; color: #25764f; font: 900 .74rem var(--display); }

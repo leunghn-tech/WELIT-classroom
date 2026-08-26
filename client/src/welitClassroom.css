@@ -1,11 +1,11 @@
-/* 此檔案在所有既有工作紙樣式之後載入，作為 WelitQuest 的最終品牌與提示工具層。 */
+/* 此檔案在所有既有工作紙樣式之後載入，作為 WELIT classroom 的最終品牌與提示工具層。 */
 
 /* 實際隱藏舊有拆分式字標，再在同一個品牌容器輸出新名稱。 */
 .site-shell .activity-brand-lockup > div > b { display: none !important; }
 .site-shell .activity-brand-lockup > div::before {
   display: block;
   color: #1d2a45;
-  content: 'WelitQuest';
+  content: 'WELIT classroom';
   font: 800 1.02rem/1 var(--display);
   letter-spacing: -.055em;
 }
@@ -13,7 +13,7 @@
 .site-shell .brand > span:last-child::before {
   display: block;
   color: #1d2a45;
-  content: 'WelitQuest';
+  content: 'WELIT classroom';
   font: 800 1.28rem/1 var(--display);
   letter-spacing: -.07em;
 }
@@ -21,12 +21,12 @@
 .site-shell .life-application-model > header > span { display: none !important; }
 .site-shell .math-choice-model > header::before {
   color: #25764f;
-  content: '✦ WelitQuest 數學模型';
+  content: '✦ WELIT classroom 數學模型';
   font: 900 .74rem var(--display);
 }
 .site-shell .life-application-model > header::before {
   color: #25764f;
-  content: '✦ WelitQuest 解題模型';
+  content: '✦ WELIT classroom 解題模型';
   font: 900 .74rem var(--display);
 }
 

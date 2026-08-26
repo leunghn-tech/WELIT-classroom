@@ -206,7 +206,7 @@ function vitePluginStorageProxy(): Plugin {
 const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
 
 export default defineConfig({
-  base: process.env.GITHUB_ACTIONS === "true" ? "/Welit-classroom-game/" : "/",
+  base: process.env.GITHUB_ACTIONS === "true" ? "/WELIT-classroom/" : "/",
   plugins,
   resolve: {
     alias: {

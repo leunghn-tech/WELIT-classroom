@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import './index.css';
-import './welitQuest.css';
+import './welitClassroom.css';
 import './p1Difficulty.css';
 import './teacherClassroomToolkit.css';
 import './classroomExtensions.css';

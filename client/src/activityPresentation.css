@@ -213,7 +213,7 @@ html[data-eduquest-minimal-projection="on"] .site-shell :is(.match-heading, .mat
   .site-shell h1[data-eduquest-question-length="xlong"] { font-size: 1.18rem !important; }
 }
 
-/* 跨科一致化：EduQuest 識別、學科主色和單一連續工作紙。 */
+/* 跨科一致化：WELIT classroom 識別、學科主色和單一連續工作紙。 */
 main.site-shell:is(.choice-worksheet-page, .word-match-page, .radical-sort-page, .punctuation-drop-page, .story-structure-page, .sentence-expand-page, .p2-writing-page, .format-sort-page, .p3-study-page, .tale-reading-page, .paragraph-mark-page) {
   --activity-accent: #e5725b !important;
   --activity-ink: #63342b !important;

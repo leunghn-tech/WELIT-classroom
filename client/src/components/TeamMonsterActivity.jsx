@@ -1,4 +1,4 @@
-// EduQuest 低小跨科合作模式：將中文、英文及數學的可選答題庫轉為「全班商量 → 合力攻擊」的課堂遊戲。
+// WELIT classroom 低小跨科合作模式：將中文、英文及數學的可選答題庫轉為「全班商量 → 合力攻擊」的課堂遊戲。
 import { ArrowLeft, Check, ChevronRight, RotateCcw, Sparkles, Swords, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { pauseExamTimer } from '../lib/examTimerStore';

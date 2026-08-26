@@ -1,4 +1,4 @@
-/* EduQuest 寫作工房：開放式寫句由教師按參考句與課堂討論確認，不以單一標準句誤判。 */
+/* WELIT classroom 寫作工房：開放式寫句由教師按參考句與課堂討論確認，不以單一標準句誤判。 */
 import { useEffect, useState } from 'react';
 import { CheckCircle2, Eye, Lightbulb, PenLine, Sparkles } from 'lucide-react';
 

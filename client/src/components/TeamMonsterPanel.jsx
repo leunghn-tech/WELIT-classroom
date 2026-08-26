@@ -1,4 +1,4 @@
-// EduQuest「彩色課程工作檯」：低小合作戰鬥面板把生命、能量、連勝技能與教師可見的示範控制放在同一條投影動線。
+// WELIT classroom「彩色課程工作檯」：低小合作戰鬥面板把生命、能量、連勝技能與教師可見的示範控制放在同一條投影動線。
 import { Heart, ShieldCheck, Sparkles, Swords, UsersRound, Zap } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import TeamScoreboard from './TeamScoreboard';

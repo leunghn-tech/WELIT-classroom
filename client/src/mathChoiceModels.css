@@ -17,7 +17,7 @@
   border: 1px solid #a9dfc0;
   color: #247a50;
   background: #effbf4;
-  content: '✦ EDUQUEST · MATH MODEL';
+  content: '✦ WELIT classroom · MATH MODEL';
   font: 900 .52rem var(--display);
   letter-spacing: .08em;
 }
@@ -341,8 +341,8 @@ html[data-eduquest-animation='off'] .story-token-arrive, html[data-eduquest-anim
 .math-activity-page .math-heading h1 { max-width: 26ch; margin-top: .5rem; color: #142a45; font-size: clamp(2.1rem, 4.25vw, 3.8rem); }
 .math-activity-page .math-heading p { padding: .36rem .52rem; border-left: 4px solid #74ca99; color: #3b745a; background: #f1fbf5; font-size: .96rem; font-weight: 800; }
 .math-activity-page .math-worksheet { border-left-color: #2ca568; }
-.math-activity-page .math-worksheet::before { border-color: #7bcda0; color: #1f704b; background: #effbf4; content: '✦ EDUQUEST · 看材料 → 動手分組 → 作答'; }
-.math-activity-page .math-choice-model::after { border-color: #68c18f; color: #1d704a; background: #edf9f2; content: '✦ EDUQUEST · 操作模型'; }
+.math-activity-page .math-worksheet::before { border-color: #7bcda0; color: #1f704b; background: #effbf4; content: '✦ WELIT classroom · 看材料 → 動手分組 → 作答'; }
+.math-activity-page .math-choice-model::after { border-color: #68c18f; color: #1d704a; background: #edf9f2; content: '✦ WELIT classroom · 操作模型'; }
 .math-activity-page .math-answer-zone .bank-title { border-bottom: 2px solid #6bc292; }
 .math-activity-page .math-answer-zone .bank-title span { color: #1d6d49; font-size: 1.02rem; }
 .math-activity-page .math-answer-zone .bank-title small { color: #4f8065; font-weight: 900; }
