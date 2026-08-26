@@ -1,6 +1,57 @@
 {
   "purpose": "檢查題庫選項是否重複、正確答案是否存在，並模擬兩錯項排除時正確答案不會進入刪除集合。",
   "comparator": "以題庫原始 answer／radical 與 choices 值比對；文字會作 Unicode、分數斜線、負號及空白正規化。",
+  "guardRailResults": [
+    {
+      "name": "有效四選一題",
+      "passed": true,
+      "safe": true,
+      "reasons": [],
+      "pickedIndexes": [
+        0,
+        3
+      ]
+    },
+    {
+      "name": "答案不在選項",
+      "passed": true,
+      "safe": false,
+      "reasons": [
+        "ANSWER_NOT_IN_CHOICES"
+      ],
+      "pickedIndexes": []
+    },
+    {
+      "name": "正確答案重複",
+      "passed": true,
+      "safe": false,
+      "reasons": [
+        "DUPLICATE_CHOICES",
+        "DUPLICATE_CORRECT_ANSWER"
+      ],
+      "pickedIndexes": []
+    },
+    {
+      "name": "選項重複",
+      "passed": true,
+      "safe": false,
+      "reasons": [
+        "DUPLICATE_CHOICES"
+      ],
+      "pickedIndexes": []
+    },
+    {
+      "name": "錯項不足",
+      "passed": true,
+      "safe": false,
+      "reasons": [
+        "DUPLICATE_CHOICES",
+        "DUPLICATE_CORRECT_ANSWER",
+        "INSUFFICIENT_WRONG_CHOICES"
+      ],
+      "pickedIndexes": []
+    }
+  ],
   "rows": [
     {
       "subject": "中文",
