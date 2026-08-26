@@ -240,6 +240,12 @@ export default function App() {
       if (!question?.choices?.length || correctAnswer === undefined) return;
       document.querySelectorAll('.english-option-grid, .math-option-grid, .team-battle-options, .worksheet-options > div:last-child, .writing-choice-bank > div:last-child, .p3-choice-bank > div:last-child, .tale-choice-bank > div:last-child, .radical-choice-grid, .punctuation-choice-grid').forEach((grid) => {
         const options = [...grid.querySelectorAll(':scope > button')];
+        const questionKey = question.id || question.prompt;
+        if (grid.dataset.satchelQuestionKey !== questionKey) {
+          options.forEach((option) => { option.classList.remove('eliminated-choice', 'eliminating-choice'); option.disabled = false; option.removeAttribute('aria-hidden'); option.removeAttribute('aria-disabled'); });
+          grid.parentElement?.querySelector('.eliminate-choice-satchel')?.remove();
+          grid.dataset.satchelQuestionKey = questionKey;
+        }
         const existingSatchel = grid.parentElement?.querySelector('.eliminate-choice-satchel');
         if (existingSatchel?.dataset.used === 'true' && !options.some((option) => option.classList.contains('eliminated-choice') || option.classList.contains('eliminating-choice'))) existingSatchel.remove();
         if (options.length !== 4 || grid.parentElement?.querySelector('.eliminate-choice-satchel')) return;
