@@ -1,6 +1,7 @@
-import { ArrowDown, ArrowLeft, ArrowUp, CheckCircle2, ClipboardList, Dice5, Download, Play, Plus, Sparkles, Trash2 } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowUp, CheckCircle2, ClipboardList, Dice5, Download, Flag, Play, Plus, Sparkles, Trash2 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import OfflineStatus from './OfflineStatus';
+import { QUESTION_ISSUES_EVENT, readQuestionIssueReports } from '../lib/questionIssueReports';
 
 const SUBJECTS = ['中文', '英文', '數學'];
 const GRADES = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
@@ -25,9 +26,11 @@ function downloadSummary(session) {
   URL.revokeObjectURL(url);
 }
 
-export function TeacherActivityControls({ session, activeUnit, onBack, onOpenToolkit, onOpenQuickExit, onNextPlanned }) {
+export function TeacherActivityControls({ session, activeUnit, onBack, onOpenToolkit, onOpenQuickExit, onOpenIssueReports, onNextPlanned }) {
   const nextItem = session.items.find((item) => !session.completedKeys.includes(item.key) && item.unitId !== activeUnit.id);
-  return <aside className="teacher-activity-controls" aria-label="教師課堂主控列"><span><Sparkles size={15} /> 教師控制</span><b>{session.title || '未命名課堂'}</b><OfflineStatus /><button onClick={onOpenQuickExit}><Dice5 size={16} /> 出口題</button><button onClick={onOpenToolkit}><ClipboardList size={16} /> 本課清單</button><button onClick={onBack}><ArrowLeft size={16} /> 返回目錄</button><button className="teacher-next-lesson" onClick={onNextPlanned} disabled={!nextItem}><Play size={16} fill="currentColor" /> {nextItem ? '下一項' : '已完成清單'}</button></aside>;
+  const [issueCount, setIssueCount] = useState(readQuestionIssueReports().length);
+  useEffect(() => { const sync = (event) => setIssueCount(Array.isArray(event.detail) ? event.detail.length : readQuestionIssueReports().length); window.addEventListener(QUESTION_ISSUES_EVENT, sync); return () => window.removeEventListener(QUESTION_ISSUES_EVENT, sync); }, []);
+  return <aside className="teacher-activity-controls" aria-label="教師課堂主控列"><span><Sparkles size={15} /> 教師控制</span><b>{session.title || '未命名課堂'}</b><OfflineStatus /><button onClick={onOpenQuickExit}><Dice5 size={16} /> 出口題</button><button onClick={onOpenIssueReports}><Flag size={16} /> 題目回報{issueCount ? ` ${issueCount}` : ''}</button><button onClick={onOpenToolkit}><ClipboardList size={16} /> 本課清單</button><button onClick={onBack}><ArrowLeft size={16} /> 返回目錄</button><button className="teacher-next-lesson" onClick={onNextPlanned} disabled={!nextItem}><Play size={16} fill="currentColor" /> {nextItem ? '下一項' : '已完成清單'}</button></aside>;
 }
 
 function ClearConfirmDialog({ session, completed, onBackup, onCancel, onContinue, onClear }) {

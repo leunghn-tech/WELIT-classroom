@@ -12,6 +12,7 @@ import './clearProtection.css';
 import './quickExitSentence.css';
 import './lessonSupport.css';
 import './finalWorksheetTypography.css';
+import './questionIssueReports.css';
 
 createRoot(document.getElementById('root')).render(<App />);
 
